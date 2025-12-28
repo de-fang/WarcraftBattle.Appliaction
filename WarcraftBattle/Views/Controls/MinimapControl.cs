@@ -137,11 +137,19 @@ namespace WarcraftBattle.Views.Controls
                 double mx = entity.X * scaleX;
                 double my = entity.Y * scaleY;
 
-                Brush b = Brushes.Gray;
-                if (entity.Team == TeamType.Human) b = Brushes.Lime;
-                else if (entity.Team == TeamType.Orc) b = Brushes.Red;
-                if (entity is Building) b = (entity.Team == TeamType.Human) ? Brushes.LightBlue : Brushes.Orange;
-                if (entity is LootItem) b = Brushes.Gold;
+                Brush b = ThemePalette.NeutralBrush;
+                if (entity.Team == TeamType.Human)
+                    b = ThemePalette.TeamHumanBrush;
+                else if (entity.Team == TeamType.Orc)
+                    b = ThemePalette.TeamOrcBrush;
+
+                if (entity is Building)
+                    b =
+                        (entity.Team == TeamType.Human)
+                            ? ThemePalette.BuildingHumanBrush
+                            : ThemePalette.BuildingOrcBrush;
+                if (entity is LootItem)
+                    b = ThemePalette.LootBrush;
 
                 double size = (entity is Building) ? 4 : 2;
                 dc.DrawEllipse(b, null, new Point(mx, my), size, size);
@@ -197,7 +205,11 @@ namespace WarcraftBattle.Views.Controls
                 double rectW = (maxX - minX) * scaleX;
                 double rectH = (maxY - minY) * scaleY;
 
-                dc.DrawRectangle(null, new Pen(Brushes.White, 1), new Rect(rectX, rectY, rectW, rectH));
+                dc.DrawRectangle(
+                    null,
+                    ThemePalette.MinimapViewportPen,
+                    new Rect(rectX, rectY, rectW, rectH)
+                );
             }
         }
     }

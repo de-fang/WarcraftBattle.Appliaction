@@ -42,7 +42,7 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                         <TextBlock
-                              Foreground="{StaticResource GameAccentBrush}"
+                              Foreground="{StaticResource GameHighlightBrush}"
                             Margin="0,0,6,0"
                             VerticalAlignment="Center"
                             FontSize="16"
@@ -51,7 +51,7 @@
                             VerticalAlignment="Center"
                             FontSize="18"
                             FontWeight="Bold"
-                            Foreground="{StaticResource GameAccentBrush}">
+                            Foreground="{StaticResource GameHighlightBrush}">
                             <Run Text="{Binding GoldText}"/>
                         </TextBlock>
                     </StackPanel>
@@ -118,6 +118,14 @@
                     Padding="0"
                     cal:Message.Attach="ToggleSpeed"
                     Content="{Binding SpeedText}"
+                    Style="{StaticResource GameButtonStyle}" />
+                <Button
+                    Width="60"
+                    Height="40"
+                    Margin="5,0"
+                    Padding="0"
+                    cal:Message.Attach="ToggleEditor"
+                    Content="EDIT"
                     Style="{StaticResource GameButtonStyle}" />
                 <Button
                     Width="40"
@@ -288,7 +296,7 @@
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         FontSize="10"
-                                                        Foreground="{StaticResource GameAccentBrush}"
+                                                        Foreground="{StaticResource GameHighlightBrush}"
                                                         Text="{Binding Cost}" />
                                                 </Border>
                                                 <TextBlock
@@ -306,7 +314,7 @@
                                                 <TextBlock
                                                     Margin="2,0"
                                                     FontSize="10"
-                                                    Foreground="{StaticResource GameAccentBrush}"
+                                                    Foreground="{StaticResource GameHighlightBrush}"
                                                     Text="{Binding Hotkey}" />
                                             </Border>
                                         </Grid>
@@ -342,8 +350,8 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Foreground="{StaticResource GameAccentBrush}"
-                                                    Text="{Binding Cost}" />
+                                                Foreground="{StaticResource GameHighlightBrush}"
+                                                Text="{Binding Cost}" />
                                             </Border>
                                         </Grid>
                                     </Button>
@@ -433,6 +441,130 @@
                     </Grid>
                 </Border>
             </Grid>
+
+            <Border
+                Margin="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="300"
+                Padding="12"
+                Style="{StaticResource vscode.Panel.Style}"
+                Visibility="{Binding EditorVisibility}">
+                <StackPanel>
+                    <TextBlock
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource GameAccentBrush}"
+                        Text="Level Editor" />
+                    <TextBlock
+                        Margin="0,4,0,12"
+                        FontSize="10"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Left drag: paint terrain. Click to place. Right click: delete entity." />
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Tool" />
+                    <ComboBox
+                        Margin="0,4,0,8"
+                        ItemsSource="{Binding EditorTools}"
+                        SelectedItem="{Binding SelectedEditorTool}" />
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Terrain Material" />
+                    <ComboBox
+                        Margin="0,4,0,8"
+                        ItemsSource="{Binding TerrainOptions}"
+                        SelectedItem="{Binding SelectedTerrainOption}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0,0,6,0"
+                                        Source="{Binding Icon}" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Obstacle" />
+                    <ComboBox
+                        Margin="0,4,0,8"
+                        ItemsSource="{Binding ObstacleOptions}"
+                        SelectedItem="{Binding SelectedObstacleOption}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0,0,6,0"
+                                        Source="{Binding Icon}" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Building" />
+                    <ComboBox
+                        Margin="0,4,0,8"
+                        ItemsSource="{Binding BuildingOptions}"
+                        SelectedItem="{Binding SelectedBuildingOption}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0,0,6,0"
+                                        Source="{Binding Icon}" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Brush Size (tiles)" />
+                    <TextBox
+                        Margin="0,4,0,8"
+                        Text="{Binding EditorBrushSize, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{StaticResource vscode.Brush.TextDim}"
+                        Text="Map Size (tiles)" />
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,8">
+                        <TextBox
+                            Width="60"
+                            Margin="0,0,8,0"
+                            Text="{Binding EditorMapWidthTiles, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox
+                            Width="60"
+                            Text="{Binding EditorMapHeightTiles, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button
+                            Margin="8,0,0,0"
+                            Content="Apply"
+                            cal:Message.Attach="ApplyEditorMapSize"
+                            Style="{StaticResource GameButtonStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </Grid>
 
         <Grid Background="{StaticResource vscode.Brush.BackgroundOverlay}" Visibility="{Binding MenuVisibility}">
@@ -606,7 +738,7 @@
                         Grid.Row="1"
                         Margin="0,10,0,20"
                         FontSize="16"
-                        Foreground="{StaticResource GameAccentBrush}"
+                        Foreground="{StaticResource GameHighlightBrush}"
                         Text="{Binding HonorText}" />
 
                     <Border
@@ -712,7 +844,7 @@ BorderBrush="{StaticResource GameAccentBrush}"
                                 HorizontalAlignment="Right"
                                 FontSize="24"
                                 FontWeight="Bold"
-                                Foreground="{StaticResource GameAccentBrush}"
+                                Foreground="{StaticResource GameHighlightBrush}"
                                 Text="{Binding UpgradeCostText}" />
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                 <Button

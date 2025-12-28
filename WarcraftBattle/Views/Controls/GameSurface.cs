@@ -33,7 +33,7 @@ namespace WarcraftBattle.Views.Controls
     public static class GfxCache
     {
         public static readonly Pen BorderPen = new Pen(Brushes.Black, 1);
-        public static readonly Pen SelectionPen = new Pen(Brushes.LightGreen, 2);
+        public static readonly Pen SelectionPen = ThemePalette.SelectionPen;
         public static readonly Pen FloaterBorderPen = new Pen(Brushes.Black, 2);
         public static readonly Brush ShadowBrush = new SolidColorBrush(
             Color.FromArgb(140, 0, 0, 0)
@@ -45,12 +45,8 @@ namespace WarcraftBattle.Views.Controls
         public static readonly Brush HPBarHighlight = new SolidColorBrush(
             Color.FromArgb(100, 255, 255, 255)
         );
-        public static readonly Brush BloodBrush = new SolidColorBrush(
-            Color.FromArgb(220, 180, 20, 20)
-        );
-        public static readonly Brush SparkBrush = new SolidColorBrush(
-            Color.FromArgb(220, 255, 160, 60)
-        );
+        public static readonly Brush BloodBrush = ThemePalette.BloodBrush;
+        public static readonly Brush SparkBrush = ThemePalette.SparkBrush;
 
         // ������ˢ
         public static readonly Brush HumanStoneLight = new SolidColorBrush(
@@ -151,7 +147,7 @@ namespace WarcraftBattle.Views.Controls
             new Dictionary<string, FormattedText>();
 
         private Pen _borderPen = new Pen(Brushes.Black, 1);
-        private Pen _selectionPen = new Pen(Brushes.LightGreen, 2);
+        private Pen _selectionPen = ThemePalette.SelectionPen;
         private Pen _floaterBorderPen = new Pen(Brushes.Black, 2);
 
         private Brush _skyBrush = new LinearGradientBrush(
@@ -167,10 +163,10 @@ namespace WarcraftBattle.Views.Controls
         private Pen _gridPen = new Pen(new SolidColorBrush(Color.FromArgb(30, 0, 0, 0)), 1);
 
         private Brush _shadowBrush = new SolidColorBrush(Color.FromArgb(140, 0, 0, 0));
-        private Brush _hpFriendlyBrush = Brushes.LimeGreen;
-        private Brush _hpEnemyBrush = Brushes.Red;
-        private Brush _bloodBrush = new SolidColorBrush(Color.FromArgb(220, 180, 20, 20));
-        private Brush _sparkBrush = new SolidColorBrush(Color.FromArgb(220, 255, 160, 60));
+        private Brush _hpFriendlyBrush = ThemePalette.HpFriendlyBrush;
+        private Brush _hpEnemyBrush = ThemePalette.HpEnemyBrush;
+        private Brush _bloodBrush = ThemePalette.BloodBrush;
+        private Brush _sparkBrush = ThemePalette.SparkBrush;
 
         private Brush _treeLeafBrush = new SolidColorBrush(Color.FromRgb(30, 80, 20));
         private Brush _treeTrunkBrush = new SolidColorBrush(Color.FromRgb(60, 40, 20));
@@ -208,6 +204,11 @@ namespace WarcraftBattle.Views.Controls
         private WriteableBitmap _fogBitmap;
         private int[] _fogPixels;
         private double _time = 0;
+        private Pen _editorGridPen;
+        private Pen _editorBrushPen;
+        private Brush _editorBrushFill;
+        private string _editorPreviewKey;
+        private Animator _editorPreviewAnimator;
 
         // [Refactor] Multi-layer rendering
         private DrawingVisual _staticLayer = new DrawingVisual();
@@ -237,6 +238,19 @@ namespace WarcraftBattle.Views.Controls
             RenderOptions.SetBitmapScalingMode(_staticLayer, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetBitmapScalingMode(_dynamicLayer, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetBitmapScalingMode(_fogLayer, BitmapScalingMode.Linear);
+
+            _editorGridPen = new Pen(
+                new SolidColorBrush(Color.FromArgb(50, 120, 140, 170)),
+                1
+            );
+            _editorBrushPen = new Pen(
+                new SolidColorBrush(Color.FromArgb(200, 110, 200, 255)),
+                2
+            );
+            _editorBrushFill = new SolidColorBrush(Color.FromArgb(40, 110, 200, 255));
+            _editorGridPen.Freeze();
+            _editorBrushPen.Freeze();
+            _editorBrushFill.Freeze();
 
             // [Fix] 防止控件尺寸坍缩导致不可见
             MinHeight = 100;
@@ -507,6 +521,7 @@ namespace WarcraftBattle.Views.Controls
 
                 DrawSelectionRect(dc);
                 DrawFloaters(dc);
+                DrawEditorOverlay(dc);
             }
         }
 
@@ -519,13 +534,13 @@ namespace WarcraftBattle.Views.Controls
                     PointD startIso = GameEngine.WorldToIso(u.X, u.Y);
                     PointD endIso = new PointD(0, 0);
                     bool hasTarget = false;
-                    Color color = Colors.Lime;
+                    Color color = ThemePalette.SuccessColor;
 
                     if (u.Target != null && u.Target.HP > 0)
                     {
                         endIso = GameEngine.WorldToIso(u.Target.X, u.Target.Y);
                         hasTarget = true;
-                        color = Colors.Red;
+                        color = ThemePalette.DangerColor;
                     }
                     else if (u.CommandTargetPos.HasValue)
                     {
@@ -534,7 +549,7 @@ namespace WarcraftBattle.Views.Controls
                             u.CommandTargetPos.Value.Y
                         );
                         hasTarget = true;
-                        color = u.IsAttackMove ? Colors.OrangeRed : Colors.Lime;
+                        color = u.IsAttackMove ? ThemePalette.WarningColor : ThemePalette.SuccessColor;
                     }
 
                     if (hasTarget)
@@ -594,7 +609,7 @@ namespace WarcraftBattle.Views.Controls
 
         private void DrawDebugBounds(DrawingContext dc, Entity e)
         {
-            var color = e.IsSolid ? Brushes.Red : Brushes.Yellow;
+            var color = e.IsSolid ? ThemePalette.DangerBrush : ThemePalette.WarningBrush;
             var pen = new Pen(color, 2);
             if (!e.IsSolid)
                 pen.DashStyle = DashStyles.Dash;
@@ -634,7 +649,7 @@ namespace WarcraftBattle.Views.Controls
                 // 假设默认视野为 300 (具体需看 Entity.SightRange)
                 dc.DrawEllipse(
                     null,
-                    new Pen(Brushes.Cyan, 1) { DashStyle = DashStyles.Dash },
+                    new Pen(ThemePalette.InfoBrush, 1) { DashStyle = DashStyles.Dash },
                     new Point(0, 0),
                     300,
                     150
@@ -963,13 +978,20 @@ namespace WarcraftBattle.Views.Controls
             if (!Engine.IsDraggingSelection || Engine.SelectionRect.IsEmpty)
                 return;
             // Ч߻
-            var pen = new Pen(Brushes.LightGreen, 1)
+            var pen = new Pen(ThemePalette.SuccessBrush, 1)
             {
                 DashStyle = new DashStyle(new double[] { 4, 4 }, _time * 20),
             };
             //
             dc.DrawRectangle(
-                new SolidColorBrush(Color.FromArgb(30, 50, 255, 50)),
+                new SolidColorBrush(
+                    Color.FromArgb(
+                        30,
+                        ThemePalette.SuccessColor.R,
+                        ThemePalette.SuccessColor.G,
+                        ThemePalette.SuccessColor.B
+                    )
+                ),
                 pen,
                 Engine.SelectionRect
             );
@@ -1037,7 +1059,10 @@ namespace WarcraftBattle.Views.Controls
 
             if (Engine.EditorDragActive)
             {
-                var dragPen = new Pen(Brushes.Gold, 2) { DashStyle = DashStyles.Dot };
+                var dragPen = new Pen(ThemePalette.HighlightBrush, 2)
+                {
+                    DashStyle = DashStyles.Dot
+                };
                 dc.DrawGeometry(null, dragPen, outline);
 
                 var dpi = VisualTreeHelper.GetDpi(this).PixelsPerDip;
@@ -1050,7 +1075,7 @@ namespace WarcraftBattle.Views.Controls
                     FlowDirection.LeftToRight,
                     new Typeface("Bahnschrift"),
                     12,
-                    Brushes.Gold,
+                    ThemePalette.HighlightBrush,
                     dpi
                 );
                 var centerIso = GameEngine.WorldToIso(entity.X, entity.Y);
@@ -1237,8 +1262,8 @@ namespace WarcraftBattle.Views.Controls
                 {
                     var glowColor =
                         (e.Team == Shared.Enums.TeamType.Human)
-                            ? Color.FromRgb(0, 255, 100)
-                            : Color.FromRgb(255, 50, 50);
+                            ? ThemePalette.SuccessColor
+                            : ThemePalette.DangerColor;
                     var pulse = 1.0 + 0.1 * Math.Sin(_time * 5.0);
                     dc.DrawEllipse(
                         null,
@@ -1343,7 +1368,10 @@ namespace WarcraftBattle.Views.Controls
             double yOff = (e is Building) ? -e.Height - 10 : -60;
 
             dc.DrawRectangle(GfxCache.HPBarBg, null, new Rect(-barW / 2, yOff, barW, barH));
-            Brush hpBrush = e.Team == Shared.Enums.TeamType.Human ? Brushes.LimeGreen : Brushes.Red;
+            Brush hpBrush =
+                e.Team == Shared.Enums.TeamType.Human
+                    ? ThemePalette.HpFriendlyBrush
+                    : ThemePalette.HpEnemyBrush;
             dc.DrawRectangle(hpBrush, null, new Rect(-barW / 2, yOff, barW * currentPct, barH));
             dc.DrawRectangle(
                 GfxCache.HPBarHighlight,
@@ -1354,7 +1382,8 @@ namespace WarcraftBattle.Views.Controls
 
         private void DrawGhost(DrawingContext dc, double x, double y, double w, double h)
         {
-            Color stateColor = Engine.CanBuildAtGhost ? Colors.LimeGreen : Colors.Red;
+            Color stateColor =
+                Engine.CanBuildAtGhost ? ThemePalette.SuccessColor : ThemePalette.DangerColor;
             dc.PushTransform(new TranslateTransform(x, y));
             // Ƶػռؾ
             dc.DrawRectangle(
@@ -1417,6 +1446,139 @@ namespace WarcraftBattle.Views.Controls
                 dc.Pop();
                 dc.Pop();
             }
+        }
+
+        private void DrawEditorOverlay(DrawingContext dc)
+        {
+            if (Engine == null || !Engine.EditorEnabled || Engine.MapData == null)
+                return;
+
+            dc.PushTransform(new ScaleTransform(Engine.Zoom, Engine.Zoom));
+            dc.PushTransform(new TranslateTransform(-Engine.CameraX, -Engine.CameraY));
+
+            DrawEditorGrid(dc);
+            DrawEditorBrush(dc);
+            DrawEditorPreview(dc);
+
+            dc.Pop();
+            dc.Pop();
+        }
+
+        private void DrawEditorGrid(DrawingContext dc)
+        {
+            int tilesX = Engine.MapData.GetLength(0);
+            int tilesY = Engine.MapData.GetLength(1);
+            double tile = Engine.TileSize;
+
+            for (int x = 0; x <= tilesX; x++)
+            {
+                double worldX = x * tile;
+                PointD isoStart = GameEngine.WorldToIso(worldX, 0);
+                PointD isoEnd = GameEngine.WorldToIso(worldX, tilesY * tile);
+                dc.DrawLine(
+                    _editorGridPen,
+                    new Point(isoStart.X, isoStart.Y),
+                    new Point(isoEnd.X, isoEnd.Y)
+                );
+            }
+
+            for (int y = 0; y <= tilesY; y++)
+            {
+                double worldY = y * tile;
+                PointD isoStart = GameEngine.WorldToIso(0, worldY);
+                PointD isoEnd = GameEngine.WorldToIso(tilesX * tile, worldY);
+                dc.DrawLine(
+                    _editorGridPen,
+                    new Point(isoStart.X, isoStart.Y),
+                    new Point(isoEnd.X, isoEnd.Y)
+                );
+            }
+        }
+
+        private void DrawEditorBrush(DrawingContext dc)
+        {
+            int brush = Math.Max(1, Engine.EditorBrushSize);
+            int half = brush / 2;
+            double tile = Engine.TileSize;
+            double centerX = Engine.EditorGhostPosition.X;
+            double centerY = Engine.EditorGhostPosition.Y;
+
+            double startX = (Math.Floor(centerX / tile) - half) * tile;
+            double startY = (Math.Floor(centerY / tile) - half) * tile;
+            double size = brush * tile;
+
+            PointD iso = GameEngine.WorldToIso(startX + size / 2.0, startY + size / 2.0);
+            dc.PushTransform(new TranslateTransform(iso.X, iso.Y));
+            dc.DrawRectangle(
+                _editorBrushFill,
+                _editorBrushPen,
+                new Rect(-size / 2.0, -size / 4.0, size, size / 2.0)
+            );
+            dc.Pop();
+        }
+
+        private void DrawEditorPreview(DrawingContext dc)
+        {
+            if (Engine.EditorTool == EditorTool.PaintTerrain)
+                return;
+
+            if (Engine.EditorTool == EditorTool.PlaceBuilding)
+            {
+                var key = Engine.EditorSelectedBuildingId;
+                if (string.IsNullOrWhiteSpace(key))
+                    return;
+
+                UpdateEditorPreviewAnimator(key);
+                DrawEditorPreviewAnimator(dc, Engine.EditorGhostPosition);
+                return;
+            }
+
+            if (Engine.EditorTool == EditorTool.PlaceObstacle)
+            {
+                var key = Engine.EditorSelectedObstacleKey;
+                if (string.IsNullOrWhiteSpace(key))
+                    return;
+
+                UpdateEditorPreviewAnimator(key);
+                DrawEditorPreviewAnimator(dc, Engine.EditorGhostPosition);
+            }
+        }
+
+        private void UpdateEditorPreviewAnimator(string key)
+        {
+            if (_editorPreviewKey == key && _editorPreviewAnimator != null)
+                return;
+
+            _editorPreviewKey = key;
+            _editorPreviewAnimator = AssetManager.CreateAnimator(key);
+            _editorPreviewAnimator?.Play("Idle");
+        }
+
+        private void DrawEditorPreviewAnimator(DrawingContext dc, PointD worldPos)
+        {
+            if (_editorPreviewAnimator == null)
+                return;
+
+            var frame = _editorPreviewAnimator.GetCurrentFrame();
+            if (frame == null)
+                return;
+
+            PointD isoPos = GameEngine.WorldToIso(worldPos.X, worldPos.Y);
+            dc.PushTransform(new TranslateTransform(isoPos.X, isoPos.Y));
+            dc.PushOpacity(0.7);
+            var f = frame.Value;
+            DrawSprite(
+                dc,
+                f,
+                new Rect(
+                    -f.PixelWidth / 2,
+                    -f.PixelHeight + 45.0,
+                    f.PixelWidth,
+                    f.PixelHeight
+                )
+            );
+            dc.Pop();
+            dc.Pop();
         }
 
         private void DrawVignette(DrawingContext dc)
@@ -1640,7 +1802,7 @@ namespace WarcraftBattle.Views.Controls
                 isTargeting = true;
                 skill = Engine.PendingSkill;
                 baseRange = skill.Range;
-                baseColor = Color.FromRgb(0, 255, 255);
+                baseColor = ThemePalette.InfoColor;
             }
             else if (Engine.IsAttackMoveMode)
             {
@@ -1651,11 +1813,14 @@ namespace WarcraftBattle.Views.Controls
                 );
                 dc.PushTransform(new TranslateTransform(cursorIso.X, cursorIso.Y));
 
-                var attackPen = new Pen(Brushes.Red, 2);
+                var attackPen = new Pen(ThemePalette.DangerBrush, 2);
                 dc.DrawLine(attackPen, new Point(-10, -10), new Point(10, 10));
                 dc.DrawLine(attackPen, new Point(-10, 10), new Point(10, -10));
 
-                var circlePen = new Pen(Brushes.Red, 1) { DashStyle = DashStyles.Dash };
+                var circlePen = new Pen(ThemePalette.DangerBrush, 1)
+                {
+                    DashStyle = DashStyles.Dash
+                };
                 dc.DrawEllipse(null, circlePen, new Point(0, 0), 20, 10);
 
                 dc.Pop();
@@ -1667,7 +1832,7 @@ namespace WarcraftBattle.Views.Controls
                     baseRange = u.Stats.Range;
                 else if (entity is Building b && b.Damage > 0)
                     baseRange = b.Range;
-                baseColor = Color.FromRgb(60, 140, 255);
+                baseColor = ThemePalette.TeamHumanColor;
             }
             else if (entity.Team == TeamType.Orc || entity.Team == TeamType.Neutral)
             {
@@ -1675,7 +1840,7 @@ namespace WarcraftBattle.Views.Controls
                     baseRange = u.Stats.Range;
                 else if (entity is Building b && b.Damage > 0)
                     baseRange = b.Range;
-                baseColor = Color.FromRgb(255, 60, 60);
+                baseColor = ThemePalette.TeamOrcColor;
             }
             if (baseRange <= 0)
                 return;
@@ -1748,7 +1913,8 @@ namespace WarcraftBattle.Views.Controls
                 double dy = Engine.GhostPosition.Y - entity.Y;
                 bool outOfRange = (dx * dx + dy * dy) > (checkRange * checkRange);
 
-                Color stateColor = outOfRange ? Colors.Red : Colors.Cyan;
+                Color stateColor =
+                    outOfRange ? ThemePalette.DangerColor : ThemePalette.InfoColor;
                 var cursorPen = new Pen(new SolidColorBrush(stateColor), 2);
                 var cursorFill = new SolidColorBrush(
                     Color.FromArgb(50, stateColor.R, stateColor.G, stateColor.B)
@@ -1776,7 +1942,7 @@ namespace WarcraftBattle.Views.Controls
 
                 if (outOfRange)
                 {
-                    var xPen = new Pen(Brushes.Red, 3);
+                    var xPen = new Pen(ThemePalette.DangerBrush, 3);
                     dc.DrawLine(xPen, new Point(-8, -4), new Point(8, 4));
                     dc.DrawLine(xPen, new Point(-8, 4), new Point(8, -4));
                 }
@@ -1897,9 +2063,22 @@ namespace WarcraftBattle.Views.Controls
                 }
                 else
                 {
-                    dc.DrawEllipse(Brushes.Gold, new Pen(Brushes.White, 1), new Point(0, 0), 4, 4);
+                    dc.DrawEllipse(
+                        ThemePalette.HighlightBrush,
+                        new Pen(Brushes.White, 1),
+                        new Point(0, 0),
+                        4,
+                        4
+                    );
                     var trailPen = new Pen(
-                        new SolidColorBrush(Color.FromArgb(150, 255, 200, 0)),
+                        new SolidColorBrush(
+                            Color.FromArgb(
+                                150,
+                                ThemePalette.HighlightColor.R,
+                                ThemePalette.HighlightColor.G,
+                                ThemePalette.HighlightColor.B
+                            )
+                        ),
                         2
                     );
                     dc.DrawLine(trailPen, new Point(-6, 0), new Point(-18, 0));

@@ -8,25 +8,28 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <!-- VS Code Style Colors -->
-                    <Color x:Key="vscode.Color.Background">#1E1E1E</Color>
-                    <Color x:Key="vscode.Color.PanelBackground">#252526</Color>
-                    <Color x:Key="vscode.Color.Border">#3C3C3C</Color>
-                    <Color x:Key="vscode.Color.Accent">#007ACC</Color>
-                    <Color x:Key="vscode.Color.Text">#D4D4D4</Color>
-                    <Color x:Key="vscode.Color.Button.Background">#3A3D41</Color>
-                    <Color x:Key="vscode.Color.Button.MouseOver.Background">#4A4D51</Color>
-                    <Color x:Key="vscode.Color.ScrollBar.Thumb">#686868</Color>
-                    <Color x:Key="vscode.Color.ScrollBar.Thumb.MouseOver">#9E9E9E</Color>
-                    <Color x:Key="vscode.Color.Danger">#F44747</Color>
-                    <Color x:Key="vscode.Color.Warning">#FFA500</Color>
-                    <Color x:Key="vscode.Color.TextDim">#888888</Color>
+                    <Color x:Key="vscode.Color.Background">#191B1F</Color>
+                    <Color x:Key="vscode.Color.PanelBackground">#23262B</Color>
+                    <Color x:Key="vscode.Color.Border">#3A3F47</Color>
+                    <Color x:Key="vscode.Color.Accent">#4AA3FF</Color>
+                    <Color x:Key="vscode.Color.Text">#E6E6E6</Color>
+                    <Color x:Key="vscode.Color.Button.Background">#2B2F36</Color>
+                    <Color x:Key="vscode.Color.Button.MouseOver.Background">#3A404A</Color>
+                    <Color x:Key="vscode.Color.ScrollBar.Thumb">#5C616B</Color>
+                    <Color x:Key="vscode.Color.ScrollBar.Thumb.MouseOver">#838894</Color>
+                    <Color x:Key="vscode.Color.Danger">#FF5C5C</Color>
+                    <Color x:Key="vscode.Color.Warning">#FFB347</Color>
+                    <Color x:Key="vscode.Color.TextDim">#9AA0A6</Color>
+                    <Color x:Key="vscode.Color.Success">#6BD176</Color>
+                    <Color x:Key="vscode.Color.Info">#70CCFF</Color>
+                    <Color x:Key="vscode.Color.Highlight">#F6C15C</Color>
 
                     <!-- Brushes -->
                     <SolidColorBrush x:Key="vscode.Brush.Background" Color="{StaticResource vscode.Color.Background}" />
                     <SolidColorBrush x:Key="vscode.Brush.PanelBackground" Color="{StaticResource vscode.Color.PanelBackground}" />
-                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent_Light" Color="#11252526" />
-                    <SolidColorBrush x:Key="vscode.Brush.BackgroundOverlay" Color="#E61E1E1E" />
-                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent" Color="#AA252526" />
+                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent_Light" Color="#1423262B" />
+                    <SolidColorBrush x:Key="vscode.Brush.BackgroundOverlay" Color="#D91B1E22" />
+                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent" Color="#B323262B" />
                     <SolidColorBrush x:Key="vscode.Brush.Border" Color="{StaticResource vscode.Color.Border}" />
                     <SolidColorBrush x:Key="vscode.Brush.Accent" Color="{StaticResource vscode.Color.Accent}" />
                     <SolidColorBrush x:Key="vscode.Brush.Text" Color="{StaticResource vscode.Color.Text}" />
@@ -37,16 +40,24 @@
                     <SolidColorBrush x:Key="vscode.Brush.ScrollBar.Thumb.MouseOver" Color="{StaticResource vscode.Color.ScrollBar.Thumb.MouseOver}"/>
                     <SolidColorBrush x:Key="vscode.Brush.Danger" Color="{StaticResource vscode.Color.Danger}" />
                     <SolidColorBrush x:Key="vscode.Brush.Warning" Color="{StaticResource vscode.Color.Warning}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Success" Color="{StaticResource vscode.Color.Success}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Info" Color="{StaticResource vscode.Color.Info}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Highlight" Color="{StaticResource vscode.Color.Highlight}" />
                     
                     <!-- Mapped Brushes for existing keys -->
-                    <SolidColorBrush x:Key="GameDarkBg" Color="#CC1E1E1E" />
+                    <SolidColorBrush x:Key="GameDarkBg" Color="#D9191B1F" />
                     <SolidColorBrush x:Key="GameBorder" Color="{StaticResource vscode.Color.Border}" />
                     <SolidColorBrush x:Key="GameAccent" Color="{StaticResource vscode.Color.Accent}" />
                     <SolidColorBrush x:Key="GameAccentBrush" Color="{StaticResource vscode.Color.Accent}" />
                     <SolidColorBrush x:Key="GameText" Color="{StaticResource vscode.Color.Text}" />
+                    <SolidColorBrush x:Key="GameHighlightBrush" Color="{StaticResource vscode.Color.Highlight}" />
                     <LinearGradientBrush x:Key="GamePanelBrush" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#EE252526" />
-                        <GradientStop Offset="1" Color="#DD1E1E1E" />
+                        <GradientStop Offset="0" Color="#FF2C2F36" />
+                        <GradientStop Offset="1" Color="#FF1B1E22" />
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="GameAccentGradient" StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0" Color="#FF4AA3FF" />
+                        <GradientStop Offset="1" Color="#FF7BC7FF" />
                     </LinearGradientBrush>
 
                     <!-- Base Window Style -->
@@ -58,10 +69,10 @@
                     </Style>
 
                     <Style x:Key="vscode.Panel.Style" TargetType="Border">
-                        <Setter Property="Background" Value="{StaticResource vscode.Brush.PanelBackground}" />
+                        <Setter Property="Background" Value="{StaticResource GamePanelBrush}" />
                         <Setter Property="BorderBrush" Value="{StaticResource vscode.Brush.Border}" />
                         <Setter Property="BorderThickness" Value="1" />
-                        <Setter Property="CornerRadius" Value="4" />
+                        <Setter Property="CornerRadius" Value="6" />
                     </Style>
 
                     <Style x:Key="GameButtonStyle" TargetType="Button">
@@ -71,6 +82,7 @@
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="FontSize" Value="14" />
                         <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Padding" Value="8,4" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
@@ -85,9 +97,11 @@
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="border" Property="Background" Value="{StaticResource vscode.Brush.Button.MouseOver.Background}" />
+                                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource vscode.Brush.Accent}" />
                                         </Trigger>
                                         <Trigger Property="IsPressed" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="{StaticResource vscode.Brush.Button.Background}" />
+                                            <Setter TargetName="border" Property="Background" Value="{StaticResource GameAccentGradient}" />
+                                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource vscode.Brush.Accent}" />
                                         </Trigger>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Opacity" Value="0.5" />

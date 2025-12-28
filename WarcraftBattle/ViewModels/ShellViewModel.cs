@@ -10,6 +10,7 @@ using WarcraftBattle.Engine.Animation;
 using WarcraftBattle.Models;
 using WarcraftBattle.Shared.Enums;
 using WarcraftBattle.Shared.Models;
+using WarcraftBattle.Views.Controls;
 
 namespace WarcraftBattle.ViewModels
 {
@@ -56,6 +57,7 @@ namespace WarcraftBattle.ViewModels
         private Visibility _shopVisibility = Visibility.Collapsed;
         private Visibility _gameVisibility = Visibility.Collapsed;
         private Visibility _resultVisibility = Visibility.Collapsed;
+        private Visibility _editorVisibility = Visibility.Collapsed;
 
         private Visibility _entityInfoVisibility = Visibility.Collapsed;
         private Visibility _multiSelectionVisibility = Visibility.Collapsed;
@@ -97,6 +99,7 @@ namespace WarcraftBattle.ViewModels
         public Visibility ShopVisibility { get => _shopVisibility; set => Set(ref _shopVisibility, value); }
         public Visibility GameVisibility { get => _gameVisibility; set => Set(ref _gameVisibility, value); }
         public Visibility ResultVisibility { get => _resultVisibility; set => Set(ref _resultVisibility, value); }
+        public Visibility EditorVisibility { get => _editorVisibility; set => Set(ref _editorVisibility, value); }
 
         public Visibility EntityInfoVisibility { get => _entityInfoVisibility; set => Set(ref _entityInfoVisibility, value); }
         public Visibility MultiSelectionVisibility { get => _multiSelectionVisibility; set => Set(ref _multiSelectionVisibility, value); }
@@ -118,6 +121,99 @@ namespace WarcraftBattle.ViewModels
         public SolidColorBrush SelectedUnitHpColor { get; set; }
         public double SelectedUnitMana { get; set; }
         public double SelectedUnitMaxMana { get; set; }
+
+        public BindableCollection<EditorOptionItem> TerrainOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorOptionItem> ObstacleOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorOptionItem> BuildingOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorTool> EditorTools { get; } =
+            new BindableCollection<EditorTool>();
+
+        private EditorOptionItem _selectedTerrainOption;
+        private EditorOptionItem _selectedObstacleOption;
+        private EditorOptionItem _selectedBuildingOption;
+        private EditorTool _selectedEditorTool = EditorTool.PaintTerrain;
+        private int _editorBrushSize = 1;
+        private int _editorMapWidthTiles;
+        private int _editorMapHeightTiles;
+
+        public EditorOptionItem SelectedTerrainOption
+        {
+            get => _selectedTerrainOption;
+            set
+            {
+                _selectedTerrainOption = value;
+                if (value != null && int.TryParse(value.Id, out var id))
+                    _engine.EditorSelectedTileId = id;
+                NotifyOfPropertyChange(() => SelectedTerrainOption);
+            }
+        }
+
+        public EditorOptionItem SelectedObstacleOption
+        {
+            get => _selectedObstacleOption;
+            set
+            {
+                _selectedObstacleOption = value;
+                _engine.EditorSelectedObstacleKey = value?.Id;
+                NotifyOfPropertyChange(() => SelectedObstacleOption);
+            }
+        }
+
+        public EditorOptionItem SelectedBuildingOption
+        {
+            get => _selectedBuildingOption;
+            set
+            {
+                _selectedBuildingOption = value;
+                _engine.EditorSelectedBuildingId = value?.Id;
+                NotifyOfPropertyChange(() => SelectedBuildingOption);
+            }
+        }
+
+        public EditorTool SelectedEditorTool
+        {
+            get => _selectedEditorTool;
+            set
+            {
+                _selectedEditorTool = value;
+                _engine.EditorTool = value;
+                NotifyOfPropertyChange(() => SelectedEditorTool);
+            }
+        }
+
+        public int EditorBrushSize
+        {
+            get => _editorBrushSize;
+            set
+            {
+                _editorBrushSize = Math.Max(1, value);
+                _engine.EditorBrushSize = _editorBrushSize;
+                NotifyOfPropertyChange(() => EditorBrushSize);
+            }
+        }
+
+        public int EditorMapWidthTiles
+        {
+            get => _editorMapWidthTiles;
+            set
+            {
+                _editorMapWidthTiles = Math.Max(1, value);
+                NotifyOfPropertyChange(() => EditorMapWidthTiles);
+            }
+        }
+
+        public int EditorMapHeightTiles
+        {
+            get => _editorMapHeightTiles;
+            set
+            {
+                _editorMapHeightTiles = Math.Max(1, value);
+                NotifyOfPropertyChange(() => EditorMapHeightTiles);
+            }
+        }
 
         public ShellViewModel()
         {
@@ -145,6 +241,7 @@ namespace WarcraftBattle.ViewModels
             _lastRenderTime = TimeSpan.FromTicks(DateTime.Now.Ticks);
 
             GoToMenu();
+            InitializeEditorOptions();
         }
 
         private void OnRendering(object sender, EventArgs e)
@@ -292,7 +389,10 @@ namespace WarcraftBattle.ViewModels
                         Icon = GetUnitIcon(key),
                         IsSelected = e == sel,
                         HpPct = e.MaxHP > 0 ? e.HP / e.MaxHP : 0,
-                        HpColor = (e.HP / e.MaxHP) > 0.5 ? Brushes.LimeGreen : Brushes.Red,
+                        HpColor =
+                            (e.HP / e.MaxHP) > 0.5
+                                ? ThemePalette.HpFriendlyBrush
+                                : ThemePalette.HpEnemyBrush,
                         OnClick = (o) => { _engine.SelectedEntity = ((UnitInfoModel)o).Entity; RefreshActionButtons(); }
                     });
                 }
@@ -482,6 +582,89 @@ namespace WarcraftBattle.ViewModels
             else { _engine.TimeScale = 1.0; SpeedText = "1x"; }
         }
 
+        public void ToggleEditor()
+        {
+            _engine.EditorEnabled = !_engine.EditorEnabled;
+            EditorVisibility = _engine.EditorEnabled ? Visibility.Visible : Visibility.Collapsed;
+
+            if (_engine.EditorEnabled)
+            {
+                _engine.State = GameState.Paused;
+                _engine.EditorTool = SelectedEditorTool;
+                _engine.EditorBrushSize = EditorBrushSize;
+                if (_engine.MapData != null)
+                {
+                    EditorMapWidthTiles = _engine.MapData.GetLength(0);
+                    EditorMapHeightTiles = _engine.MapData.GetLength(1);
+                }
+            }
+            else
+            {
+                _engine.State = GameState.Playing;
+            }
+        }
+
+        public void ApplyEditorMapSize()
+        {
+            _engine.ResizeMapTiles(EditorMapWidthTiles, EditorMapHeightTiles);
+        }
+
+        private void InitializeEditorOptions()
+        {
+            if (EditorTools.Count == 0)
+            {
+                foreach (var tool in Enum.GetValues(typeof(EditorTool)).Cast<EditorTool>())
+                    EditorTools.Add(tool);
+            }
+
+            TerrainOptions.Clear();
+            foreach (var t in _engine.EnvConfig.TerrainTextures)
+            {
+                TerrainOptions.Add(new EditorOptionItem
+                {
+                    Id = t.Id.ToString(),
+                    Name = $"Tile {t.Id}",
+                    Icon = AssetManager.GetTerrainImage(t.Id)
+                });
+            }
+
+            ObstacleOptions.Clear();
+            foreach (var kvp in GameEngine.ObstacleInfo)
+            {
+                AssetManager.StaticSprites.TryGetValue(kvp.Key, out var icon);
+                ObstacleOptions.Add(new EditorOptionItem
+                {
+                    Id = kvp.Key,
+                    Name = kvp.Value.Name ?? kvp.Key,
+                    Icon = icon
+                });
+            }
+
+            BuildingOptions.Clear();
+            foreach (var kvp in _engine.BuildingRegistry)
+            {
+                AssetManager.StaticSprites.TryGetValue(kvp.Key, out var icon);
+                BuildingOptions.Add(new EditorOptionItem
+                {
+                    Id = kvp.Key,
+                    Name = kvp.Value.Name ?? kvp.Key,
+                    Icon = icon
+                });
+            }
+
+            SelectedTerrainOption = TerrainOptions.FirstOrDefault();
+            SelectedObstacleOption = ObstacleOptions.FirstOrDefault();
+            SelectedBuildingOption = BuildingOptions.FirstOrDefault();
+            _engine.EditorTool = SelectedEditorTool;
+            _engine.EditorBrushSize = EditorBrushSize;
+
+            if (_engine.MapData != null)
+            {
+                EditorMapWidthTiles = _engine.MapData.GetLength(0);
+                EditorMapHeightTiles = _engine.MapData.GetLength(1);
+            }
+        }
+
         public void UseTower() { _engine.EnterTargetingMode(); }
 
         public void SelectShopUnit(ShopUnitItem item)
@@ -569,7 +752,10 @@ namespace WarcraftBattle.ViewModels
                         SelectedUnitSmoothHp += (SelectedUnitHp - SelectedUnitSmoothHp) * 0.1; // Decay
                     }
 
-                    SelectedUnitHpColor = (e.HP / e.MaxHP) > 0.25 ? Brushes.LimeGreen : Brushes.Red;
+                    SelectedUnitHpColor =
+                        (e.HP / e.MaxHP) > 0.25
+                            ? ThemePalette.HpFriendlyBrush
+                            : ThemePalette.HpEnemyBrush;
 
                     if (e is Unit u)
                     {
@@ -610,7 +796,10 @@ namespace WarcraftBattle.ViewModels
                     if (item.Entity != null)
                     {
                         item.HpPct = item.Entity.MaxHP > 0 ? item.Entity.HP / item.Entity.MaxHP : 0;
-                        item.HpColor = item.HpPct > 0.5 ? Brushes.LimeGreen : Brushes.Red;
+                        item.HpColor =
+                            item.HpPct > 0.5
+                                ? ThemePalette.HpFriendlyBrush
+                                : ThemePalette.HpEnemyBrush;
                         // Trigger property change if needed, but BindableCollection items might not notify automatically unless they are ViewModels
                         // For simple polling, we might need to force refresh or use specific VM for item
                     }
@@ -622,7 +811,7 @@ namespace WarcraftBattle.ViewModels
         private void HandleGameOver(bool win, int reward)
         {
             ResultTitle = win ? "VICTORY" : "DEFEAT";
-            ResultColor = win ? Brushes.Gold : Brushes.Red;
+            ResultColor = win ? ThemePalette.HighlightBrush : ThemePalette.DangerBrush;
             ResultReward = $"荣誉奖励: +{reward}";
 
             WinButtonsVisibility = win ? Visibility.Visible : Visibility.Collapsed;

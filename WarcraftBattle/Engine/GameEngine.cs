@@ -110,6 +110,15 @@ namespace WarcraftBattle.Engine
         public bool IsDraggingSelection { get; set; }
         public bool EditorDragActive { get; set; }
         public PointD EditorDragWorldPos { get; set; }
+        public bool EditorEnabled { get; set; }
+        public EditorTool EditorTool { get; set; } = EditorTool.PaintTerrain;
+        public int EditorBrushSize { get; set; } = 1;
+        public int EditorSelectedTileId { get; set; }
+        public string EditorSelectedObstacleKey { get; set; }
+        public string EditorSelectedBuildingId { get; set; }
+        public PointD EditorGhostPosition { get; set; }
+        private int _editorLastPaintX = -1;
+        private int _editorLastPaintY = -1;
 
         public IInputManager Input { get; private set; }
         public IAudioManager Audio { get; private set; }
@@ -721,6 +730,39 @@ namespace WarcraftBattle.Engine
             Pathfinder = new Pathfinder((int)WorldWidth, (int)MapDepth);
             Fog.Initialize((int)WorldWidth, (int)MapDepth);
             GameServices.Register<IPathfinder>(Pathfinder);
+        }
+
+        public void ResizeMapTiles(int tilesX, int tilesY, int? fillTileId = null)
+        {
+            if (tilesX <= 0 || tilesY <= 0)
+                return;
+
+            WorldWidth = tilesX * TileSize;
+            MapDepth = tilesY * TileSize;
+
+            int width = tilesX;
+            int height = tilesY;
+
+            int defaultId = fillTileId ?? EditorSelectedTileId;
+            if (defaultId == 0 && EnvConfig.TerrainTextures.Count > 0)
+                defaultId = EnvConfig.TerrainTextures[0].Id;
+
+            MapData = new int[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    MapData[x, y] = defaultId;
+                }
+            }
+
+            EntityManager.Clear();
+            EntityManager.Initialize(WorldWidth, MapDepth);
+            Pathfinder = new Pathfinder((int)WorldWidth, (int)MapDepth);
+            Fog.Initialize((int)WorldWidth, (int)MapDepth);
+            GameServices.Register<IPathfinder>(Pathfinder);
+
+            OnMapChanged?.Invoke();
         }
 
 
@@ -1426,6 +1468,102 @@ namespace WarcraftBattle.Engine
             }
             PendingBuildingInfo = b;
             IsBuildMode = true;
+        }
+
+        public void ApplyEditorAtWorld(PointD worldPos, bool allowContinuous = true)
+        {
+            if (!EditorEnabled)
+                return;
+
+            EditorGhostPosition = SnapToTileCenter(worldPos);
+            switch (EditorTool)
+            {
+                case EditorTool.PaintTerrain:
+                    PaintTerrainAtWorld(worldPos, allowContinuous);
+                    break;
+                case EditorTool.PlaceObstacle:
+                    if (!allowContinuous)
+                        PlaceObstacleAtWorld(EditorGhostPosition);
+                    break;
+                case EditorTool.PlaceBuilding:
+                    if (!allowContinuous)
+                        PlaceBuildingAtWorld(EditorGhostPosition);
+                    break;
+            }
+        }
+
+        public PointD SnapToTileCenter(PointD worldPos)
+        {
+            double x = Math.Floor(worldPos.X / TileSize) * TileSize + TileSize / 2.0;
+            double y = Math.Floor(worldPos.Y / TileSize) * TileSize + TileSize / 2.0;
+            x = Math.Max(TileSize / 2.0, Math.Min(WorldWidth - TileSize / 2.0, x));
+            y = Math.Max(TileSize / 2.0, Math.Min(MapDepth - TileSize / 2.0, y));
+            return new PointD(x, y);
+        }
+
+        private void PaintTerrainAtWorld(PointD worldPos, bool allowContinuous)
+        {
+            if (MapData == null)
+                return;
+
+            int tileX = (int)(worldPos.X / TileSize);
+            int tileY = (int)(worldPos.Y / TileSize);
+            if (tileX < 0 || tileY < 0 || tileX >= MapData.GetLength(0) || tileY >= MapData.GetLength(1))
+                return;
+
+            if (allowContinuous && tileX == _editorLastPaintX && tileY == _editorLastPaintY)
+                return;
+
+            _editorLastPaintX = tileX;
+            _editorLastPaintY = tileY;
+
+            int brush = Math.Max(1, EditorBrushSize);
+            int half = brush / 2;
+
+            for (int x = tileX - half; x <= tileX + half; x++)
+            {
+                for (int y = tileY - half; y <= tileY + half; y++)
+                {
+                    SetTile(x, y, EditorSelectedTileId);
+                }
+            }
+        }
+
+        public void PlaceObstacleAtWorld(PointD worldPos)
+        {
+            if (string.IsNullOrWhiteSpace(EditorSelectedObstacleKey))
+                return;
+
+            var obstacle = new Obstacle(
+                worldPos.X,
+                worldPos.Y,
+                EditorSelectedObstacleKey
+            );
+            EntityManager.Add(obstacle);
+            InvalidatePathfinding();
+        }
+
+        public void PlaceBuildingAtWorld(PointD worldPos)
+        {
+            if (string.IsNullOrWhiteSpace(EditorSelectedBuildingId))
+                return;
+
+            if (!BuildingRegistry.TryGetValue(EditorSelectedBuildingId, out var info))
+                return;
+
+            var building = new Building(worldPos.X, worldPos.Y, TeamType.Human, info);
+            EntityManager.Add(building);
+            InvalidatePathfinding();
+        }
+
+        public void RemoveEntityAtScreenPos(double screenX, double screenY)
+        {
+            var entity = GetEntityAtScreenPos(screenX, screenY);
+            if (entity == null)
+                return;
+
+            EntityManager.Remove(entity);
+            InvalidatePathfinding();
         }
 
         public bool CheckBuildValidity(double x, double y, double w, double h)
@@ -2292,4 +2430,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
