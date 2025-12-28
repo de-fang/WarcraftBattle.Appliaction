@@ -1,5 +1,7 @@
 using Caliburn.Micro;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +20,9 @@ namespace WarcraftBattle.ViewModels
         private GameEngine _engine;
         private DispatcherTimer _uiTimer;
         private TimeSpan _lastRenderTime;
+        private readonly Dictionary<string, ImageSource> _iconCache = new Dictionary<string, ImageSource>();
+        private bool _shopOpenLogged;
+        private bool _buildTabLogged;
 
 
 
@@ -125,9 +130,20 @@ namespace WarcraftBattle.ViewModels
             DisplayName = _engine.GameTitle;
 
             // 初始化资源管理器 (只需调用一次)
+            var assetInitWatch = Stopwatch.StartNew();
             AssetManager.Init(_engine.BaseUnitStats, _engine.EffectConfigs);
+            assetInitWatch.Stop();
+            Debug.WriteLine($"[Startup] AssetManager.Init: {assetInitWatch.ElapsedMilliseconds} ms");
 
+            var preloadWatch = Stopwatch.StartNew();
+            PreloadCriticalIcons();
+            preloadWatch.Stop();
+            Debug.WriteLine($"[Startup] Preload critical icons: {preloadWatch.ElapsedMilliseconds} ms (Count={_iconCache.Count})");
+
+            var shopListWatch = Stopwatch.StartNew();
             InitializeShopList(); // 初始化商店列表
+            shopListWatch.Stop();
+            Debug.WriteLine($"[Startup] InitializeShopList: {shopListWatch.ElapsedMilliseconds} ms (Items={ShopUnitList.Count})");
 
             // 绑定引擎事件
             _engine.OnResourceUpdate += UpdateResources;
@@ -168,28 +184,37 @@ namespace WarcraftBattle.ViewModels
         // =========================================================
         private ImageSource GetUnitIcon(string key)
         {
+            if (string.IsNullOrWhiteSpace(key)) return null;
+            if (_iconCache.TryGetValue(key, out var cached)) return cached;
+
+            ImageSource icon = null;
             // 1. 尝试从单位配置找
             if (_engine.BaseUnitStats.TryGetValue(key, out var stats) && stats.SpriteConfig != null)
             {
-                return CropIcon(stats.SpriteConfig.Image, stats.SpriteConfig.FrameW, stats.SpriteConfig.FrameH);
+                icon = CropIcon(stats.SpriteConfig.Image, stats.SpriteConfig.FrameW, stats.SpriteConfig.FrameH);
             }
             // 2. 尝试从建筑配置找
-            if (_engine.BuildingRegistry.TryGetValue(key, out var bStats) && bStats.SpriteConfig != null)
+            else if (_engine.BuildingRegistry.TryGetValue(key, out var bStats) && bStats.SpriteConfig != null)
             {
-                return CropIcon(bStats.SpriteConfig.Image, bStats.SpriteConfig.FrameW, bStats.SpriteConfig.FrameH);
+                icon = CropIcon(bStats.SpriteConfig.Image, bStats.SpriteConfig.FrameW, bStats.SpriteConfig.FrameH);
             }
             // 3. 兜底：尝试从 AssetManager 的静态缓存拿
-            if (AssetManager.StaticSprites.ContainsKey(key))
+            else if (AssetManager.StaticSprites.ContainsKey(key))
             {
-                return AssetManager.StaticSprites[key];
+                icon = AssetManager.StaticSprites[key];
             }
             // [Fix] Adapt to SpriteFrame change
-            var animFrame = AssetManager.CreateAnimator(key)?.GetCurrentFrame();
-            if (animFrame.HasValue)
+            else
             {
-                return new CroppedBitmap(animFrame.Value.Sheet, animFrame.Value.SourceRect);
+                var animFrame = AssetManager.CreateAnimator(key)?.GetCurrentFrame();
+                if (animFrame.HasValue)
+                {
+                    icon = new CroppedBitmap(animFrame.Value.Sheet, animFrame.Value.SourceRect);
+                }
             }
-            return null;
+
+            if (icon != null) _iconCache[key] = icon;
+            return icon;
         }
 
         private ImageSource CropIcon(string imagePath, int w, int h)
@@ -215,6 +240,30 @@ namespace WarcraftBattle.ViewModels
             catch
             {
                 return null;
+            }
+        }
+
+        private void PreloadCriticalIcons()
+        {
+            var preloadKeys = new HashSet<string>();
+
+            foreach (var kvp in _engine.BaseUnitStats)
+            {
+                if (kvp.Value.Faction == "Human")
+                {
+                    preloadKeys.Add(kvp.Key);
+                }
+            }
+
+            foreach (var bp in _engine.Buildings)
+            {
+                if (bp.Id.ToLower().Contains("orc") || bp.Id == "stronghold") continue;
+                preloadKeys.Add(bp.Id);
+            }
+
+            foreach (var key in preloadKeys)
+            {
+                GetUnitIcon(key);
             }
         }
 
@@ -425,6 +474,12 @@ namespace WarcraftBattle.ViewModels
             {
                 BuildTabVisibility = Visibility.Visible;
 
+                Stopwatch buildWatch = null;
+                if (!_buildTabLogged)
+                {
+                    buildWatch = Stopwatch.StartNew();
+                }
+
                 foreach (var bp in _engine.Buildings)
                 {
                     // 过滤掉敌方建筑和特殊建筑
@@ -444,6 +499,13 @@ namespace WarcraftBattle.ViewModels
                         OnClick = (o) => _engine.StartPlacingBuilding(((ActionButtonModel)o).Id)
                     });
                 }
+
+                if (buildWatch != null)
+                {
+                    buildWatch.Stop();
+                    _buildTabLogged = true;
+                    Debug.WriteLine($"[Startup] First BuildTab render: {buildWatch.ElapsedMilliseconds} ms (Items={BuildingButtons.Count})");
+                }
             }
         }
 
@@ -451,7 +513,25 @@ namespace WarcraftBattle.ViewModels
         // 导航与状态管理
         // =========================================================
         public void GoToMenu() { _engine.State = GameState.Menu; SetVisibility(menu: true); }
-        public void GoToShop() { UpdateShopState(); SetVisibility(shop: true); if (ShopUnitList.Count > 0) SelectShopUnit(ShopUnitList[0]); }
+        public void GoToShop()
+        {
+            Stopwatch watch = null;
+            if (!_shopOpenLogged)
+            {
+                watch = Stopwatch.StartNew();
+            }
+
+            UpdateShopState();
+            SetVisibility(shop: true);
+            if (ShopUnitList.Count > 0) SelectShopUnit(ShopUnitList[0]);
+
+            if (watch != null)
+            {
+                watch.Stop();
+                _shopOpenLogged = true;
+                Debug.WriteLine($"[Startup] First GoToShop: {watch.ElapsedMilliseconds} ms");
+            }
+        }
 
         public void StartGame(int level)
         {
