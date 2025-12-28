@@ -148,6 +148,8 @@ namespace WarcraftBattle.Engine
         public string GameTitle { get; private set; } = "Warcraft";
         public double InitialGold { get; private set; } = 200;
         public double GoldPerSecond { get; private set; } = 5;
+        private const double ResourceUpdateInterval = 0.1;
+        private double _resourceUpdateTimer = 0;
 
         // [New] Control Groups: Group Number -> List of Entity HashCodes (UIDs)
         private Dictionary<int, List<int>> _controlGroups = new Dictionary<int, List<int>>();
@@ -1078,7 +1080,12 @@ namespace WarcraftBattle.Engine
                     houseCount++;
             }
             Gold += (GoldPerSecond + houseCount * HouseGoldPerSec) * dt;
-            OnResourceUpdate?.Invoke();
+            _resourceUpdateTimer += dt;
+            if (_resourceUpdateTimer >= ResourceUpdateInterval)
+            {
+                _resourceUpdateTimer -= ResourceUpdateInterval;
+                OnResourceUpdate?.Invoke();
+            }
 
             _aiTimer += dt;
             double waveInterval = Math.Max(2.0, 8.0 - Stage * 0.5 - AiWaveLevel * 0.1);
@@ -2292,4 +2299,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
