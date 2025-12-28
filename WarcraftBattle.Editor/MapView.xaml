@@ -1,0 +1,8 @@
+<UserControl x:Class="WarcraftBattle.Editor.MapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:WarcraftBattle.Views.Controls;assembly=WarcraftBattle">
+    <Grid>
+        <controls:GameSurface x:Name="EditorSurface" Engine="{Binding Engine}" />
+    </Grid>
+</UserControl>

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle", "WarcraftB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle.Shared", "WarcraftBattle.Shared\WarcraftBattle.Shared.csproj", "{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle.Editor", "WarcraftBattle.Editor\WarcraftBattle.Editor.csproj", "{24790C70-6B37-4185-A7C0-C18F1ECADD80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24790C70-6B37-4185-A7C0-C18F1ECADD80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24790C70-6B37-4185-A7C0-C18F1ECADD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24790C70-6B37-4185-A7C0-C18F1ECADD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24790C70-6B37-4185-A7C0-C18F1ECADD80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

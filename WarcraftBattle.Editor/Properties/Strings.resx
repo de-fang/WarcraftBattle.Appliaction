@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EditorTitle" xml:space="preserve">
+    <value>WarcraftBattle World Editor</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MenuNew" xml:space="preserve">
+    <value>New Map</value>
+  </data>
+  <data name="MenuOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MenuSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MenuSaveAs" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="MenuExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MenuUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MenuRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MenuCut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="MenuCopy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="MenuShowToolbox" xml:space="preserve">
+    <value>Show Toolbox</value>
+  </data>
+  <data name="MenuShowInspector" xml:space="preserve">
+    <value>Show Inspector</value>
+  </data>
+  <data name="MenuShowOutput" xml:space="preserve">
+    <value>Show Output</value>
+  </data>
+  <data name="MenuData" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="MenuObjectEditor" xml:space="preserve">
+    <value>Object Editor (F6)</value>
+  </data>
+  <data name="MenuTriggerEditor" xml:space="preserve">
+    <value>Trigger Editor (F4)</value>
+  </data>
+  <data name="MenuEnvironment" xml:space="preserve">
+    <value>Environment Settings</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="ToolboxPalette" xml:space="preserve">
+    <value>Palette</value>
+  </data>
+  <data name="ToolboxAssets" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+  <data name="AssetBrowserPlaceholder" xml:space="preserve">
+    <value>Asset browser placeholder</value>
+  </data>
+  <data name="PlacementMode" xml:space="preserve">
+    <value>Placement Mode</value>
+  </data>
+  <data name="ModeSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="ModeBuilding" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="ModeObstacle" xml:space="preserve">
+    <value>Obstacle</value>
+  </data>
+  <data name="BuildingList" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="ObstacleList" xml:space="preserve">
+    <value>Obstacles</value>
+  </data>
+  <data name="StageSettings" xml:space="preserve">
+    <value>Stage Settings</value>
+  </data>
+  <data name="StageSelect" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="StageTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="StageWidth" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="StageHeight" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="StageEnemyHp" xml:space="preserve">
+    <value>Enemy Base HP</value>
+  </data>
+  <data name="StageObstacleCount" xml:space="preserve">
+    <value>Random Obstacles</value>
+  </data>
+  <data name="ApplyStageSettings" xml:space="preserve">
+    <value>Apply Stage Settings</value>
+  </data>
+  <data name="SelectionTools" xml:space="preserve">
+    <value>Selection</value>
+  </data>
+  <data name="DeleteSelection" xml:space="preserve">
+    <value>Delete Selection</value>
+  </data>
+  <data name="SaveMap" xml:space="preserve">
+    <value>Save Map</value>
+  </data>
+  <data name="OutputTitle" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="StageUpdatedFormat" xml:space="preserve">
+    <value>Updated stage: {0}</value>
+  </data>
+  <data name="GameConfigMissing" xml:space="preserve">
+    <value>GameConfig.xml not found.</value>
+  </data>
+  <data name="SaveCompleteFormat" xml:space="preserve">
+    <value>Saved to {0}</value>
+  </data>
+</root>

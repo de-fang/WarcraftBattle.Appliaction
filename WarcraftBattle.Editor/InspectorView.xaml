@@ -1,0 +1,48 @@
+<UserControl x:Class="WarcraftBattle.Editor.InspectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:res="clr-namespace:WarcraftBattle.Editor.Properties">
+    <Border Background="{StaticResource Editor.Panel.Background}" BorderBrush="{StaticResource Editor.Border.Base}" BorderThickness="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="10">
+                <TextBlock Text="{x:Static res:Strings.StageSettings}" FontWeight="Bold" Margin="0,0,0,6" />
+                <TextBlock Text="{x:Static res:Strings.StageSelect}" />
+                <ComboBox ItemsSource="{Binding Map.Stages}"
+                          SelectedItem="{Binding Map.SelectedStage}"
+                          DisplayMemberPath="Title" />
+
+                <TextBlock Text="{x:Static res:Strings.StageTitle}" Margin="0,8,0,2" />
+                <TextBox Text="{Binding Map.StageTitle, UpdateSourceTrigger=PropertyChanged}" />
+
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <StackPanel Width="120">
+                        <TextBlock Text="{x:Static res:Strings.StageWidth}" />
+                        <TextBox Text="{Binding Map.StageWidth, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Width="120" Margin="8,0,0,0">
+                        <TextBlock Text="{x:Static res:Strings.StageHeight}" />
+                        <TextBox Text="{Binding Map.StageHeight, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <StackPanel Width="120">
+                        <TextBlock Text="{x:Static res:Strings.StageEnemyHp}" />
+                        <TextBox Text="{Binding Map.StageEnemyHp, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <StackPanel Width="120" Margin="8,0,0,0">
+                        <TextBlock Text="{x:Static res:Strings.StageObstacleCount}" />
+                        <TextBox Text="{Binding Map.StageObstacleCount, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Content="{x:Static res:Strings.ApplyStageSettings}" Margin="0,8,0,0" cal:Message.Attach="Map.ApplyStageSettings" IsEnabled="{Binding Map.CanApplyStageSettings}" />
+
+                <TextBlock Text="{x:Static res:Strings.SelectionTools}" FontWeight="Bold" Margin="0,16,0,6" />
+                <Button Content="{x:Static res:Strings.DeleteSelection}" cal:Message.Attach="Map.DeleteSelected" />
+                <Button Content="{x:Static res:Strings.SaveMap}" Margin="0,8,0,0" cal:Message.Attach="Map.SaveMap" IsEnabled="{Binding Map.CanSaveMap}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>
