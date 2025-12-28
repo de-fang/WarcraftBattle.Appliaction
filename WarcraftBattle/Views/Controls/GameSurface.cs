@@ -204,6 +204,11 @@ namespace WarcraftBattle.Views.Controls
         private WriteableBitmap _fogBitmap;
         private int[] _fogPixels;
         private double _time = 0;
+        private Pen _editorGridPen;
+        private Pen _editorBrushPen;
+        private Brush _editorBrushFill;
+        private string _editorPreviewKey;
+        private Animator _editorPreviewAnimator;
 
         // [Refactor] Multi-layer rendering
         private DrawingVisual _staticLayer = new DrawingVisual();
@@ -233,6 +238,19 @@ namespace WarcraftBattle.Views.Controls
             RenderOptions.SetBitmapScalingMode(_staticLayer, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetBitmapScalingMode(_dynamicLayer, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetBitmapScalingMode(_fogLayer, BitmapScalingMode.Linear);
+
+            _editorGridPen = new Pen(
+                new SolidColorBrush(Color.FromArgb(50, 120, 140, 170)),
+                1
+            );
+            _editorBrushPen = new Pen(
+                new SolidColorBrush(Color.FromArgb(200, 110, 200, 255)),
+                2
+            );
+            _editorBrushFill = new SolidColorBrush(Color.FromArgb(40, 110, 200, 255));
+            _editorGridPen.Freeze();
+            _editorBrushPen.Freeze();
+            _editorBrushFill.Freeze();
 
             // [Fix] 防止控件尺寸坍缩导致不可见
             MinHeight = 100;
@@ -503,6 +521,7 @@ namespace WarcraftBattle.Views.Controls
 
                 DrawSelectionRect(dc);
                 DrawFloaters(dc);
+                DrawEditorOverlay(dc);
             }
         }
 
@@ -1427,6 +1446,139 @@ namespace WarcraftBattle.Views.Controls
                 dc.Pop();
                 dc.Pop();
             }
+        }
+
+        private void DrawEditorOverlay(DrawingContext dc)
+        {
+            if (Engine == null || !Engine.EditorEnabled || Engine.MapData == null)
+                return;
+
+            dc.PushTransform(new ScaleTransform(Engine.Zoom, Engine.Zoom));
+            dc.PushTransform(new TranslateTransform(-Engine.CameraX, -Engine.CameraY));
+
+            DrawEditorGrid(dc);
+            DrawEditorBrush(dc);
+            DrawEditorPreview(dc);
+
+            dc.Pop();
+            dc.Pop();
+        }
+
+        private void DrawEditorGrid(DrawingContext dc)
+        {
+            int tilesX = Engine.MapData.GetLength(0);
+            int tilesY = Engine.MapData.GetLength(1);
+            double tile = Engine.TileSize;
+
+            for (int x = 0; x <= tilesX; x++)
+            {
+                double worldX = x * tile;
+                PointD isoStart = GameEngine.WorldToIso(worldX, 0);
+                PointD isoEnd = GameEngine.WorldToIso(worldX, tilesY * tile);
+                dc.DrawLine(
+                    _editorGridPen,
+                    new Point(isoStart.X, isoStart.Y),
+                    new Point(isoEnd.X, isoEnd.Y)
+                );
+            }
+
+            for (int y = 0; y <= tilesY; y++)
+            {
+                double worldY = y * tile;
+                PointD isoStart = GameEngine.WorldToIso(0, worldY);
+                PointD isoEnd = GameEngine.WorldToIso(tilesX * tile, worldY);
+                dc.DrawLine(
+                    _editorGridPen,
+                    new Point(isoStart.X, isoStart.Y),
+                    new Point(isoEnd.X, isoEnd.Y)
+                );
+            }
+        }
+
+        private void DrawEditorBrush(DrawingContext dc)
+        {
+            int brush = Math.Max(1, Engine.EditorBrushSize);
+            int half = brush / 2;
+            double tile = Engine.TileSize;
+            double centerX = Engine.EditorGhostPosition.X;
+            double centerY = Engine.EditorGhostPosition.Y;
+
+            double startX = (Math.Floor(centerX / tile) - half) * tile;
+            double startY = (Math.Floor(centerY / tile) - half) * tile;
+            double size = brush * tile;
+
+            PointD iso = GameEngine.WorldToIso(startX + size / 2.0, startY + size / 2.0);
+            dc.PushTransform(new TranslateTransform(iso.X, iso.Y));
+            dc.DrawRectangle(
+                _editorBrushFill,
+                _editorBrushPen,
+                new Rect(-size / 2.0, -size / 4.0, size, size / 2.0)
+            );
+            dc.Pop();
+        }
+
+        private void DrawEditorPreview(DrawingContext dc)
+        {
+            if (Engine.EditorTool == EditorTool.PaintTerrain)
+                return;
+
+            if (Engine.EditorTool == EditorTool.PlaceBuilding)
+            {
+                var key = Engine.EditorSelectedBuildingId;
+                if (string.IsNullOrWhiteSpace(key))
+                    return;
+
+                UpdateEditorPreviewAnimator(key);
+                DrawEditorPreviewAnimator(dc, Engine.EditorGhostPosition);
+                return;
+            }
+
+            if (Engine.EditorTool == EditorTool.PlaceObstacle)
+            {
+                var key = Engine.EditorSelectedObstacleKey;
+                if (string.IsNullOrWhiteSpace(key))
+                    return;
+
+                UpdateEditorPreviewAnimator(key);
+                DrawEditorPreviewAnimator(dc, Engine.EditorGhostPosition);
+            }
+        }
+
+        private void UpdateEditorPreviewAnimator(string key)
+        {
+            if (_editorPreviewKey == key && _editorPreviewAnimator != null)
+                return;
+
+            _editorPreviewKey = key;
+            _editorPreviewAnimator = AssetManager.CreateAnimator(key);
+            _editorPreviewAnimator?.Play("Idle");
+        }
+
+        private void DrawEditorPreviewAnimator(DrawingContext dc, PointD worldPos)
+        {
+            if (_editorPreviewAnimator == null)
+                return;
+
+            var frame = _editorPreviewAnimator.GetCurrentFrame();
+            if (frame == null)
+                return;
+
+            PointD isoPos = GameEngine.WorldToIso(worldPos.X, worldPos.Y);
+            dc.PushTransform(new TranslateTransform(isoPos.X, isoPos.Y));
+            dc.PushOpacity(0.7);
+            var f = frame.Value;
+            DrawSprite(
+                dc,
+                f,
+                new Rect(
+                    -f.PixelWidth / 2,
+                    -f.PixelHeight + 45.0,
+                    f.PixelWidth,
+                    f.PixelHeight
+                )
+            );
+            dc.Pop();
+            dc.Pop();
         }
 
         private void DrawVignette(DrawingContext dc)

@@ -30,6 +30,7 @@ namespace WarcraftBattle.Engine
         private double _lastCameraX;
         private double _lastCameraY;
         private bool _dragIsSelection = false;
+        private bool _editorIsPainting = false;
 
         // [New] Double-tap detection for control groups
         private int _lastGroupKeyPressed = -1;
@@ -42,6 +43,14 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputStart(double x, double y)
         {
+            if (_engine.EditorEnabled)
+            {
+                _editorIsPainting = true;
+                _engine.EditorDragActive = true;
+                var wp = _engine.ScreenToWorld(x, y);
+                _engine.ApplyEditorAtWorld(wp, allowContinuous: false);
+                return;
+            }
             if (_engine.IsBuildMode) { _engine.HandleMouseClick(); return; }
             _touchStartX = x; _touchStartY = y;
             _lastCameraX = _engine.CameraX; _lastCameraY = _engine.CameraY;
@@ -54,6 +63,16 @@ namespace WarcraftBattle.Engine
 
         public void HandleDrag(double x, double y)
         {
+            if (_engine.EditorEnabled)
+            {
+                if (_editorIsPainting && _engine.EditorTool == EditorTool.PaintTerrain)
+                {
+                    var wp = _engine.ScreenToWorld(x, y);
+                    _engine.ApplyEditorAtWorld(wp, allowContinuous: true);
+                }
+                return;
+            }
+
             if (_engine.State != Shared.Enums.GameState.Playing) return;
 
             if (System.Windows.Input.Mouse.MiddleButton == System.Windows.Input.MouseButtonState.Pressed)
@@ -96,6 +115,12 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputUp(double x, double y)
         {
+            if (_engine.EditorEnabled)
+            {
+                _editorIsPainting = false;
+                _engine.EditorDragActive = false;
+                return;
+            }
             if (_engine.IsDraggingSelection)
             {
                 PerformBoxSelection();
@@ -177,6 +202,11 @@ namespace WarcraftBattle.Engine
         public void HandleMouseMove(double screenX, double screenY)
         {
             var wp = _engine.ScreenToWorld(screenX, screenY);
+            if (_engine.EditorEnabled)
+            {
+                _engine.EditorGhostPosition = _engine.SnapToTileCenter(wp);
+                return;
+            }
             if (_engine.IsBuildMode && _engine.PendingBuildingInfo != null)
             {
                 double w = _engine.PendingBuildingInfo.Width;
@@ -200,6 +230,7 @@ namespace WarcraftBattle.Engine
 
         public void HandleDoubleClick(double x, double y)
         {
+            if (_engine.EditorEnabled) return;
             if (_engine.State != Shared.Enums.GameState.Playing) return;
 
             var clickedEntity = _engine.GetEntityAtScreenPos(x, y);
@@ -230,6 +261,11 @@ namespace WarcraftBattle.Engine
 
         public void HandleRightClick(double x, double y)
         {
+            if (_engine.EditorEnabled)
+            {
+                _engine.RemoveEntityAtScreenPos(x, y);
+                return;
+            }
             if (_engine.State != Shared.Enums.GameState.Playing) return;
             var wp = _engine.ScreenToWorld(x, y);
 
@@ -289,6 +325,7 @@ namespace WarcraftBattle.Engine
 
         public void HandleMouseClickInput(double screenX, double screenY)
         {
+            if (_engine.EditorEnabled) return;
             if (_engine.IsBuildMode) return;
 
             var clickedEntity = _engine.GetEntityAtScreenPos(screenX, screenY);
@@ -303,6 +340,7 @@ namespace WarcraftBattle.Engine
 
         private void PerformBoxSelection()
         {
+            if (_engine.EditorEnabled) return;
             if (_engine.SelectionRect.Width < 5 && _engine.SelectionRect.Height < 5) return;
 
             _engine.ClearSelection();

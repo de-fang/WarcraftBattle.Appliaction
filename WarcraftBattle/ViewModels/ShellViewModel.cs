@@ -57,6 +57,7 @@ namespace WarcraftBattle.ViewModels
         private Visibility _shopVisibility = Visibility.Collapsed;
         private Visibility _gameVisibility = Visibility.Collapsed;
         private Visibility _resultVisibility = Visibility.Collapsed;
+        private Visibility _editorVisibility = Visibility.Collapsed;
 
         private Visibility _entityInfoVisibility = Visibility.Collapsed;
         private Visibility _multiSelectionVisibility = Visibility.Collapsed;
@@ -98,6 +99,7 @@ namespace WarcraftBattle.ViewModels
         public Visibility ShopVisibility { get => _shopVisibility; set => Set(ref _shopVisibility, value); }
         public Visibility GameVisibility { get => _gameVisibility; set => Set(ref _gameVisibility, value); }
         public Visibility ResultVisibility { get => _resultVisibility; set => Set(ref _resultVisibility, value); }
+        public Visibility EditorVisibility { get => _editorVisibility; set => Set(ref _editorVisibility, value); }
 
         public Visibility EntityInfoVisibility { get => _entityInfoVisibility; set => Set(ref _entityInfoVisibility, value); }
         public Visibility MultiSelectionVisibility { get => _multiSelectionVisibility; set => Set(ref _multiSelectionVisibility, value); }
@@ -119,6 +121,99 @@ namespace WarcraftBattle.ViewModels
         public SolidColorBrush SelectedUnitHpColor { get; set; }
         public double SelectedUnitMana { get; set; }
         public double SelectedUnitMaxMana { get; set; }
+
+        public BindableCollection<EditorOptionItem> TerrainOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorOptionItem> ObstacleOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorOptionItem> BuildingOptions { get; } =
+            new BindableCollection<EditorOptionItem>();
+        public BindableCollection<EditorTool> EditorTools { get; } =
+            new BindableCollection<EditorTool>();
+
+        private EditorOptionItem _selectedTerrainOption;
+        private EditorOptionItem _selectedObstacleOption;
+        private EditorOptionItem _selectedBuildingOption;
+        private EditorTool _selectedEditorTool = EditorTool.PaintTerrain;
+        private int _editorBrushSize = 1;
+        private int _editorMapWidthTiles;
+        private int _editorMapHeightTiles;
+
+        public EditorOptionItem SelectedTerrainOption
+        {
+            get => _selectedTerrainOption;
+            set
+            {
+                _selectedTerrainOption = value;
+                if (value != null && int.TryParse(value.Id, out var id))
+                    _engine.EditorSelectedTileId = id;
+                NotifyOfPropertyChange(() => SelectedTerrainOption);
+            }
+        }
+
+        public EditorOptionItem SelectedObstacleOption
+        {
+            get => _selectedObstacleOption;
+            set
+            {
+                _selectedObstacleOption = value;
+                _engine.EditorSelectedObstacleKey = value?.Id;
+                NotifyOfPropertyChange(() => SelectedObstacleOption);
+            }
+        }
+
+        public EditorOptionItem SelectedBuildingOption
+        {
+            get => _selectedBuildingOption;
+            set
+            {
+                _selectedBuildingOption = value;
+                _engine.EditorSelectedBuildingId = value?.Id;
+                NotifyOfPropertyChange(() => SelectedBuildingOption);
+            }
+        }
+
+        public EditorTool SelectedEditorTool
+        {
+            get => _selectedEditorTool;
+            set
+            {
+                _selectedEditorTool = value;
+                _engine.EditorTool = value;
+                NotifyOfPropertyChange(() => SelectedEditorTool);
+            }
+        }
+
+        public int EditorBrushSize
+        {
+            get => _editorBrushSize;
+            set
+            {
+                _editorBrushSize = Math.Max(1, value);
+                _engine.EditorBrushSize = _editorBrushSize;
+                NotifyOfPropertyChange(() => EditorBrushSize);
+            }
+        }
+
+        public int EditorMapWidthTiles
+        {
+            get => _editorMapWidthTiles;
+            set
+            {
+                _editorMapWidthTiles = Math.Max(1, value);
+                NotifyOfPropertyChange(() => EditorMapWidthTiles);
+            }
+        }
+
+        public int EditorMapHeightTiles
+        {
+            get => _editorMapHeightTiles;
+            set
+            {
+                _editorMapHeightTiles = Math.Max(1, value);
+                NotifyOfPropertyChange(() => EditorMapHeightTiles);
+            }
+        }
 
         public ShellViewModel()
         {
@@ -146,6 +241,7 @@ namespace WarcraftBattle.ViewModels
             _lastRenderTime = TimeSpan.FromTicks(DateTime.Now.Ticks);
 
             GoToMenu();
+            InitializeEditorOptions();
         }
 
         private void OnRendering(object sender, EventArgs e)
@@ -484,6 +580,89 @@ namespace WarcraftBattle.ViewModels
         {
             if (_engine.TimeScale == 1.0) { _engine.TimeScale = 2.0; SpeedText = "2x"; }
             else { _engine.TimeScale = 1.0; SpeedText = "1x"; }
+        }
+
+        public void ToggleEditor()
+        {
+            _engine.EditorEnabled = !_engine.EditorEnabled;
+            EditorVisibility = _engine.EditorEnabled ? Visibility.Visible : Visibility.Collapsed;
+
+            if (_engine.EditorEnabled)
+            {
+                _engine.State = GameState.Paused;
+                _engine.EditorTool = SelectedEditorTool;
+                _engine.EditorBrushSize = EditorBrushSize;
+                if (_engine.MapData != null)
+                {
+                    EditorMapWidthTiles = _engine.MapData.GetLength(0);
+                    EditorMapHeightTiles = _engine.MapData.GetLength(1);
+                }
+            }
+            else
+            {
+                _engine.State = GameState.Playing;
+            }
+        }
+
+        public void ApplyEditorMapSize()
+        {
+            _engine.ResizeMapTiles(EditorMapWidthTiles, EditorMapHeightTiles);
+        }
+
+        private void InitializeEditorOptions()
+        {
+            if (EditorTools.Count == 0)
+            {
+                foreach (var tool in Enum.GetValues(typeof(EditorTool)).Cast<EditorTool>())
+                    EditorTools.Add(tool);
+            }
+
+            TerrainOptions.Clear();
+            foreach (var t in _engine.EnvConfig.TerrainTextures)
+            {
+                TerrainOptions.Add(new EditorOptionItem
+                {
+                    Id = t.Id.ToString(),
+                    Name = $"Tile {t.Id}",
+                    Icon = AssetManager.GetTerrainImage(t.Id)
+                });
+            }
+
+            ObstacleOptions.Clear();
+            foreach (var kvp in GameEngine.ObstacleInfo)
+            {
+                AssetManager.StaticSprites.TryGetValue(kvp.Key, out var icon);
+                ObstacleOptions.Add(new EditorOptionItem
+                {
+                    Id = kvp.Key,
+                    Name = kvp.Value.Name ?? kvp.Key,
+                    Icon = icon
+                });
+            }
+
+            BuildingOptions.Clear();
+            foreach (var kvp in _engine.BuildingRegistry)
+            {
+                AssetManager.StaticSprites.TryGetValue(kvp.Key, out var icon);
+                BuildingOptions.Add(new EditorOptionItem
+                {
+                    Id = kvp.Key,
+                    Name = kvp.Value.Name ?? kvp.Key,
+                    Icon = icon
+                });
+            }
+
+            SelectedTerrainOption = TerrainOptions.FirstOrDefault();
+            SelectedObstacleOption = ObstacleOptions.FirstOrDefault();
+            SelectedBuildingOption = BuildingOptions.FirstOrDefault();
+            _engine.EditorTool = SelectedEditorTool;
+            _engine.EditorBrushSize = EditorBrushSize;
+
+            if (_engine.MapData != null)
+            {
+                EditorMapWidthTiles = _engine.MapData.GetLength(0);
+                EditorMapHeightTiles = _engine.MapData.GetLength(1);
+            }
         }
 
         public void UseTower() { _engine.EnterTargetingMode(); }
