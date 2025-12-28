@@ -110,6 +110,11 @@ namespace WarcraftBattle.Engine
         public bool IsDraggingSelection { get; set; }
         public bool EditorDragActive { get; set; }
         public PointD EditorDragWorldPos { get; set; }
+        public bool IsEditorMode { get; private set; }
+        public EditorTool CurrentEditorTool { get; private set; } = EditorTool.Select;
+        public string EditorPlacementTeam { get; set; } = "Human";
+        public string PendingEditorBuildingId { get; private set; }
+        public string PendingEditorObstacleKey { get; private set; }
 
         public IInputManager Input { get; private set; }
         public IAudioManager Audio { get; private set; }
@@ -729,11 +734,22 @@ namespace WarcraftBattle.Engine
 
         public void Start(int stageId)
         {
-            if (stageId > Player.MaxUnlockedStage)
+            InitializeStage(stageId, false);
+        }
+
+        public void StartEditor(int stageId)
+        {
+            InitializeStage(stageId, true);
+        }
+
+        private void InitializeStage(int stageId, bool isEditor)
+        {
+            if (!isEditor && stageId > Player.MaxUnlockedStage)
                 return;
             if (!Stages.ContainsKey(stageId))
                 stageId = 1;
 
+            IsEditorMode = isEditor;
             Stage = stageId;
             CurrentStageInfo = Stages[stageId];
             InitializeMap(CurrentStageInfo);
@@ -807,6 +823,7 @@ namespace WarcraftBattle.Engine
                     b.Rotation = p.Rotation;
                     if (p.Width > 0) b.Width = p.Width;
                     if (p.Height > 0) b.Height = p.Height;
+                    b.EditorId = p.EditorId;
                     EntityManager.Add(b);
                 }
                 else if (p.Type == "Unit")
@@ -820,9 +837,11 @@ namespace WarcraftBattle.Engine
                 obstacle.Rotation = obs.Rotation;
                 if (obs.Width > 0) obstacle.Width = obs.Width;
                 if (obs.Height > 0) obstacle.Height = obs.Height;
+                obstacle.EditorId = obs.EditorId;
                 EntityManager.Add(obstacle);
             }
-            GenerateObstacles((int)CurrentStageInfo.RandomObstacleCount);
+            if (!isEditor)
+                GenerateObstacles((int)CurrentStageInfo.RandomObstacleCount);
             var playerBase = Entities.FirstOrDefault(e =>
                 e.Team == TeamType.Human && e is Building b && b.Id == "castle"
             );
@@ -1009,6 +1028,8 @@ namespace WarcraftBattle.Engine
         public void Update(double dt)
         {
             if (State != GameState.Playing)
+                return;
+            if (IsEditorMode)
                 return;
 
             Audio.Update(dt);
@@ -1409,6 +1430,175 @@ namespace WarcraftBattle.Engine
                 IsBuildMode = false;
                 PendingBuildingInfo = null;
             }
+        }
+
+        public void SetEditorTool(EditorTool tool, string key = null)
+        {
+            CurrentEditorTool = tool;
+            if (tool == EditorTool.PlaceBuilding)
+            {
+                PendingEditorBuildingId = key;
+                PendingEditorObstacleKey = null;
+            }
+            else if (tool == EditorTool.PlaceObstacle)
+            {
+                PendingEditorObstacleKey = key;
+                PendingEditorBuildingId = null;
+            }
+            else
+            {
+                PendingEditorBuildingId = null;
+                PendingEditorObstacleKey = null;
+            }
+        }
+
+        public void PlaceEditorEntity(double screenX, double screenY)
+        {
+            if (!IsEditorMode || CurrentStageInfo == null)
+                return;
+
+            var wp = ScreenToWorld(screenX, screenY);
+            if (CurrentEditorTool == EditorTool.PlaceBuilding && !string.IsNullOrEmpty(PendingEditorBuildingId))
+            {
+                if (!BuildingRegistry.TryGetValue(PendingEditorBuildingId, out var info))
+                    return;
+
+                var placement = new EntityPlacement
+                {
+                    EditorId = Guid.NewGuid(),
+                    Team = EditorPlacementTeam,
+                    Type = "Building",
+                    Key = PendingEditorBuildingId,
+                    X = wp.X,
+                    Y = wp.Y,
+                    Rotation = 0,
+                    Width = info.Width,
+                    Height = info.Height
+                };
+                CurrentStageInfo.Placements.Add(placement);
+
+                TeamType team = TeamType.Neutral;
+                if (EditorPlacementTeam.Equals("Human", StringComparison.OrdinalIgnoreCase))
+                    team = TeamType.Human;
+                else if (EditorPlacementTeam.Equals("Orc", StringComparison.OrdinalIgnoreCase))
+                    team = TeamType.Orc;
+
+                var building = new Building(wp.X, wp.Y, team, info.Clone())
+                {
+                    EditorId = placement.EditorId
+                };
+                EntityManager.Add(building);
+                InvalidatePathfinding();
+            }
+            else if (CurrentEditorTool == EditorTool.PlaceObstacle && !string.IsNullOrEmpty(PendingEditorObstacleKey))
+            {
+                var obstacleDef = ObstacleInfo.ContainsKey(PendingEditorObstacleKey)
+                    ? ObstacleInfo[PendingEditorObstacleKey]
+                    : null;
+
+                var def = new LevelObstacleDef
+                {
+                    EditorId = Guid.NewGuid(),
+                    X = wp.X,
+                    Y = wp.Y,
+                    Type = PendingEditorObstacleKey,
+                    Rotation = 0,
+                    Width = obstacleDef?.Width ?? 0,
+                    Height = obstacleDef?.Height ?? 0,
+                    ImagePath = obstacleDef?.Image ?? ""
+                };
+                CurrentStageInfo.FixedObstacles.Add(def);
+
+                var obstacle = new Obstacle(wp.X, wp.Y, PendingEditorObstacleKey);
+                obstacle.EditorId = def.EditorId;
+                EntityManager.Add(obstacle);
+                InvalidatePathfinding();
+            }
+        }
+
+        public void MoveEditorSelectedEntity(double worldX, double worldY)
+        {
+            if (!IsEditorMode || SelectedEntity == null || CurrentStageInfo == null)
+                return;
+
+            var entity = SelectedEntity;
+            if (entity is Building || entity is Obstacle)
+            {
+                EntityManager.Remove(entity);
+                entity.X = worldX;
+                entity.Y = worldY;
+                EntityManager.Add(entity);
+            }
+            else
+            {
+                entity.X = worldX;
+                entity.Y = worldY;
+            }
+
+            if (entity is Building)
+            {
+                for (int i = 0; i < CurrentStageInfo.Placements.Count; i++)
+                {
+                    if (CurrentStageInfo.Placements[i].EditorId == entity.EditorId)
+                    {
+                        var p = CurrentStageInfo.Placements[i];
+                        p.X = entity.X;
+                        p.Y = entity.Y;
+                        p.Rotation = entity.Rotation;
+                        p.Width = entity.Width;
+                        p.Height = entity.Height;
+                        CurrentStageInfo.Placements[i] = p;
+                        break;
+                    }
+                }
+            }
+            else if (entity is Obstacle)
+            {
+                for (int i = 0; i < CurrentStageInfo.FixedObstacles.Count; i++)
+                {
+                    if (CurrentStageInfo.FixedObstacles[i].EditorId == entity.EditorId)
+                    {
+                        var o = CurrentStageInfo.FixedObstacles[i];
+                        o.X = entity.X;
+                        o.Y = entity.Y;
+                        o.Rotation = entity.Rotation;
+                        o.Width = entity.Width;
+                        o.Height = entity.Height;
+                        CurrentStageInfo.FixedObstacles[i] = o;
+                        break;
+                    }
+                }
+            }
+
+            InvalidatePathfinding();
+        }
+
+        public void DeleteSelectedEditorEntity()
+        {
+            if (!IsEditorMode || SelectedEntity == null || CurrentStageInfo == null)
+                return;
+
+            var entity = SelectedEntity;
+            if (entity is Building)
+            {
+                CurrentStageInfo.Placements.RemoveAll(p => p.EditorId == entity.EditorId);
+            }
+            else if (entity is Obstacle)
+            {
+                CurrentStageInfo.FixedObstacles.RemoveAll(o => o.EditorId == entity.EditorId);
+            }
+
+            EntityManager.Remove(entity);
+            ClearSelection();
+            EditorDragActive = false;
+            InvalidatePathfinding();
+        }
+
+        public void ExitEditorMode()
+        {
+            IsEditorMode = false;
+            EditorDragActive = false;
+            SetEditorTool(EditorTool.Select);
         }
 
         public void StartPlacingBuilding(string buildingId)
@@ -1963,6 +2153,7 @@ namespace WarcraftBattle.Engine
                         {
                             stage.Placements.Add(new EntityPlacement
                             {
+                                EditorId = Guid.NewGuid(),
                                 Team = p.Team,
                                 Type = p.Type,
                                 Key = p.Key,
@@ -1978,6 +2169,7 @@ namespace WarcraftBattle.Engine
                         {
                             stage.FixedObstacles.Add(new LevelObstacleDef
                             {
+                                EditorId = Guid.NewGuid(),
                                 X = o.X,
                                 Y = o.Y,
                                 Type = o.Type,
@@ -2292,4 +2484,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-

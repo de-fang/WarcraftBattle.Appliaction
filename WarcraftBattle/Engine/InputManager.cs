@@ -30,6 +30,8 @@ namespace WarcraftBattle.Engine
         private double _lastCameraX;
         private double _lastCameraY;
         private bool _dragIsSelection = false;
+        private bool _editorDragging = false;
+        private PointD _editorDragOffset;
 
         // [New] Double-tap detection for control groups
         private int _lastGroupKeyPressed = -1;
@@ -42,6 +44,32 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputStart(double x, double y)
         {
+            if (_engine.IsEditorMode)
+            {
+                if (_engine.CurrentEditorTool == EditorTool.PlaceBuilding || _engine.CurrentEditorTool == EditorTool.PlaceObstacle)
+                {
+                    _engine.PlaceEditorEntity(x, y);
+                    return;
+                }
+
+                var clickedEntity = _engine.GetEntityAtScreenPos(x, y);
+                _engine.ClearSelection();
+                _editorDragging = false;
+                _engine.EditorDragActive = false;
+                if (clickedEntity != null)
+                {
+                    _engine.AddToSelection(clickedEntity);
+                }
+                _engine.RefreshSelectionState();
+                if (clickedEntity != null)
+                {
+                    var world = _engine.ScreenToWorld(x, y);
+                    _editorDragOffset = new PointD(clickedEntity.X - world.X, clickedEntity.Y - world.Y);
+                    _editorDragging = true;
+                    _engine.EditorDragActive = true;
+                }
+                return;
+            }
             if (_engine.IsBuildMode) { _engine.HandleMouseClick(); return; }
             _touchStartX = x; _touchStartY = y;
             _lastCameraX = _engine.CameraX; _lastCameraY = _engine.CameraY;
@@ -55,6 +83,16 @@ namespace WarcraftBattle.Engine
         public void HandleDrag(double x, double y)
         {
             if (_engine.State != Shared.Enums.GameState.Playing) return;
+
+            if (_engine.IsEditorMode)
+            {
+                if (_editorDragging && System.Windows.Input.Mouse.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+                {
+                    var world = _engine.ScreenToWorld(x, y);
+                    _engine.MoveEditorSelectedEntity(world.X + _editorDragOffset.X, world.Y + _editorDragOffset.Y);
+                }
+                return;
+            }
 
             if (System.Windows.Input.Mouse.MiddleButton == System.Windows.Input.MouseButtonState.Pressed)
             {
@@ -96,6 +134,12 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputUp(double x, double y)
         {
+            if (_engine.IsEditorMode)
+            {
+                _editorDragging = false;
+                _engine.EditorDragActive = false;
+                return;
+            }
             if (_engine.IsDraggingSelection)
             {
                 PerformBoxSelection();
