@@ -409,14 +409,7 @@ namespace WarcraftBattle.Editor
                     .ToList();
 
                 stageConfig.MapTiles = stage.TileOverrides
-                    .Select(t => new MapTileRectConfig
-                    {
-                        X = t.X,
-                        Y = t.Y,
-                        W = t.W,
-                        H = t.H,
-                        Id = t.TileId
-                    })
+                    .Select(CreateMapTileRectConfig)
                     .ToList();
 
                 stageConfig.Placements = stage.Placements
@@ -465,6 +458,18 @@ namespace WarcraftBattle.Editor
             field = value;
             NotifyOfPropertyChange(propertyName);
             return true;
+        }
+
+        private static MapTileRectConfig CreateMapTileRectConfig(TileRectDef tileOverride)
+        {
+            return new MapTileRectConfig
+            {
+                X = tileOverride.X,
+                Y = tileOverride.Y,
+                W = tileOverride.W,
+                H = tileOverride.H,
+                Id = tileOverride.TileId
+            };
         }
     }
 }
