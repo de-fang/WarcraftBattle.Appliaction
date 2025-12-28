@@ -611,11 +611,8 @@ namespace WarcraftBattle.ViewModels
                     {
                         item.HpPct = item.Entity.MaxHP > 0 ? item.Entity.HP / item.Entity.MaxHP : 0;
                         item.HpColor = item.HpPct > 0.5 ? Brushes.LimeGreen : Brushes.Red;
-                        // Trigger property change if needed, but BindableCollection items might not notify automatically unless they are ViewModels
-                        // For simple polling, we might need to force refresh or use specific VM for item
                     }
                 }
-                SelectedUnitsList.Refresh(); // Force refresh list UI
             }
         }
 
