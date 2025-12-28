@@ -415,7 +415,7 @@ namespace WarcraftBattle.Editor
                         Y = t.Y,
                         W = t.W,
                         H = t.H,
-                        TileId = t.TileId
+                        Id = t.TileId
                     })
                     .ToList();
 
