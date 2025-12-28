@@ -1,5 +1,6 @@
 using Caliburn.Micro;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +19,7 @@ namespace WarcraftBattle.ViewModels
         private GameEngine _engine;
         private DispatcherTimer _uiTimer;
         private TimeSpan _lastRenderTime;
+        private readonly Dictionary<string, ImageSource> _unitIconCache = new Dictionary<string, ImageSource>();
 
 
 
@@ -168,28 +170,46 @@ namespace WarcraftBattle.ViewModels
         // =========================================================
         private ImageSource GetUnitIcon(string key)
         {
-            // 1. 尝试从单位配置找
-            if (_engine.BaseUnitStats.TryGetValue(key, out var stats) && stats.SpriteConfig != null)
+            if (string.IsNullOrWhiteSpace(key)) return null;
+
+            if (_unitIconCache.TryGetValue(key, out var cached))
             {
-                return CropIcon(stats.SpriteConfig.Image, stats.SpriteConfig.FrameW, stats.SpriteConfig.FrameH);
+                return cached;
             }
-            // 2. 尝试从建筑配置找
-            if (_engine.BuildingRegistry.TryGetValue(key, out var bStats) && bStats.SpriteConfig != null)
+
+            ImageSource icon = null;
+
+            // 1. 直接复用 AssetManager 的静态缓存
+            if (AssetManager.StaticSprites.TryGetValue(key, out var staticSprite))
             {
-                return CropIcon(bStats.SpriteConfig.Image, bStats.SpriteConfig.FrameW, bStats.SpriteConfig.FrameH);
+                icon = staticSprite;
             }
-            // 3. 兜底：尝试从 AssetManager 的静态缓存拿
-            if (AssetManager.StaticSprites.ContainsKey(key))
+            // 2. 尝试从单位配置找
+            else if (_engine.BaseUnitStats.TryGetValue(key, out var stats) && stats.SpriteConfig != null)
             {
-                return AssetManager.StaticSprites[key];
+                icon = CropIcon(stats.SpriteConfig.Image, stats.SpriteConfig.FrameW, stats.SpriteConfig.FrameH);
             }
-            // [Fix] Adapt to SpriteFrame change
-            var animFrame = AssetManager.CreateAnimator(key)?.GetCurrentFrame();
-            if (animFrame.HasValue)
+            // 3. 尝试从建筑配置找
+            else if (_engine.BuildingRegistry.TryGetValue(key, out var bStats) && bStats.SpriteConfig != null)
             {
-                return new CroppedBitmap(animFrame.Value.Sheet, animFrame.Value.SourceRect);
+                icon = CropIcon(bStats.SpriteConfig.Image, bStats.SpriteConfig.FrameW, bStats.SpriteConfig.FrameH);
             }
-            return null;
+            else
+            {
+                // [Fix] Adapt to SpriteFrame change
+                var animFrame = AssetManager.CreateAnimator(key)?.GetCurrentFrame();
+                if (animFrame.HasValue)
+                {
+                    icon = new CroppedBitmap(animFrame.Value.Sheet, animFrame.Value.SourceRect);
+                }
+            }
+
+            if (icon != null)
+            {
+                _unitIconCache[key] = icon;
+            }
+
+            return icon;
         }
 
         private ImageSource CropIcon(string imagePath, int w, int h)
@@ -197,6 +217,13 @@ namespace WarcraftBattle.ViewModels
             try
             {
                 if (string.IsNullOrEmpty(imagePath)) return null;
+
+                var cachedTexture = AssetManager.TryGetCachedTexture(imagePath);
+                if (cachedTexture != null)
+                {
+                    return new CroppedBitmap(cachedTexture, new Int32Rect(0, 0, w, h));
+                }
+
                 // 处理 pack URI 路径 (WPF 资源路径格式)
                 string fullPath = imagePath.StartsWith("pack:") ? imagePath : "pack://application:,,,/Assets/" + imagePath.TrimStart('/');
 

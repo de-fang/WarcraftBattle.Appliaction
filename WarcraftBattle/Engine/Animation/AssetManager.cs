@@ -133,6 +133,12 @@ namespace WarcraftBattle.Engine.Animation
             return null;
         }
 
+        public static BitmapSource TryGetCachedTexture(string relativePath)
+        {
+            if (string.IsNullOrEmpty(relativePath)) return null;
+            return _textureCache.TryGetValue(relativePath, out var cached) ? cached : null;
+        }
+
         public static ImageSource GetTerrainImage(int tileId)
         {
             string key = $"Terrain_{tileId}";
