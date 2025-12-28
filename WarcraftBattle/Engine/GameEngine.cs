@@ -1471,6 +1471,9 @@ namespace WarcraftBattle.Engine
                     {
                         Rotation = building.Rotation
                     };
+                    newBuilding.Width = building.Width;
+                    newBuilding.Height = building.Height;
+                    newBuilding.RenderOffsetY = building.RenderOffsetY;
                     newBuilding.HP = building.HP;
                     return newBuilding;
                 case Obstacle obstacle:
@@ -1478,6 +1481,9 @@ namespace WarcraftBattle.Engine
                     {
                         Rotation = obstacle.Rotation
                     };
+                    newObstacle.Width = obstacle.Width;
+                    newObstacle.Height = obstacle.Height;
+                    newObstacle.RenderOffsetY = obstacle.RenderOffsetY;
                     return newObstacle;
                 default:
                     return null;
