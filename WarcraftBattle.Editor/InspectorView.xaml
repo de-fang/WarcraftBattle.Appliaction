@@ -39,6 +39,152 @@
 
                 <Button Content="{x:Static res:Strings.ApplyStageSettings}" Margin="0,8,0,0" cal:Message.Attach="Map.ApplyStageSettings" IsEnabled="{Binding Map.CanApplyStageSettings}" />
 
+                <TextBlock Text="{x:Static res:Strings.UnitEditor}" FontWeight="Bold" Margin="0,16,0,6" />
+                <StackPanel IsEnabled="{Binding Map.HasSelectedUnit}">
+                    <TextBlock Text="{x:Static res:Strings.UnitSelect}" />
+                    <ComboBox ItemsSource="{Binding Map.UnitOptions}"
+                              SelectedItem="{Binding Map.SelectedUnit}"
+                              DisplayMemberPath="Name" />
+
+                    <TextBlock Text="{x:Static res:Strings.UnitName}" Margin="0,8,0,2" />
+                    <TextBox Text="{Binding Map.UnitName, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Text="{x:Static res:Strings.UnitFaction}" Margin="0,8,0,2" />
+                    <TextBox Text="{Binding Map.UnitFaction, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitCost}" />
+                            <TextBox Text="{Binding Map.UnitCost, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitHp}" />
+                            <TextBox Text="{Binding Map.UnitHp, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitDamage}" />
+                            <TextBox Text="{Binding Map.UnitDamage, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitRange}" />
+                            <TextBox Text="{Binding Map.UnitRange, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitSpeed}" />
+                            <TextBox Text="{Binding Map.UnitSpeed, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitCooldown}" />
+                            <TextBox Text="{Binding Map.UnitCooldown, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitWidth}" />
+                            <TextBox Text="{Binding Map.UnitWidth, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitHeight}" />
+                            <TextBox Text="{Binding Map.UnitHeight, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitMaxMana}" />
+                            <TextBox Text="{Binding Map.UnitMaxMana, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitManaRegen}" />
+                            <TextBox Text="{Binding Map.UnitManaRegen, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitType}" />
+                            <ComboBox ItemsSource="{Binding Map.UnitTypeOptions}" SelectedItem="{Binding Map.UnitType}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitAttackType}" />
+                            <ComboBox ItemsSource="{Binding Map.AttackTypeOptions}" SelectedItem="{Binding Map.UnitAttackType}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitArmorType}" />
+                            <ComboBox ItemsSource="{Binding Map.ArmorTypeOptions}" SelectedItem="{Binding Map.UnitArmorType}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <CheckBox Content="{x:Static res:Strings.UnitIsHero}" IsChecked="{Binding Map.UnitIsHero}" />
+                        <CheckBox Content="{x:Static res:Strings.UnitIsMounted}" IsChecked="{Binding Map.UnitIsMounted}" Margin="8,0,0,0" />
+                        <CheckBox Content="{x:Static res:Strings.UnitDoubleShot}" IsChecked="{Binding Map.UnitDoubleShot}" Margin="8,0,0,0" />
+                    </StackPanel>
+
+                    <TextBlock Text="{x:Static res:Strings.UnitSpriteSheet}" FontWeight="Bold" Margin="0,12,0,4" />
+                    <TextBlock Text="{x:Static res:Strings.UnitSpriteImage}" />
+                    <TextBox Text="{Binding Map.UnitSpriteImage, UpdateSourceTrigger=LostFocus}" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitSpriteFrameW}" />
+                            <TextBox Text="{Binding Map.UnitSpriteFrameW, UpdateSourceTrigger=LostFocus}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitSpriteFrameH}" />
+                            <TextBox Text="{Binding Map.UnitSpriteFrameH, UpdateSourceTrigger=LostFocus}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <StackPanel Width="120">
+                            <TextBlock Text="{x:Static res:Strings.UnitSpriteFrameCount}" />
+                            <TextBox Text="{Binding Map.UnitSpriteFrameCount, UpdateSourceTrigger=LostFocus}" />
+                        </StackPanel>
+                        <StackPanel Width="120" Margin="8,0,0,0">
+                            <TextBlock Text="{x:Static res:Strings.UnitSpriteScale}" />
+                            <TextBox Text="{Binding Map.UnitSpriteScale, UpdateSourceTrigger=LostFocus}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TextBlock Text="{x:Static res:Strings.UnitAnimations}" FontWeight="Bold" Margin="0,12,0,4" />
+                    <ItemsControl ItemsSource="{Binding Map.UnitAnimationPreviews}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource Editor.Border.Base}" BorderThickness="1" Margin="4" Padding="4">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Image Source="{Binding Frame}"
+                                               Width="64"
+                                               Height="64"
+                                               Stretch="Uniform"
+                                               RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <Image.LayoutTransform>
+                                                <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" />
+                                            </Image.LayoutTransform>
+                                        </Image>
+                                        <TextBlock Text="{Binding Name}" Margin="0,4,0,0" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
                 <TextBlock Text="{x:Static res:Strings.SelectionTools}" FontWeight="Bold" Margin="0,16,0,6" />
                 <Button Content="{x:Static res:Strings.DeleteSelection}" cal:Message.Attach="Map.DeleteSelected" />
                 <Button Content="{x:Static res:Strings.SaveMap}" Margin="0,8,0,0" cal:Message.Attach="Map.SaveMap" IsEnabled="{Binding Map.CanSaveMap}" />
