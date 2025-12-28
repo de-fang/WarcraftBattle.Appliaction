@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Xml.Serialization;
 using WarcraftBattle.Engine.AI;
 using WarcraftBattle.Engine.Animation;
 using WarcraftBattle.Shared.Enums;
@@ -2089,11 +2088,7 @@ namespace WarcraftBattle.Engine
 
         private GameConfigData LoadConfigFromFile(string path)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(GameConfigData));
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-            {
-                return (GameConfigData)serializer.Deserialize(fs);
-            }
+            return GameConfigSerializer.LoadFromFile(path);
         }
 
         private UnitStats GetOrLoadUnitStats(string key, Dictionary<string, UnitConfig> rawUnits, HashSet<string> visiting)
@@ -2292,4 +2287,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
