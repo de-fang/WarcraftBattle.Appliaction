@@ -723,6 +723,76 @@ namespace WarcraftBattle.Engine
             GameServices.Register<IPathfinder>(Pathfinder);
         }
 
+        public double CalculateMinZoom()
+        {
+            double minZoomX = ViewportWidth / WorldWidth;
+            double minZoomY = ViewportHeight / MapDepth;
+            double calculatedMinZoom = Math.Max(minZoomX, minZoomY) * 1.05;
+            return Math.Max(0.5, calculatedMinZoom);
+        }
+
+        public void RefreshZoomLimits()
+        {
+            MinZoom = CalculateMinZoom();
+            Zoom = Math.Max(MinZoom, Math.Min(MaxZoom, Zoom));
+        }
+
+        public void ApplyStageDimensions(double width, double height)
+        {
+            if (CurrentStageInfo == null) return;
+
+            double minSize = TileSize;
+            double newWidth = Math.Max(minSize, width);
+            double newHeight = Math.Max(minSize, height);
+
+            if (Math.Abs(CurrentStageInfo.MapWidth - newWidth) < 0.01
+                && Math.Abs(CurrentStageInfo.MapHeight - newHeight) < 0.01)
+            {
+                return;
+            }
+
+            CurrentStageInfo.MapWidth = newWidth;
+            CurrentStageInfo.MapHeight = newHeight;
+
+            InitializeMap(CurrentStageInfo);
+            EntityManager.RebuildStaticGrid();
+            RefreshZoomLimits();
+            ClampCamera();
+        }
+
+        public void UpdateEnemyBaseHp(double hp)
+        {
+            if (CurrentStageInfo == null) return;
+
+            double newHp = Math.Max(0, hp);
+            CurrentStageInfo.EnemyBaseHp = newHp;
+
+            foreach (var entity in Entities)
+            {
+                if (entity is Building building && building.Id == "stronghold")
+                {
+                    building.MaxHP = newHp;
+                    building.HP = newHp;
+                }
+            }
+        }
+
+        public void CenterCameraOnMap(bool resetZoom = false)
+        {
+            RefreshZoomLimits();
+            if (resetZoom)
+            {
+                Zoom = Math.Max(MinZoom, Math.Min(MaxZoom, 1.0));
+            }
+
+            var centerIso = WorldToIso(WorldWidth / 2, MapDepth / 2);
+            double visibleW = ViewportWidth / Zoom;
+            double visibleH = ViewportHeight / Zoom;
+            CameraX = centerIso.X - visibleW / 2;
+            CameraY = centerIso.Y - visibleH / 2;
+            ClampCamera();
+        }
+
 
 
 
@@ -2292,4 +2362,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
