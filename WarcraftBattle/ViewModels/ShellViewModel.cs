@@ -1,6 +1,7 @@
 using Caliburn.Micro;
 using System;
 using System.Linq;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging; // 必须引用，用于处理图标
@@ -50,6 +51,12 @@ namespace WarcraftBattle.ViewModels
         private string _resultReward = "";
         private Brush _resultColor = Brushes.White;
 
+        private string _stageTitle = "";
+        private string _stageWidth = "";
+        private string _stageHeight = "";
+        private string _stageHp = "";
+        private bool _suppressStageEdit = false;
+
         // --- 可见性属性 ---
         private Visibility _menuVisibility = Visibility.Visible;
         private Visibility _levelSelectVisibility = Visibility.Collapsed;
@@ -91,6 +98,54 @@ namespace WarcraftBattle.ViewModels
         public string ResultTitle { get => _resultTitle; set => Set(ref _resultTitle, value); }
         public string ResultReward { get => _resultReward; set => Set(ref _resultReward, value); }
         public Brush ResultColor { get => _resultColor; set => Set(ref _resultColor, value); }
+
+        public string StageTitle
+        {
+            get => _stageTitle;
+            set
+            {
+                if (Set(ref _stageTitle, value) && !_suppressStageEdit)
+                {
+                    ApplyStageTitle(value);
+                }
+            }
+        }
+
+        public string StageWidth
+        {
+            get => _stageWidth;
+            set
+            {
+                if (Set(ref _stageWidth, value) && !_suppressStageEdit)
+                {
+                    ApplyStageDimension(value, isWidth: true);
+                }
+            }
+        }
+
+        public string StageHeight
+        {
+            get => _stageHeight;
+            set
+            {
+                if (Set(ref _stageHeight, value) && !_suppressStageEdit)
+                {
+                    ApplyStageDimension(value, isWidth: false);
+                }
+            }
+        }
+
+        public string StageHp
+        {
+            get => _stageHp;
+            set
+            {
+                if (Set(ref _stageHp, value) && !_suppressStageEdit)
+                {
+                    ApplyStageHp(value);
+                }
+            }
+        }
 
         public Visibility MenuVisibility { get => _menuVisibility; set => Set(ref _menuVisibility, value); }
         public Visibility LevelSelectVisibility { get => _levelSelectVisibility; set => Set(ref _levelSelectVisibility, value); }
@@ -462,10 +517,17 @@ namespace WarcraftBattle.ViewModels
             SetVisibility(game: true);
             RefreshActionButtons();
             UpdateResources();
+            SyncStageEditorFields();
         }
 
         public void NextLevel() => StartGame(_engine.Stage + 1);
         public void RetryLevel() => StartGame(_engine.Stage);
+
+        public void ResetStageView()
+        {
+            if (_engine.CurrentStageInfo == null) return;
+            _engine.CenterCameraOnMap(resetZoom: true);
+        }
 
         private void SetVisibility(bool menu = false, bool levelSelect = false, bool shop = false, bool game = false, bool result = false)
         {
@@ -532,6 +594,51 @@ namespace WarcraftBattle.ViewModels
                 UpgradeCostText = "MAX LEVEL";
                 UpgradeBtnVisibility = Visibility.Collapsed;
             }
+        }
+
+        private void SyncStageEditorFields()
+        {
+            var stage = _engine.CurrentStageInfo;
+            if (stage == null) return;
+
+            _suppressStageEdit = true;
+            StageTitle = stage.Title ?? "";
+            StageWidth = stage.MapWidth.ToString("0", CultureInfo.CurrentCulture);
+            StageHeight = stage.MapHeight.ToString("0", CultureInfo.CurrentCulture);
+            StageHp = stage.EnemyBaseHp.ToString("0", CultureInfo.CurrentCulture);
+            _suppressStageEdit = false;
+        }
+
+        private void ApplyStageTitle(string value)
+        {
+            if (_engine.CurrentStageInfo == null) return;
+            _engine.CurrentStageInfo.Title = value ?? "";
+            LevelText = _engine.CurrentStageInfo.Title;
+        }
+
+        private void ApplyStageDimension(string value, bool isWidth)
+        {
+            if (_engine.CurrentStageInfo == null) return;
+            if (!TryParseDouble(value, out var parsed)) return;
+
+            double width = _engine.CurrentStageInfo.MapWidth;
+            double height = _engine.CurrentStageInfo.MapHeight;
+            if (isWidth) width = parsed;
+            else height = parsed;
+
+            _engine.ApplyStageDimensions(width, height);
+        }
+
+        private void ApplyStageHp(string value)
+        {
+            if (!TryParseDouble(value, out var parsed)) return;
+            _engine.UpdateEnemyBaseHp(parsed);
+        }
+
+        private bool TryParseDouble(string value, out double result)
+        {
+            return double.TryParse(value, NumberStyles.Float, CultureInfo.CurrentCulture, out result)
+                || double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
         }
 
         private void UpdateResources()

@@ -130,6 +130,48 @@
                     Style="{StaticResource GameButtonStyle}" />
             </StackPanel>
 
+            <Border
+                Width="240"
+                Margin="20,80,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource vscode.Panel.Style}">
+                <StackPanel Margin="12">
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource GameAccentBrush}"
+                        Text="Stage Editor" />
+
+                    <StackPanel Margin="0,10,0,0">
+                        <TextBlock FontSize="11" Foreground="{StaticResource vscode.Brush.TextDim}" Text="Title" />
+                        <TextBox Text="{Binding StageTitle, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,8,0,0">
+                        <TextBlock FontSize="11" Foreground="{StaticResource vscode.Brush.TextDim}" Text="Width" />
+                        <TextBox Text="{Binding StageWidth, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,8,0,0">
+                        <TextBlock FontSize="11" Foreground="{StaticResource vscode.Brush.TextDim}" Text="Height" />
+                        <TextBox Text="{Binding StageHeight, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,8,0,0">
+                        <TextBlock FontSize="11" Foreground="{StaticResource vscode.Brush.TextDim}" Text="HP" />
+                        <TextBox Text="{Binding StageHp, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <Button
+                        Margin="0,12,0,0"
+                        Padding="6,4"
+                        cal:Message.Attach="ResetStageView"
+                        Content="居中/重置视角"
+                        Style="{StaticResource GameButtonStyle}" />
+                </StackPanel>
+            </Border>
+
             <Grid Margin="20,0,20,20" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

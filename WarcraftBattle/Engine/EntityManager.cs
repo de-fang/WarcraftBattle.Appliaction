@@ -45,6 +45,22 @@ namespace WarcraftBattle.Engine
             }
         }
 
+        public void RebuildStaticGrid()
+        {
+            if (_staticGrid == null) return;
+
+            for (int i = 0; i < _staticGrid.Length; i++)
+            {
+                _staticGrid[i].Clear();
+            }
+
+            for (int i = 0; i < Entities.Count; i++)
+            {
+                var e = Entities[i];
+                if (IsStatic(e)) AddToGrid(_staticGrid, e);
+            }
+        }
+
         private bool IsStatic(Entity e) => e is Building || e is Obstacle;
 
         public void Add(Entity entity)
