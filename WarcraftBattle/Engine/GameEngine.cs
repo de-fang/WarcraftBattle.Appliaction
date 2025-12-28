@@ -1071,15 +1071,6 @@ namespace WarcraftBattle.Engine
                     ShakeIntensity = 0;
             }
 
-            int houseCount = 0;
-            for (int i = 0; i < Entities.Count; i++)
-            {
-                if (Entities[i] is Building b && b.Team == TeamType.Human && b.Name == "姘戝眳")
-                    houseCount++;
-            }
-            Gold += (GoldPerSecond + houseCount * HouseGoldPerSec) * dt;
-            OnResourceUpdate?.Invoke();
-
             _aiTimer += dt;
             double waveInterval = Math.Max(2.0, 8.0 - Stage * 0.5 - AiWaveLevel * 0.1);
             if (_aiTimer > waveInterval)
@@ -1167,17 +1158,31 @@ namespace WarcraftBattle.Engine
                 OnSelectionChanged?.Invoke();
             }
 
-            // [淇] 娓告垙缁撴潫鍒ゅ畾缁熶竴浣跨敤 Key/Id 妫€鏌ワ紝閬垮厤鍥犲悕绉颁慨鏀瑰鑷村垽瀹氬け鏁?
+            // [修正] 游戏结束判定统一使用 Key/Id 检查，避免因名称修改导致判定失效
+            int houseCount = 0;
             bool castleAlive = false;
             bool strongholdAlive = false;
             for (int i = 0; i < Entities.Count; i++)
             {
                 var e = Entities[i];
-                if (e.Team == TeamType.Human && e is Building b && b.Id == "castle")
-                    castleAlive = true;
-                else if (e.Team == TeamType.Orc && e is Building b2 && b2.Id == "stronghold")
-                    strongholdAlive = true;
+                if (e is Building b)
+                {
+                    if (b.Team == TeamType.Human)
+                    {
+                        if (b.Name == "姘戝眳")
+                            houseCount++;
+                        if (b.Id == "castle")
+                            castleAlive = true;
+                    }
+                    else if (b.Team == TeamType.Orc && b.Id == "stronghold")
+                    {
+                        strongholdAlive = true;
+                    }
+                }
             }
+
+            Gold += (GoldPerSecond + houseCount * HouseGoldPerSec) * dt;
+            OnResourceUpdate?.Invoke();
 
             if (!castleAlive)
                 GameOver(false);
