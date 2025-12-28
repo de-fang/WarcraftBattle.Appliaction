@@ -16,6 +16,7 @@ namespace WarcraftBattle.Engine
     public class GameEngine : IGameContext
     {
         public bool ShowDebug = false;
+        public bool IsEditorMode { get; set; } = false;
         private bool _isPathfindingDirty = true;
         public double ViewportWidth = 2000;
         public double ViewportHeight = 720;
@@ -822,7 +823,10 @@ namespace WarcraftBattle.Engine
                 if (obs.Height > 0) obstacle.Height = obs.Height;
                 EntityManager.Add(obstacle);
             }
-            GenerateObstacles((int)CurrentStageInfo.RandomObstacleCount);
+            if (!IsEditorMode)
+            {
+                GenerateObstacles((int)CurrentStageInfo.RandomObstacleCount);
+            }
             var playerBase = Entities.FirstOrDefault(e =>
                 e.Team == TeamType.Human && e is Building b && b.Id == "castle"
             );
@@ -1038,8 +1042,11 @@ namespace WarcraftBattle.Engine
         {
             TotalTime += dt;
 
-            // Update AI
-            AI.Update(dt);
+            if (!IsEditorMode)
+            {
+                // Update AI
+                AI.Update(dt);
+            }
 
             // [鍒嗙墖瀵昏矾] 椹卞姩瀵昏矾璁＄畻
             Pathfinder?.Update();
@@ -1071,21 +1078,27 @@ namespace WarcraftBattle.Engine
                     ShakeIntensity = 0;
             }
 
-            int houseCount = 0;
-            for (int i = 0; i < Entities.Count; i++)
+            if (!IsEditorMode)
             {
-                if (Entities[i] is Building b && b.Team == TeamType.Human && b.Name == "姘戝眳")
-                    houseCount++;
+                int houseCount = 0;
+                for (int i = 0; i < Entities.Count; i++)
+                {
+                    if (Entities[i] is Building b && b.Team == TeamType.Human && b.Name == "姘戝眳")
+                        houseCount++;
+                }
+                Gold += (GoldPerSecond + houseCount * HouseGoldPerSec) * dt;
+                OnResourceUpdate?.Invoke();
             }
-            Gold += (GoldPerSecond + houseCount * HouseGoldPerSec) * dt;
-            OnResourceUpdate?.Invoke();
 
-            _aiTimer += dt;
-            double waveInterval = Math.Max(2.0, 8.0 - Stage * 0.5 - AiWaveLevel * 0.1);
-            if (_aiTimer > waveInterval)
+            if (!IsEditorMode)
             {
-                _aiTimer = 0;
-                SpawnEnemyWave();
+                _aiTimer += dt;
+                double waveInterval = Math.Max(2.0, 8.0 - Stage * 0.5 - AiWaveLevel * 0.1);
+                if (_aiTimer > waveInterval)
+                {
+                    _aiTimer = 0;
+                    SpawnEnemyWave();
+                }
             }
 
             EntityManager.Update(dt, this);
@@ -1385,7 +1398,10 @@ namespace WarcraftBattle.Engine
         { /* ... [淇濇寔鍘熸牱] ... */
             if (IsBuildMode && PendingBuildingInfo != null && CanBuildAtGhost)
             {
-                Gold -= PendingBuildingInfo.Cost;
+                if (!IsEditorMode)
+                {
+                    Gold -= PendingBuildingInfo.Cost;
+                }
                 var b = new Building(
                     GhostPosition.X,
                     GhostPosition.Y,
@@ -1394,15 +1410,21 @@ namespace WarcraftBattle.Engine
                 );
                 EntityManager.Add(b);
                 InvalidatePathfinding();
-                AddFloater(
-                    $"{PendingBuildingInfo.Name} 寤烘垚!",
-                    GhostPosition.X,
-                    GhostPosition.Y - 50,
-                    "Gold"
-                );
+                if (!IsEditorMode)
+                {
+                    AddFloater(
+                        $"{PendingBuildingInfo.Name} 寤烘垚!",
+                        GhostPosition.X,
+                        GhostPosition.Y - 50,
+                        "Gold"
+                    );
+                }
                 IsBuildMode = false;
                 PendingBuildingInfo = null;
-                OnResourceUpdate?.Invoke();
+                if (!IsEditorMode)
+                {
+                    OnResourceUpdate?.Invoke();
+                }
             }
             else if (IsBuildMode)
             {
@@ -1414,6 +1436,14 @@ namespace WarcraftBattle.Engine
         public void StartPlacingBuilding(string buildingId)
         { /* ... [淇濇寔鍘熸牱] ... */
             var b = Buildings.Find(x => x.Id == buildingId); /*if (b == null || b.Level >= b.Max) return;*/
+            if (b == null)
+                return;
+            if (IsEditorMode)
+            {
+                PendingBuildingInfo = b;
+                IsBuildMode = true;
+                return;
+            }
             int count = Entities.Count(e =>
                 e is Building bd && bd.Name == b.Name && bd.Team == TeamType.Human
             );
@@ -1473,21 +1503,26 @@ namespace WarcraftBattle.Engine
             }
 
             // 妫€鏌ユ槸鍚︾鍩哄湴澶繙 (淇濇寔鍘熼€昏緫)
-            bool nearBase = false;
-            foreach (var e in Entities)
+            if (!IsEditorMode)
             {
-                if (e is Building b && b.Id == "castle")
+                bool nearBase = false;
+                foreach (var e in Entities)
                 {
-                    double d = Math.Sqrt(Math.Pow(e.X - x, 2) + Math.Pow(e.Y - y, 2));
-                    if (d < 800)
-                        nearBase = true; // 绋嶅井鏀瑰ぇ浜嗚寖鍥?
+                    if (e is Building b && b.Id == "castle")
+                    {
+                        double d = Math.Sqrt(Math.Pow(e.X - x, 2) + Math.Pow(e.Y - y, 2));
+                        if (d < 800)
+                            nearBase = true; // 绋嶅井鏀瑰ぇ浜嗚寖鍥?
+                    }
                 }
-            }
-            // 濡傛灉娌℃湁鍩哄湴锛堟瘮濡傜涓€搴э級锛屽垯鍏佽寤洪€?
-            if (!Entities.Any(e => e is Building b && b.Id == "castle"))
-                nearBase = true;
+                // 濡傛灉娌℃湁鍩哄湴锛堟瘮濡傜涓€搴э級锛屽垯鍏佽寤洪€?
+                if (!Entities.Any(e => e is Building b && b.Id == "castle"))
+                    nearBase = true;
 
-            return nearBase;
+                return nearBase;
+            }
+
+            return true;
         }
 
         public int GetFloaterCount() => _floaterQueue.Count;
@@ -2292,4 +2327,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
