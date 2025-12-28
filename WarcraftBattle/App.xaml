@@ -1,0 +1,176 @@
+<Application
+    x:Class="WarcraftBattle.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WarcraftBattle">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!-- VS Code Style Colors -->
+                    <Color x:Key="vscode.Color.Background">#1E1E1E</Color>
+                    <Color x:Key="vscode.Color.PanelBackground">#252526</Color>
+                    <Color x:Key="vscode.Color.Border">#3C3C3C</Color>
+                    <Color x:Key="vscode.Color.Accent">#007ACC</Color>
+                    <Color x:Key="vscode.Color.Text">#D4D4D4</Color>
+                    <Color x:Key="vscode.Color.Button.Background">#3A3D41</Color>
+                    <Color x:Key="vscode.Color.Button.MouseOver.Background">#4A4D51</Color>
+                    <Color x:Key="vscode.Color.ScrollBar.Thumb">#686868</Color>
+                    <Color x:Key="vscode.Color.ScrollBar.Thumb.MouseOver">#9E9E9E</Color>
+                    <Color x:Key="vscode.Color.Danger">#F44747</Color>
+                    <Color x:Key="vscode.Color.Warning">#FFA500</Color>
+                    <Color x:Key="vscode.Color.TextDim">#888888</Color>
+
+                    <!-- Brushes -->
+                    <SolidColorBrush x:Key="vscode.Brush.Background" Color="{StaticResource vscode.Color.Background}" />
+                    <SolidColorBrush x:Key="vscode.Brush.PanelBackground" Color="{StaticResource vscode.Color.PanelBackground}" />
+                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent_Light" Color="#11252526" />
+                    <SolidColorBrush x:Key="vscode.Brush.BackgroundOverlay" Color="#E61E1E1E" />
+                    <SolidColorBrush x:Key="vscode.Brush.PanelBackgroundTransparent" Color="#AA252526" />
+                    <SolidColorBrush x:Key="vscode.Brush.Border" Color="{StaticResource vscode.Color.Border}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Accent" Color="{StaticResource vscode.Color.Accent}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Text" Color="{StaticResource vscode.Color.Text}" />
+                    <SolidColorBrush x:Key="vscode.Brush.TextDim" Color="{StaticResource vscode.Color.TextDim}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Button.Background" Color="{StaticResource vscode.Color.Button.Background}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Button.MouseOver.Background" Color="{StaticResource vscode.Color.Button.MouseOver.Background}" />
+                    <SolidColorBrush x:Key="vscode.Brush.ScrollBar.Thumb" Color="{StaticResource vscode.Color.ScrollBar.Thumb}" />
+                    <SolidColorBrush x:Key="vscode.Brush.ScrollBar.Thumb.MouseOver" Color="{StaticResource vscode.Color.ScrollBar.Thumb.MouseOver}"/>
+                    <SolidColorBrush x:Key="vscode.Brush.Danger" Color="{StaticResource vscode.Color.Danger}" />
+                    <SolidColorBrush x:Key="vscode.Brush.Warning" Color="{StaticResource vscode.Color.Warning}" />
+                    
+                    <!-- Mapped Brushes for existing keys -->
+                    <SolidColorBrush x:Key="GameDarkBg" Color="#CC1E1E1E" />
+                    <SolidColorBrush x:Key="GameBorder" Color="{StaticResource vscode.Color.Border}" />
+                    <SolidColorBrush x:Key="GameAccent" Color="{StaticResource vscode.Color.Accent}" />
+                    <SolidColorBrush x:Key="GameAccentBrush" Color="{StaticResource vscode.Color.Accent}" />
+                    <SolidColorBrush x:Key="GameText" Color="{StaticResource vscode.Color.Text}" />
+                    <LinearGradientBrush x:Key="GamePanelBrush" StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#EE252526" />
+                        <GradientStop Offset="1" Color="#DD1E1E1E" />
+                    </LinearGradientBrush>
+
+                    <!-- Base Window Style -->
+                    <Style TargetType="{x:Type Window}">
+                        <Setter Property="Background" Value="{StaticResource vscode.Brush.Background}" />
+                    </Style>
+                    <Style TargetType="{x:Type Page}">
+                        <Setter Property="Background" Value="{StaticResource vscode.Brush.Background}" />
+                    </Style>
+
+                    <Style x:Key="vscode.Panel.Style" TargetType="Border">
+                        <Setter Property="Background" Value="{StaticResource vscode.Brush.PanelBackground}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource vscode.Brush.Border}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="CornerRadius" Value="4" />
+                    </Style>
+
+                    <Style x:Key="GameButtonStyle" TargetType="Button">
+                        <Setter Property="Background" Value="{StaticResource vscode.Brush.Button.Background}" />
+                        <Setter Property="Foreground" Value="{StaticResource vscode.Brush.Text}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource vscode.Brush.Border}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border
+                                        x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="2">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="{StaticResource vscode.Brush.Button.MouseOver.Background}" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="{StaticResource vscode.Brush.Button.Background}" />
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="GameProgressBarStyle" TargetType="ProgressBar">
+                        <Setter Property="Height" Value="12" />
+                        <Setter Property="Background" Value="{StaticResource vscode.Brush.Border}" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Foreground" Value="{StaticResource vscode.Brush.Accent}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ProgressBar">
+                                    <Grid>
+                                        <Border
+                                            Name="PART_Track"
+                                            Background="{TemplateBinding Background}"
+                                            CornerRadius="2" />
+                                        <Border
+                                            Name="PART_Indicator"
+                                            HorizontalAlignment="Left"
+                                            Background="{TemplateBinding Foreground}"
+                                            CornerRadius="2" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="vscode.ScrollBar.Thumb.Style" TargetType="{x:Type Thumb}">
+                        <Setter Property="OverridesDefaultStyle" Value="true" />
+                        <Setter Property="IsTabStop" Value="false" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Border Name="thumbBorder" Background="{StaticResource vscode.Brush.ScrollBar.Thumb}" CornerRadius="2" />
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="thumbBorder" Property="Background" Value="{StaticResource vscode.Brush.ScrollBar.Thumb.MouseOver}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+                        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                        <Setter Property="Width" Value="10" />
+                        <Setter Property="MinWidth" Value="10" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid x:Name="Bg" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                        <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Command="{x:Static ScrollBar.LineUpCommand}"  />
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Command="{x:Static ScrollBar.LineDownCommand}"/>
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb Style="{StaticResource vscode.ScrollBar.Thumb.Style}" />
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <local:AppBootstrapper x:Key="Start" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
