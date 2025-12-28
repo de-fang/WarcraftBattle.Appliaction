@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging; // 必须引用，用于处理图标
-using System.Windows.Threading;
 using WarcraftBattle.Engine;
 using WarcraftBattle.Engine.Animation;
 using WarcraftBattle.Models;
@@ -16,7 +15,6 @@ namespace WarcraftBattle.ViewModels
     public class ShellViewModel : Screen
     {
         private GameEngine _engine;
-        private DispatcherTimer _uiTimer;
         private TimeSpan _lastRenderTime;
 
 
@@ -136,11 +134,6 @@ namespace WarcraftBattle.ViewModels
 
             // 渲染循环
             CompositionTarget.Rendering += OnRendering;
-
-            // UI 更新定时器 (低频)
-            _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
-            _uiTimer.Tick += (s, e) => UpdateResources();
-            _uiTimer.Start();
 
             _lastRenderTime = TimeSpan.FromTicks(DateTime.Now.Ticks);
 
@@ -410,7 +403,6 @@ namespace WarcraftBattle.ViewModels
                                 OnClick = (o) =>
                                 {
                                     _engine.SpawnUnit(((ActionButtonModel)o).Id, TeamType.Human);
-                                    UpdateResources();
                                 }
                             });
                         }
@@ -461,7 +453,6 @@ namespace WarcraftBattle.ViewModels
             _engine.TimeScale = 1.0;
             SetVisibility(game: true);
             RefreshActionButtons();
-            UpdateResources();
         }
 
         public void NextLevel() => StartGame(_engine.Stage + 1);
