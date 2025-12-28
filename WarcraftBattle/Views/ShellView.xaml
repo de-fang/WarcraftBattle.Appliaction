@@ -28,7 +28,7 @@
             Engine="{Binding Engine}"
             Visibility="{Binding GameVisibility}" />
 
-        <Grid Visibility="{Binding GameVisibility}">
+        <Grid Visibility="{Binding GameHudVisibility}">
             <Border
                 Height="48"
                 Margin="0,15"
@@ -435,6 +435,160 @@
             </Grid>
         </Grid>
 
+        <Grid Visibility="{Binding EditorVisibility}">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Column="0"
+                    Padding="16"
+                    Style="{StaticResource vscode.Panel.Style}">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource GameAccentBrush}"
+                            Text="LEVEL EDITOR" />
+
+                        <TextBlock
+                            Margin="0,12,0,4"
+                            FontSize="12"
+                            Foreground="{StaticResource vscode.Brush.TextDim}"
+                            Text="Stage List" />
+                        <ScrollViewer Height="120" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding EditorStageList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            Margin="0,2"
+                                            cal:Message.Attach="Execute"
+                                            Style="{StaticResource GameButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="0,0,6,0"
+                                                    Foreground="{StaticResource GameAccentBrush}"
+                                                    Text="{Binding StageId, StringFormat=0{0}}" />
+                                                <TextBlock Text="{Binding Title}" />
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <TextBlock
+                            Margin="0,12,0,4"
+                            FontSize="12"
+                            Foreground="{StaticResource vscode.Brush.TextDim}"
+                            Text="Placement Team" />
+                        <ComboBox
+                            ItemsSource="{Binding EditorTeams}"
+                            SelectedItem="{Binding EditorPlacementTeam}" />
+
+                        <TextBlock
+                            Margin="0,12,0,4"
+                            FontSize="12"
+                            Foreground="{StaticResource vscode.Brush.TextDim}"
+                            Text="Tools" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Margin="0,0,6,0"
+                                cal:Message.Attach="SelectEditorTool"
+                                Content="选择/移动"
+                                Style="{StaticResource GameButtonStyle}" />
+                            <Button
+                                cal:Message.Attach="DeleteEditorSelection"
+                                Content="删除"
+                                Style="{StaticResource GameButtonStyle}" />
+                        </StackPanel>
+
+                        <TabControl Margin="0,12,0,0">
+                            <TabItem Header="建筑">
+                                <ScrollViewer Height="220" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding EditorBuildingList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Width="72"
+                                                    Margin="4"
+                                                    cal:Message.Attach="Execute"
+                                                    Style="{StaticResource GameButtonStyle}"
+                                                    ToolTip="{Binding Name}">
+                                                    <StackPanel>
+                                                        <Image
+                                                            Height="36"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                            Source="{Binding Icon}"
+                                                            Stretch="Uniform" />
+                                                        <TextBlock
+                                                            FontSize="10"
+                                                            Text="{Binding Name}"
+                                                            TextAlignment="Center"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="障碍">
+                                <ScrollViewer Height="220" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding EditorObstacleList}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Width="72"
+                                                    Margin="4"
+                                                    cal:Message.Attach="Execute"
+                                                    Style="{StaticResource GameButtonStyle}"
+                                                    ToolTip="{Binding Name}">
+                                                    <StackPanel>
+                                                        <Image
+                                                            Height="36"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                            Source="{Binding Icon}"
+                                                            Stretch="Uniform" />
+                                                        <TextBlock
+                                                            FontSize="10"
+                                                            Text="{Binding Name}"
+                                                            TextAlignment="Center"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button
+                        Width="140"
+                        Height="42"
+                        cal:Message.Attach="GoToMenu"
+                        Content="返回菜单"
+                        Style="{StaticResource GameButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
         <Grid Background="{StaticResource vscode.Brush.BackgroundOverlay}" Visibility="{Binding MenuVisibility}">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -471,6 +625,11 @@
                         Margin="0,5"
                         cal:Message.Attach="GoToLevelSelect"
                         Content="CAMPAIGN // 战役模式"
+                        Style="{StaticResource GameButtonStyle}" />
+                    <Button
+                        Margin="0,5"
+                        cal:Message.Attach="GoToEditor"
+                        Content="EDITOR // 关卡编辑"
                         Style="{StaticResource GameButtonStyle}" />
                     <Button
                         Margin="0,5"

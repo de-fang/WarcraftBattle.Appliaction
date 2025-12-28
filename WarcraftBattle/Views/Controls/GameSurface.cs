@@ -253,6 +253,10 @@ namespace WarcraftBattle.Views.Controls
                 {
                     Engine.ShowDebug = !Engine.ShowDebug;
                 }
+                if ((e.Key == System.Windows.Input.Key.Delete || e.Key == System.Windows.Input.Key.Back) && Engine != null && Engine.IsEditorMode)
+                {
+                    Engine.DeleteSelectedEditorEntity();
+                }
             };
 
             MouseLeftButtonDown += (s, e) =>

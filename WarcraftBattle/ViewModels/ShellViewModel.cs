@@ -28,6 +28,10 @@ namespace WarcraftBattle.ViewModels
         public BindableCollection<ShopUnitItem> ShopUnitList { get; } = new BindableCollection<ShopUnitItem>();
         public BindableCollection<StageItemModel> StageList { get; } = new BindableCollection<StageItemModel>();
         public BindableCollection<UnitInfoModel> SelectedUnitsList { get; } = new BindableCollection<UnitInfoModel>();
+        public BindableCollection<StageItemModel> EditorStageList { get; } = new BindableCollection<StageItemModel>();
+        public BindableCollection<ActionButtonModel> EditorBuildingList { get; } = new BindableCollection<ActionButtonModel>();
+        public BindableCollection<ActionButtonModel> EditorObstacleList { get; } = new BindableCollection<ActionButtonModel>();
+        public BindableCollection<string> EditorTeams { get; } = new BindableCollection<string>();
 
 
         // --- 选中项 ---
@@ -56,6 +60,8 @@ namespace WarcraftBattle.ViewModels
         private Visibility _shopVisibility = Visibility.Collapsed;
         private Visibility _gameVisibility = Visibility.Collapsed;
         private Visibility _resultVisibility = Visibility.Collapsed;
+        private Visibility _editorVisibility = Visibility.Collapsed;
+        private Visibility _gameHudVisibility = Visibility.Collapsed;
 
         private Visibility _entityInfoVisibility = Visibility.Collapsed;
         private Visibility _multiSelectionVisibility = Visibility.Collapsed;
@@ -68,6 +74,7 @@ namespace WarcraftBattle.ViewModels
         private Visibility _winButtonsVisibility = Visibility.Collapsed;
         private Visibility _loseButtonsVisibility = Visibility.Collapsed;
         private Visibility _upgradeBtnVisibility = Visibility.Collapsed;
+        private string _editorPlacementTeam = "Human";
 
         // --- 属性封装 ---
         public GameEngine Engine
@@ -97,6 +104,8 @@ namespace WarcraftBattle.ViewModels
         public Visibility ShopVisibility { get => _shopVisibility; set => Set(ref _shopVisibility, value); }
         public Visibility GameVisibility { get => _gameVisibility; set => Set(ref _gameVisibility, value); }
         public Visibility ResultVisibility { get => _resultVisibility; set => Set(ref _resultVisibility, value); }
+        public Visibility EditorVisibility { get => _editorVisibility; set => Set(ref _editorVisibility, value); }
+        public Visibility GameHudVisibility { get => _gameHudVisibility; set => Set(ref _gameHudVisibility, value); }
 
         public Visibility EntityInfoVisibility { get => _entityInfoVisibility; set => Set(ref _entityInfoVisibility, value); }
         public Visibility MultiSelectionVisibility { get => _multiSelectionVisibility; set => Set(ref _multiSelectionVisibility, value); }
@@ -109,6 +118,17 @@ namespace WarcraftBattle.ViewModels
         public Visibility WinButtonsVisibility { get => _winButtonsVisibility; set => Set(ref _winButtonsVisibility, value); }
         public Visibility LoseButtonsVisibility { get => _loseButtonsVisibility; set => Set(ref _loseButtonsVisibility, value); }
         public Visibility UpgradeBtnVisibility { get => _upgradeBtnVisibility; set => Set(ref _upgradeBtnVisibility, value); }
+        public string EditorPlacementTeam
+        {
+            get => _editorPlacementTeam;
+            set
+            {
+                if (Set(ref _editorPlacementTeam, value))
+                {
+                    _engine.EditorPlacementTeam = value;
+                }
+            }
+        }
         public string SelectedUnitName { get; set; }
         public ImageSource SelectedUnitIcon { get; set; }
         public string SelectedUnitStats { get; set; }
@@ -243,6 +263,7 @@ namespace WarcraftBattle.ViewModels
 
         public void GoToLevelSelect()
         {
+            _engine.ExitEditorMode();
             StageList.Clear();
             foreach (var s in _engine.Stages.Values)
             {
@@ -257,12 +278,69 @@ namespace WarcraftBattle.ViewModels
             SetVisibility(levelSelect: true);
         }
 
+        public void GoToEditor()
+        {
+            _engine.ExitEditorMode();
+            EditorStageList.Clear();
+            foreach (var s in _engine.Stages.Values.OrderBy(s => s.Id))
+            {
+                EditorStageList.Add(new StageItemModel
+                {
+                    StageId = s.Id,
+                    Title = s.Title,
+                    IsLocked = false,
+                    OnClick = (o) => StartEditorStage(((StageItemModel)o).StageId)
+                });
+            }
+
+            EditorBuildingList.Clear();
+            foreach (var b in _engine.BuildingRegistry.Values.OrderBy(b => b.Name))
+            {
+                EditorBuildingList.Add(new ActionButtonModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Cost = 0,
+                    Icon = GetUnitIcon(b.Id),
+                    OnClick = (o) => SelectEditorBuilding((ActionButtonModel)o)
+                });
+            }
+
+            EditorObstacleList.Clear();
+            foreach (var obs in GameEngine.ObstacleInfo.Values.OrderBy(o => o.Name))
+            {
+                EditorObstacleList.Add(new ActionButtonModel
+                {
+                    Id = obs.Key,
+                    Name = obs.Name,
+                    Cost = 0,
+                    Icon = GetUnitIcon(obs.Key),
+                    OnClick = (o) => SelectEditorObstacle((ActionButtonModel)o)
+                });
+            }
+
+            EditorTeams.Clear();
+            EditorTeams.Add("Human");
+            EditorTeams.Add("Orc");
+            EditorTeams.Add("Neutral");
+            EditorPlacementTeam = "Human";
+
+            if (EditorStageList.Any())
+            {
+                StartEditorStage(EditorStageList.First().StageId);
+            }
+
+            SetVisibility(game: true, editor: true);
+        }
+
         // =========================================================
         // 游戏内操作面板逻辑
         // =========================================================
 
         private void RefreshActionButtons()
         {
+            if (_engine.IsEditorMode)
+                return;
             UnitButtons.Clear();
             BuildingButtons.Clear();
             SkillButtons.Clear();
@@ -450,11 +528,12 @@ namespace WarcraftBattle.ViewModels
         // =========================================================
         // 导航与状态管理
         // =========================================================
-        public void GoToMenu() { _engine.State = GameState.Menu; SetVisibility(menu: true); }
+        public void GoToMenu() { _engine.State = GameState.Menu; _engine.ExitEditorMode(); SetVisibility(menu: true); }
         public void GoToShop() { UpdateShopState(); SetVisibility(shop: true); if (ShopUnitList.Count > 0) SelectShopUnit(ShopUnitList[0]); }
 
         public void StartGame(int level)
         {
+            _engine.ExitEditorMode();
             _engine.Start(level);
             LevelText = _engine.CurrentStageInfo?.Title ?? $"第 {level} 关";
             SpeedText = "1x";
@@ -467,13 +546,51 @@ namespace WarcraftBattle.ViewModels
         public void NextLevel() => StartGame(_engine.Stage + 1);
         public void RetryLevel() => StartGame(_engine.Stage);
 
-        private void SetVisibility(bool menu = false, bool levelSelect = false, bool shop = false, bool game = false, bool result = false)
+        public void StartEditorStage(int stageId)
+        {
+            _engine.StartEditor(stageId);
+            _engine.SetEditorTool(EditorTool.Select);
+        }
+
+        public void SelectEditorBuilding(ActionButtonModel model)
+        {
+            if (model == null)
+                return;
+            _engine.SetEditorTool(EditorTool.PlaceBuilding, model.Id);
+        }
+
+        public void SelectEditorObstacle(ActionButtonModel model)
+        {
+            if (model == null)
+                return;
+            _engine.SetEditorTool(EditorTool.PlaceObstacle, model.Id);
+        }
+
+        public void SelectEditorTool()
+        {
+            _engine.SetEditorTool(EditorTool.Select);
+        }
+
+        public void DeleteEditorSelection()
+        {
+            _engine.DeleteSelectedEditorEntity();
+        }
+
+        private void SetVisibility(
+            bool menu = false,
+            bool levelSelect = false,
+            bool shop = false,
+            bool game = false,
+            bool result = false,
+            bool editor = false)
         {
             MenuVisibility = menu ? Visibility.Visible : Visibility.Collapsed;
             LevelSelectVisibility = levelSelect ? Visibility.Visible : Visibility.Collapsed;
             ShopVisibility = shop ? Visibility.Visible : Visibility.Collapsed;
             GameVisibility = game ? Visibility.Visible : Visibility.Collapsed;
             ResultVisibility = result ? Visibility.Visible : Visibility.Collapsed;
+            EditorVisibility = editor ? Visibility.Visible : Visibility.Collapsed;
+            GameHudVisibility = game && !editor ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public void ToggleSpeed()

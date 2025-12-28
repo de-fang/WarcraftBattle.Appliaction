@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace WarcraftBattle.Shared.Models
 {
     public struct EntityPlacement
     {
-        public string Team; public string Type; public string Key; public double X, Y; public double Rotation; public double Width, Height;
+        public Guid EditorId; public string Team; public string Type; public string Key; public double X, Y; public double Rotation; public double Width, Height;
     }
 
     public struct StageTerrainDef
@@ -14,7 +15,7 @@ namespace WarcraftBattle.Shared.Models
 
     public struct LevelObstacleDef
     {
-        public double X, Y; public string Type; public string ImagePath; public double Width, Height; public double Rotation;
+        public Guid EditorId; public double X, Y; public string Type; public string ImagePath; public double Width, Height; public double Rotation;
     }
 
     public struct TileRectDef
