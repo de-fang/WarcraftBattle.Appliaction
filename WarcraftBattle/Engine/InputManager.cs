@@ -30,6 +30,11 @@ namespace WarcraftBattle.Engine
         private double _lastCameraX;
         private double _lastCameraY;
         private bool _dragIsSelection = false;
+        private bool _isEditorDragging = false;
+        private PointD _editorDragStartWorldPos;
+        private readonly Dictionary<Entity, PointD> _editorDragStartPositions = new Dictionary<Entity, PointD>();
+        private PointD _lastMouseWorldPos;
+        private List<Entity> _copyBuffer = new List<Entity>();
 
         // [New] Double-tap detection for control groups
         private int _lastGroupKeyPressed = -1;
@@ -50,6 +55,9 @@ namespace WarcraftBattle.Engine
             _engine.IsDraggingSelection = false;
             _engine.SelectionRect = Rect.Empty;
             _dragIsSelection = System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Shift);
+            _isEditorDragging = false;
+            _engine.EditorDragActive = false;
+            _editorDragStartPositions.Clear();
         }
 
         public void HandleDrag(double x, double y)
@@ -67,7 +75,32 @@ namespace WarcraftBattle.Engine
             }
             else if (!_engine.IsBuildMode && System.Windows.Input.Mouse.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {
-                if (_dragIsSelection)
+                if (System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Alt)
+                    && _engine.SelectedEntities.Count > 0)
+                {
+                    if (!_isEditorDragging)
+                    {
+                        _isEditorDragging = true;
+                        _engine.EditorDragActive = true;
+                        _editorDragStartWorldPos = _engine.ScreenToWorld(_touchStartX, _touchStartY);
+                        _editorDragStartPositions.Clear();
+                        foreach (var entity in _engine.SelectedEntities)
+                        {
+                            _editorDragStartPositions[entity] = new PointD(entity.X, entity.Y);
+                        }
+                    }
+
+                    var currentWorld = _engine.ScreenToWorld(x, y);
+                    var deltaX = currentWorld.X - _editorDragStartWorldPos.X;
+                    var deltaY = currentWorld.Y - _editorDragStartWorldPos.Y;
+                    foreach (var kvp in _editorDragStartPositions)
+                    {
+                        kvp.Key.X = kvp.Value.X + deltaX;
+                        kvp.Key.Y = kvp.Value.Y + deltaY;
+                    }
+                    _engine.EditorDragWorldPos = currentWorld;
+                }
+                else if (_dragIsSelection)
                 {
                     // Left mouse drag (Selection)
                     double dx = x - _touchStartX;
@@ -96,6 +129,12 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputUp(double x, double y)
         {
+            if (_isEditorDragging)
+            {
+                _isEditorDragging = false;
+                _engine.EditorDragActive = false;
+                return;
+            }
             if (_engine.IsDraggingSelection)
             {
                 PerformBoxSelection();
@@ -142,6 +181,38 @@ namespace WarcraftBattle.Engine
 
         public void HandleKeyDown(System.Windows.Input.Key key)
         {
+            if (key == System.Windows.Input.Key.Delete || key == System.Windows.Input.Key.Back)
+            {
+                _engine.RemoveSelectedEntities();
+                return;
+            }
+
+            if (System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
+            {
+                if (key == System.Windows.Input.Key.C)
+                {
+                    _copyBuffer = _engine.SelectedEntities.ToList();
+                    return;
+                }
+                if (key == System.Windows.Input.Key.V)
+                {
+                    _engine.DuplicateEntities(_copyBuffer, _lastMouseWorldPos);
+                    return;
+                }
+                if (key == System.Windows.Input.Key.D)
+                {
+                    _engine.DuplicateEntities(_engine.SelectedEntities, _lastMouseWorldPos);
+                    return;
+                }
+            }
+
+            if (key == System.Windows.Input.Key.Q || key == System.Windows.Input.Key.E)
+            {
+                double delta = key == System.Windows.Input.Key.Q ? -5 : 5;
+                _engine.RotateSelectedEntities(delta);
+                return;
+            }
+
             if (key >= System.Windows.Input.Key.D0 && key <= System.Windows.Input.Key.D9)
             {
                 int groupNumber = key - System.Windows.Input.Key.D0;
@@ -177,6 +248,7 @@ namespace WarcraftBattle.Engine
         public void HandleMouseMove(double screenX, double screenY)
         {
             var wp = _engine.ScreenToWorld(screenX, screenY);
+            _lastMouseWorldPos = wp;
             if (_engine.IsBuildMode && _engine.PendingBuildingInfo != null)
             {
                 double w = _engine.PendingBuildingInfo.Width;

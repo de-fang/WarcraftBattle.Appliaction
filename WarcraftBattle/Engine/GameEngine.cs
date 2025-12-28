@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using WarcraftBattle.Engine.AI;
 using WarcraftBattle.Engine.Animation;
+using WarcraftBattle.Engine.Components;
 using WarcraftBattle.Shared.Enums;
 using WarcraftBattle.Shared.Models;
 using WarcraftBattle.Shared.Models.Config;
@@ -1381,6 +1382,116 @@ namespace WarcraftBattle.Engine
             OnSelectionChanged?.Invoke();
         }
 
+        public void RemoveSelectedEntities()
+        {
+            if (SelectedEntities.Count == 0)
+                return;
+
+            var toRemove = SelectedEntities.ToList();
+            ClearSelection();
+            foreach (var entity in toRemove)
+            {
+                EntityManager.Remove(entity);
+            }
+            RefreshSelectionState();
+        }
+
+        public void RotateSelectedEntities(double deltaDegrees)
+        {
+            if (SelectedEntities.Count == 0)
+                return;
+
+            foreach (var entity in SelectedEntities)
+            {
+                entity.Rotation = (entity.Rotation + deltaDegrees) % 360;
+            }
+        }
+
+        public void DuplicateEntities(IEnumerable<Entity> sourceEntities, PointD targetCenter)
+        {
+            if (sourceEntities == null)
+                return;
+
+            var sourceList = sourceEntities.Where(e => e != null).ToList();
+            if (sourceList.Count == 0)
+                return;
+
+            var centerX = sourceList.Average(e => e.X);
+            var centerY = sourceList.Average(e => e.Y);
+            var offsetX = targetCenter.X - centerX;
+            var offsetY = targetCenter.Y - centerY;
+
+            var newEntities = new List<Entity>();
+            foreach (var source in sourceList)
+            {
+                var clone = CreateEntityCopy(source, source.X + offsetX, source.Y + offsetY);
+                if (clone != null)
+                {
+                    EntityManager.Add(clone);
+                    newEntities.Add(clone);
+                }
+            }
+
+            if (newEntities.Count > 0)
+            {
+                ClearSelection();
+                foreach (var entity in newEntities)
+                {
+                    AddToSelection(entity);
+                }
+                RefreshSelectionState();
+            }
+        }
+
+        private Entity? CreateEntityCopy(Entity source, double x, double y)
+        {
+            switch (source)
+            {
+                case Unit unit:
+                    var stats = unit.Stats.Clone();
+                    var newUnit = new Unit(x, y, unit.Team, unit.Key, stats)
+                    {
+                        Rotation = unit.Rotation,
+                        Facing = unit.Facing
+                    };
+                    newUnit.HP = unit.HP;
+                    var mana = unit.GetComponent<ManaComponent>();
+                    if (mana != null)
+                    {
+                        var newMana = newUnit.GetComponent<ManaComponent>();
+                        if (newMana != null)
+                            newMana.Mana = mana.Mana;
+                    }
+                    return newUnit;
+                case Building building:
+                    var info = ResolveBuildingInfo(building);
+                    if (info == null)
+                        return null;
+                    var newBuilding = new Building(x, y, building.Team, info.Clone())
+                    {
+                        Rotation = building.Rotation
+                    };
+                    newBuilding.HP = building.HP;
+                    return newBuilding;
+                case Obstacle obstacle:
+                    var newObstacle = new Obstacle(x, y, obstacle.Type, "", obstacle.Width, obstacle.Height)
+                    {
+                        Rotation = obstacle.Rotation
+                    };
+                    return newObstacle;
+                default:
+                    return null;
+            }
+        }
+
+        private BuildingInfo? ResolveBuildingInfo(Building building)
+        {
+            if (BuildingRegistry.TryGetValue(building.Id, out var info))
+                return info;
+
+            return BuildingRegistry.Values.FirstOrDefault(bp => bp.Name == building.Name);
+        }
+
         public void HandleMouseClick()
         { /* ... [淇濇寔鍘熸牱] ... */
             if (IsBuildMode && PendingBuildingInfo != null && CanBuildAtGhost)
@@ -2292,4 +2403,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
