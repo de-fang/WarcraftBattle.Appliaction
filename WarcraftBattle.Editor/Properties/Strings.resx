@@ -108,6 +108,87 @@
   <data name="ObstacleList" xml:space="preserve">
     <value>Obstacles</value>
   </data>
+  <data name="UnitEditor" xml:space="preserve">
+    <value>Unit Editor</value>
+  </data>
+  <data name="UnitSelect" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="UnitName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UnitFaction" xml:space="preserve">
+    <value>Faction</value>
+  </data>
+  <data name="UnitCost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="UnitHp" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="UnitDamage" xml:space="preserve">
+    <value>Damage</value>
+  </data>
+  <data name="UnitRange" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="UnitSpeed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="UnitCooldown" xml:space="preserve">
+    <value>Cooldown</value>
+  </data>
+  <data name="UnitWidth" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="UnitHeight" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="UnitMaxMana" xml:space="preserve">
+    <value>Max Mana</value>
+  </data>
+  <data name="UnitManaRegen" xml:space="preserve">
+    <value>Mana Regen</value>
+  </data>
+  <data name="UnitType" xml:space="preserve">
+    <value>Unit Type</value>
+  </data>
+  <data name="UnitAttackType" xml:space="preserve">
+    <value>Attack Type</value>
+  </data>
+  <data name="UnitArmorType" xml:space="preserve">
+    <value>Armor Type</value>
+  </data>
+  <data name="UnitIsHero" xml:space="preserve">
+    <value>Hero</value>
+  </data>
+  <data name="UnitIsMounted" xml:space="preserve">
+    <value>Mounted</value>
+  </data>
+  <data name="UnitDoubleShot" xml:space="preserve">
+    <value>Double Shot</value>
+  </data>
+  <data name="UnitSpriteSheet" xml:space="preserve">
+    <value>Sprite Sheet</value>
+  </data>
+  <data name="UnitSpriteImage" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="UnitSpriteFrameW" xml:space="preserve">
+    <value>Frame W</value>
+  </data>
+  <data name="UnitSpriteFrameH" xml:space="preserve">
+    <value>Frame H</value>
+  </data>
+  <data name="UnitSpriteFrameCount" xml:space="preserve">
+    <value>Frame Count</value>
+  </data>
+  <data name="UnitSpriteScale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="UnitAnimations" xml:space="preserve">
+    <value>Animations</value>
+  </data>
   <data name="StageSettings" xml:space="preserve">
     <value>Stage Settings</value>
   </data>
