@@ -30,6 +30,27 @@ namespace WarcraftBattle.Engine
         private double _lastCameraX;
         private double _lastCameraY;
         private bool _dragIsSelection = false;
+        private bool _isEditorDragging = false;
+        private PointD _editorDragStartWorldPos;
+        private readonly Dictionary<Entity, PointD> _editorDragStartPositions = new Dictionary<Entity, PointD>();
+        private PointD _lastMouseWorldPos;
+        private List<Entity> _copyBuffer = new List<Entity>();
+        private GizmoDragMode _gizmoDragMode = GizmoDragMode.None;
+        private PointD _gizmoFixedCornerWorld;
+        private PointD _gizmoStartCenterWorld;
+        private double _gizmoStartWidth;
+        private double _gizmoStartHeight;
+        private double _gizmoStartOffsetY;
+
+        private enum GizmoDragMode
+        {
+            None,
+            ResizeNW,
+            ResizeNE,
+            ResizeSE,
+            ResizeSW,
+            OffsetY
+        }
 
         // [New] Double-tap detection for control groups
         private int _lastGroupKeyPressed = -1;
@@ -50,6 +71,20 @@ namespace WarcraftBattle.Engine
             _engine.IsDraggingSelection = false;
             _engine.SelectionRect = Rect.Empty;
             _dragIsSelection = System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Shift);
+            _isEditorDragging = false;
+            _engine.EditorDragActive = false;
+            _editorDragStartPositions.Clear();
+            _gizmoDragMode = GizmoDragMode.None;
+
+            if (System.Windows.Input.Mouse.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                if (TryBeginGizmoDrag(x, y))
+                {
+                    _isEditorDragging = true;
+                    _engine.EditorDragActive = true;
+                    _dragIsSelection = false;
+                }
+            }
         }
 
         public void HandleDrag(double x, double y)
@@ -67,7 +102,36 @@ namespace WarcraftBattle.Engine
             }
             else if (!_engine.IsBuildMode && System.Windows.Input.Mouse.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {
-                if (_dragIsSelection)
+                if (_gizmoDragMode != GizmoDragMode.None)
+                {
+                    HandleGizmoDrag(x, y);
+                }
+                else if (System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Alt)
+                    && _engine.SelectedEntities.Count > 0)
+                {
+                    if (!_isEditorDragging)
+                    {
+                        _isEditorDragging = true;
+                        _engine.EditorDragActive = true;
+                        _editorDragStartWorldPos = _engine.ScreenToWorld(_touchStartX, _touchStartY);
+                        _editorDragStartPositions.Clear();
+                        foreach (var entity in _engine.SelectedEntities)
+                        {
+                            _editorDragStartPositions[entity] = new PointD(entity.X, entity.Y);
+                        }
+                    }
+
+                    var currentWorld = _engine.ScreenToWorld(x, y);
+                    var deltaX = currentWorld.X - _editorDragStartWorldPos.X;
+                    var deltaY = currentWorld.Y - _editorDragStartWorldPos.Y;
+                    foreach (var kvp in _editorDragStartPositions)
+                    {
+                        kvp.Key.X = kvp.Value.X + deltaX;
+                        kvp.Key.Y = kvp.Value.Y + deltaY;
+                    }
+                    _engine.EditorDragWorldPos = currentWorld;
+                }
+                else if (_dragIsSelection)
                 {
                     // Left mouse drag (Selection)
                     double dx = x - _touchStartX;
@@ -96,6 +160,13 @@ namespace WarcraftBattle.Engine
 
         public void HandleInputUp(double x, double y)
         {
+            if (_isEditorDragging)
+            {
+                _isEditorDragging = false;
+                _engine.EditorDragActive = false;
+                _gizmoDragMode = GizmoDragMode.None;
+                return;
+            }
             if (_engine.IsDraggingSelection)
             {
                 PerformBoxSelection();
@@ -142,6 +213,38 @@ namespace WarcraftBattle.Engine
 
         public void HandleKeyDown(System.Windows.Input.Key key)
         {
+            if (key == System.Windows.Input.Key.Delete || key == System.Windows.Input.Key.Back)
+            {
+                _engine.RemoveSelectedEntities();
+                return;
+            }
+
+            if (System.Windows.Input.Keyboard.Modifiers.HasFlag(System.Windows.Input.ModifierKeys.Control))
+            {
+                if (key == System.Windows.Input.Key.C)
+                {
+                    _copyBuffer = _engine.SelectedEntities.ToList();
+                    return;
+                }
+                if (key == System.Windows.Input.Key.V)
+                {
+                    _engine.DuplicateEntities(_copyBuffer, _lastMouseWorldPos);
+                    return;
+                }
+                if (key == System.Windows.Input.Key.D)
+                {
+                    _engine.DuplicateEntities(_engine.SelectedEntities, _lastMouseWorldPos);
+                    return;
+                }
+            }
+
+            if (key == System.Windows.Input.Key.Q || key == System.Windows.Input.Key.E)
+            {
+                double delta = key == System.Windows.Input.Key.Q ? -5 : 5;
+                _engine.RotateSelectedEntities(delta);
+                return;
+            }
+
             if (key >= System.Windows.Input.Key.D0 && key <= System.Windows.Input.Key.D9)
             {
                 int groupNumber = key - System.Windows.Input.Key.D0;
@@ -177,6 +280,7 @@ namespace WarcraftBattle.Engine
         public void HandleMouseMove(double screenX, double screenY)
         {
             var wp = _engine.ScreenToWorld(screenX, screenY);
+            _lastMouseWorldPos = wp;
             if (_engine.IsBuildMode && _engine.PendingBuildingInfo != null)
             {
                 double w = _engine.PendingBuildingInfo.Width;
@@ -196,6 +300,162 @@ namespace WarcraftBattle.Engine
             if (_engine.IsTargetingMode) { _engine.GhostPosition = wp; }
 
             _engine.HoveredEntity = _engine.GetEntityAtScreenPos(screenX, screenY);
+        }
+
+        private bool TryBeginGizmoDrag(double screenX, double screenY)
+        {
+            if (_engine.SelectedEntity == null)
+                return false;
+
+            var handle = GetGizmoHandleAt(screenX, screenY);
+            if (handle == GizmoDragMode.None)
+                return false;
+
+            var entity = _engine.SelectedEntity;
+            _gizmoDragMode = handle;
+            _gizmoStartCenterWorld = new PointD(entity.X, entity.Y);
+            _gizmoStartWidth = entity.Width;
+            _gizmoStartHeight = entity.Height;
+            _editorDragStartWorldPos = _engine.ScreenToWorld(screenX, screenY);
+            _engine.EditorDragWorldPos = _editorDragStartWorldPos;
+
+            switch (handle)
+            {
+                case GizmoDragMode.ResizeNW:
+                    _gizmoFixedCornerWorld = new PointD(
+                        entity.X + entity.Width / 2,
+                        entity.Y + entity.Height / 2
+                    );
+                    break;
+                case GizmoDragMode.ResizeNE:
+                    _gizmoFixedCornerWorld = new PointD(
+                        entity.X - entity.Width / 2,
+                        entity.Y + entity.Height / 2
+                    );
+                    break;
+                case GizmoDragMode.ResizeSE:
+                    _gizmoFixedCornerWorld = new PointD(
+                        entity.X - entity.Width / 2,
+                        entity.Y - entity.Height / 2
+                    );
+                    break;
+                case GizmoDragMode.ResizeSW:
+                    _gizmoFixedCornerWorld = new PointD(
+                        entity.X + entity.Width / 2,
+                        entity.Y - entity.Height / 2
+                    );
+                    break;
+                case GizmoDragMode.OffsetY:
+                    if (entity is Building building)
+                        _gizmoStartOffsetY = building.RenderOffsetY;
+                    else if (entity is Obstacle obstacle)
+                        _gizmoStartOffsetY = obstacle.RenderOffsetY;
+                    else
+                        return false;
+                    break;
+            }
+
+            return true;
+        }
+
+        private void HandleGizmoDrag(double screenX, double screenY)
+        {
+            var entity = _engine.SelectedEntity;
+            if (entity == null)
+                return;
+
+            var currentWorld = _engine.ScreenToWorld(screenX, screenY);
+            _engine.EditorDragWorldPos = currentWorld;
+
+            if (_gizmoDragMode == GizmoDragMode.OffsetY)
+            {
+                var deltaY = currentWorld.Y - _editorDragStartWorldPos.Y;
+                if (entity is Building building)
+                    building.RenderOffsetY = _gizmoStartOffsetY + deltaY;
+                else if (entity is Obstacle obstacle)
+                    obstacle.RenderOffsetY = _gizmoStartOffsetY + deltaY;
+                return;
+            }
+
+            if (_gizmoDragMode == GizmoDragMode.ResizeNW
+                || _gizmoDragMode == GizmoDragMode.ResizeNE
+                || _gizmoDragMode == GizmoDragMode.ResizeSE
+                || _gizmoDragMode == GizmoDragMode.ResizeSW)
+            {
+                var movingCorner = currentWorld;
+                var fixedCorner = _gizmoFixedCornerWorld;
+
+                var newWidth = Math.Abs(movingCorner.X - fixedCorner.X);
+                var newHeight = Math.Abs(movingCorner.Y - fixedCorner.Y);
+                newWidth = Math.Max(10, newWidth);
+                newHeight = Math.Max(10, newHeight);
+
+                entity.Width = newWidth;
+                entity.Height = newHeight;
+                entity.X = (movingCorner.X + fixedCorner.X) * 0.5;
+                entity.Y = (movingCorner.Y + fixedCorner.Y) * 0.5;
+            }
+        }
+
+        private GizmoDragMode GetGizmoHandleAt(double screenX, double screenY)
+        {
+            var entity = _engine.SelectedEntity;
+            if (entity == null)
+                return GizmoDragMode.None;
+
+            var halfW = entity.Width / 2;
+            var halfH = entity.Height / 2;
+            var left = entity.X - halfW;
+            var right = entity.X + halfW;
+            var top = entity.Y - halfH;
+            var bottom = entity.Y + halfH;
+
+            var center = GameEngine.WorldToIso(entity.X, entity.Y);
+            var p1 = GameEngine.WorldToIso(left, top);
+            var p2 = GameEngine.WorldToIso(right, top);
+            var p3 = GameEngine.WorldToIso(right, bottom);
+            var p4 = GameEngine.WorldToIso(left, bottom);
+
+            if (Math.Abs(entity.Rotation) > 0.01)
+            {
+                p1 = RotatePoint(p1, center, entity.Rotation);
+                p2 = RotatePoint(p2, center, entity.Rotation);
+                p3 = RotatePoint(p3, center, entity.Rotation);
+                p4 = RotatePoint(p4, center, entity.Rotation);
+            }
+
+            var topCenter = new PointD((p1.X + p2.X) * 0.5, (p1.Y + p2.Y) * 0.5);
+
+            const double handleSize = 6;
+            var threshold = (handleSize + 4) * _engine.Zoom;
+
+            if (IsNearScreenPoint(p1, screenX, screenY, threshold)) return GizmoDragMode.ResizeNW;
+            if (IsNearScreenPoint(p2, screenX, screenY, threshold)) return GizmoDragMode.ResizeNE;
+            if (IsNearScreenPoint(p3, screenX, screenY, threshold)) return GizmoDragMode.ResizeSE;
+            if (IsNearScreenPoint(p4, screenX, screenY, threshold)) return GizmoDragMode.ResizeSW;
+            if (IsNearScreenPoint(topCenter, screenX, screenY, threshold)) return GizmoDragMode.OffsetY;
+
+            return GizmoDragMode.None;
+        }
+
+        private bool IsNearScreenPoint(PointD isoPoint, double screenX, double screenY, double threshold)
+        {
+            var sx = (isoPoint.X - _engine.CameraX) * _engine.Zoom;
+            var sy = (isoPoint.Y - _engine.CameraY) * _engine.Zoom;
+            return Math.Abs(screenX - sx) <= threshold && Math.Abs(screenY - sy) <= threshold;
+        }
+
+        private static PointD RotatePoint(PointD point, PointD center, double degrees)
+        {
+            double rad = degrees * Math.PI / 180.0;
+            double cos = Math.Cos(rad);
+            double sin = Math.Sin(rad);
+            double dx = point.X - center.X;
+            double dy = point.Y - center.Y;
+            return new PointD(
+                center.X + (dx * cos - dy * sin),
+                center.Y + (dx * sin + dy * cos)
+            );
         }
 
         public void HandleDoubleClick(double x, double y)

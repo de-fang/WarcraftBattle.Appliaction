@@ -1021,6 +1021,7 @@ namespace WarcraftBattle.Views.Controls
             DrawGizmoHandle(dc, p4, handleSize);
 
             var topCenter = new PointD((p1.X + p2.X) * 0.5, (p1.Y + p2.Y) * 0.5);
+            DrawGizmoHandle(dc, topCenter, handleSize);
             var dirX = topCenter.X - center.X;
             var dirY = topCenter.Y - center.Y;
             var len = Math.Sqrt(dirX * dirX + dirY * dirY);
