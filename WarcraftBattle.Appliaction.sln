@@ -4,6 +4,8 @@ VisualStudioVersion = 18.0.11217.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle", "WarcraftBattle\WarcraftBattle.csproj", "{524F270B-7325-DE1B-9F64-64CD6D7F52C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle.Editor", "WarcraftBattle.Editor\WarcraftBattle.Editor.csproj", "{686B3A83-D24A-461E-91DE-88B0615CA73C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarcraftBattle.Shared", "WarcraftBattle.Shared\WarcraftBattle.Shared.csproj", "{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}"
 EndProject
 Global
@@ -16,6 +18,10 @@ Global
 		{524F270B-7325-DE1B-9F64-64CD6D7F52C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{524F270B-7325-DE1B-9F64-64CD6D7F52C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{524F270B-7325-DE1B-9F64-64CD6D7F52C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{686B3A83-D24A-461E-91DE-88B0615CA73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{686B3A83-D24A-461E-91DE-88B0615CA73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{686B3A83-D24A-461E-91DE-88B0615CA73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{686B3A83-D24A-461E-91DE-88B0615CA73C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F5E231A-2818-B5A7-EEEE-5C330D3D2810}.Release|Any CPU.ActiveCfg = Release|Any CPU
