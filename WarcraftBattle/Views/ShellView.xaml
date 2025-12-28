@@ -42,7 +42,7 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                         <TextBlock
-                              Foreground="{StaticResource GameAccentBrush}"
+                              Foreground="{StaticResource GameHighlightBrush}"
                             Margin="0,0,6,0"
                             VerticalAlignment="Center"
                             FontSize="16"
@@ -51,7 +51,7 @@
                             VerticalAlignment="Center"
                             FontSize="18"
                             FontWeight="Bold"
-                            Foreground="{StaticResource GameAccentBrush}">
+                            Foreground="{StaticResource GameHighlightBrush}">
                             <Run Text="{Binding GoldText}"/>
                         </TextBlock>
                     </StackPanel>
@@ -288,7 +288,7 @@
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         FontSize="10"
-                                                        Foreground="{StaticResource GameAccentBrush}"
+                                                        Foreground="{StaticResource GameHighlightBrush}"
                                                         Text="{Binding Cost}" />
                                                 </Border>
                                                 <TextBlock
@@ -306,7 +306,7 @@
                                                 <TextBlock
                                                     Margin="2,0"
                                                     FontSize="10"
-                                                    Foreground="{StaticResource GameAccentBrush}"
+                                                    Foreground="{StaticResource GameHighlightBrush}"
                                                     Text="{Binding Hotkey}" />
                                             </Border>
                                         </Grid>
@@ -342,8 +342,8 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Foreground="{StaticResource GameAccentBrush}"
-                                                    Text="{Binding Cost}" />
+                                                Foreground="{StaticResource GameHighlightBrush}"
+                                                Text="{Binding Cost}" />
                                             </Border>
                                         </Grid>
                                     </Button>
@@ -606,7 +606,7 @@
                         Grid.Row="1"
                         Margin="0,10,0,20"
                         FontSize="16"
-                        Foreground="{StaticResource GameAccentBrush}"
+                        Foreground="{StaticResource GameHighlightBrush}"
                         Text="{Binding HonorText}" />
 
                     <Border
@@ -712,7 +712,7 @@ BorderBrush="{StaticResource GameAccentBrush}"
                                 HorizontalAlignment="Right"
                                 FontSize="24"
                                 FontWeight="Bold"
-                                Foreground="{StaticResource GameAccentBrush}"
+                                Foreground="{StaticResource GameHighlightBrush}"
                                 Text="{Binding UpgradeCostText}" />
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                 <Button

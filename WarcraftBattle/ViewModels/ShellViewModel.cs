@@ -10,6 +10,7 @@ using WarcraftBattle.Engine.Animation;
 using WarcraftBattle.Models;
 using WarcraftBattle.Shared.Enums;
 using WarcraftBattle.Shared.Models;
+using WarcraftBattle.Views.Controls;
 
 namespace WarcraftBattle.ViewModels
 {
@@ -292,7 +293,10 @@ namespace WarcraftBattle.ViewModels
                         Icon = GetUnitIcon(key),
                         IsSelected = e == sel,
                         HpPct = e.MaxHP > 0 ? e.HP / e.MaxHP : 0,
-                        HpColor = (e.HP / e.MaxHP) > 0.5 ? Brushes.LimeGreen : Brushes.Red,
+                        HpColor =
+                            (e.HP / e.MaxHP) > 0.5
+                                ? ThemePalette.HpFriendlyBrush
+                                : ThemePalette.HpEnemyBrush,
                         OnClick = (o) => { _engine.SelectedEntity = ((UnitInfoModel)o).Entity; RefreshActionButtons(); }
                     });
                 }
@@ -569,7 +573,10 @@ namespace WarcraftBattle.ViewModels
                         SelectedUnitSmoothHp += (SelectedUnitHp - SelectedUnitSmoothHp) * 0.1; // Decay
                     }
 
-                    SelectedUnitHpColor = (e.HP / e.MaxHP) > 0.25 ? Brushes.LimeGreen : Brushes.Red;
+                    SelectedUnitHpColor =
+                        (e.HP / e.MaxHP) > 0.25
+                            ? ThemePalette.HpFriendlyBrush
+                            : ThemePalette.HpEnemyBrush;
 
                     if (e is Unit u)
                     {
@@ -610,7 +617,10 @@ namespace WarcraftBattle.ViewModels
                     if (item.Entity != null)
                     {
                         item.HpPct = item.Entity.MaxHP > 0 ? item.Entity.HP / item.Entity.MaxHP : 0;
-                        item.HpColor = item.HpPct > 0.5 ? Brushes.LimeGreen : Brushes.Red;
+                        item.HpColor =
+                            item.HpPct > 0.5
+                                ? ThemePalette.HpFriendlyBrush
+                                : ThemePalette.HpEnemyBrush;
                         // Trigger property change if needed, but BindableCollection items might not notify automatically unless they are ViewModels
                         // For simple polling, we might need to force refresh or use specific VM for item
                     }
@@ -622,7 +632,7 @@ namespace WarcraftBattle.ViewModels
         private void HandleGameOver(bool win, int reward)
         {
             ResultTitle = win ? "VICTORY" : "DEFEAT";
-            ResultColor = win ? Brushes.Gold : Brushes.Red;
+            ResultColor = win ? ThemePalette.HighlightBrush : ThemePalette.DangerBrush;
             ResultReward = $"荣誉奖励: +{reward}";
 
             WinButtonsVisibility = win ? Visibility.Visible : Visibility.Collapsed;
