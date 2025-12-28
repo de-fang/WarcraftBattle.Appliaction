@@ -50,6 +50,11 @@ namespace WarcraftBattle.ViewModels
         private string _resultReward = "";
         private Brush _resultColor = Brushes.White;
 
+        private int _lastGold = -1;
+        private int _lastPop = -1;
+        private int _lastMaxPop = -1;
+        private double _lastWave = double.NaN;
+
         // --- 可见性属性 ---
         private Visibility _menuVisibility = Visibility.Visible;
         private Visibility _levelSelectVisibility = Visibility.Collapsed;
@@ -538,13 +543,38 @@ namespace WarcraftBattle.ViewModels
         {
             if (_engine.State != GameState.Playing && _engine.State != GameState.Paused) return;
 
-            GoldText = $"{(int)_engine.Gold}";
-            PopText = $"{_engine.GetUnitCount()}/{_engine.MaxPop}";
-            WaveText = $"{_engine.AiWaveLevel:F1}";
+            var currentGold = (int)_engine.Gold;
+            var currentPop = _engine.GetUnitCount();
+            var currentMaxPop = _engine.MaxPop;
+            var currentWave = Math.Round(_engine.AiWaveLevel, 1);
+
+            var goldChanged = currentGold != _lastGold;
+            if (goldChanged)
+            {
+                GoldText = $"{currentGold}";
+            }
+
+            if (currentPop != _lastPop || currentMaxPop != _lastMaxPop)
+            {
+                PopText = $"{currentPop}/{currentMaxPop}";
+            }
+
+            if (!currentWave.Equals(_lastWave))
+            {
+                WaveText = $"{currentWave:F1}";
+            }
 
             // [新增] Update UI State for Feedback
-            foreach (var btn in UnitButtons) btn.UpdateState(_engine.Gold);
-            foreach (var btn in BuildingButtons) btn.UpdateState(_engine.Gold);
+            if (goldChanged)
+            {
+                foreach (var btn in UnitButtons) btn.UpdateState(_engine.Gold);
+                foreach (var btn in BuildingButtons) btn.UpdateState(_engine.Gold);
+            }
+
+            _lastGold = currentGold;
+            _lastPop = currentPop;
+            _lastMaxPop = currentMaxPop;
+            _lastWave = currentWave;
 
             // Update Dynamic Unit Info (HP, Mana, CD)
             if (EntityInfoVisibility == Visibility.Visible && _engine.SelectedEntity != null)
