@@ -18,6 +18,9 @@ namespace WarcraftBattle.ViewModels
         private GameEngine _engine;
         private DispatcherTimer _uiTimer;
         private TimeSpan _lastRenderTime;
+        private bool _isRefreshRunning;
+        private bool _isRenderingSubscribed;
+        private bool _isDisposed;
 
 
 
@@ -134,21 +137,49 @@ namespace WarcraftBattle.ViewModels
             _engine.OnGameOver += HandleGameOver;
             _engine.OnSelectionChanged += RefreshActionButtons;
 
-            // 渲染循环
-            CompositionTarget.Rendering += OnRendering;
-
-            // UI 更新定时器 (低频)
-            _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
-            _uiTimer.Tick += (s, e) => UpdateResources();
-            _uiTimer.Start();
-
-            _lastRenderTime = TimeSpan.FromTicks(DateTime.Now.Ticks);
+            InitializeUiTimer();
+            StartRefresh();
 
             GoToMenu();
         }
 
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            StartRefresh();
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            StopRefresh();
+            base.OnDeactivate(close);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+            {
+                base.Dispose(disposing);
+                return;
+            }
+
+            if (disposing)
+            {
+                StopRefresh();
+                UnsubscribeEngineEvents();
+            }
+
+            _isDisposed = true;
+            base.Dispose(disposing);
+        }
+
         private void OnRendering(object sender, EventArgs e)
         {
+            if (!_isRefreshRunning)
+            {
+                return;
+            }
+
             var args = (RenderingEventArgs)e;
 
             if (args.RenderingTime == _lastRenderTime) return;
@@ -160,6 +191,76 @@ namespace WarcraftBattle.ViewModels
             if (dt > 0.1) dt = 0.1;
 
             _engine.Update(dt);
+        }
+
+        private void InitializeUiTimer()
+        {
+            if (_uiTimer != null)
+            {
+                return;
+            }
+
+            _uiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
+            _uiTimer.Tick += UiTimerOnTick;
+        }
+
+        private void UiTimerOnTick(object sender, EventArgs e)
+        {
+            if (!_isRefreshRunning)
+            {
+                return;
+            }
+
+            UpdateResources();
+        }
+
+        private void StartRefresh()
+        {
+            if (_isDisposed || _isRefreshRunning)
+            {
+                return;
+            }
+
+            if (!_isRenderingSubscribed)
+            {
+                CompositionTarget.Rendering += OnRendering;
+                _isRenderingSubscribed = true;
+            }
+
+            InitializeUiTimer();
+            _uiTimer.Start();
+            _lastRenderTime = TimeSpan.FromTicks(DateTime.Now.Ticks);
+            _isRefreshRunning = true;
+        }
+
+        private void StopRefresh()
+        {
+            _isRefreshRunning = false;
+
+            if (_isRenderingSubscribed)
+            {
+                CompositionTarget.Rendering -= OnRendering;
+                _isRenderingSubscribed = false;
+            }
+
+            if (_uiTimer != null)
+            {
+                _uiTimer.Stop();
+                _uiTimer.Tick -= UiTimerOnTick;
+                _uiTimer = null;
+            }
+        }
+
+        private void UnsubscribeEngineEvents()
+        {
+            if (_engine == null)
+            {
+                return;
+            }
+
+            _engine.OnResourceUpdate -= UpdateResources;
+            _engine.OnGameOver -= HandleGameOver;
+            _engine.OnSelectionChanged -= RefreshActionButtons;
         }
 
         // =========================================================
