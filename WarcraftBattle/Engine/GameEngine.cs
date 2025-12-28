@@ -140,6 +140,7 @@ namespace WarcraftBattle.Engine
         private List<Building> _tempBuildings = new List<Building>(); // [Optimization] Cache for building queries
         private List<Building> _validSpawnersCache = new List<Building>(); // [Optimization] Cache for spawners
         private Queue<FloaterInfo> _floaterQueue = new Queue<FloaterInfo>();
+        private readonly Random _rng = new Random();
 
         public bool IsTargetingMode = false;
         public bool IsAttackMoveMode = false;
@@ -1319,7 +1320,6 @@ namespace WarcraftBattle.Engine
 
         private void SpawnEnemyWave()
         {
-            var r = new Random();
             int humanHeavy = 0;
             int humanLight = 0;
             for (int i = 0; i < Entities.Count; i++)
@@ -1335,17 +1335,17 @@ namespace WarcraftBattle.Engine
             }
 
             string unitType = "grunt";
-            if (humanHeavy > 3 && r.NextDouble() < 0.7)
+            if (humanHeavy > 3 && _rng.NextDouble() < 0.7)
                 unitType = "shaman";
-            else if (humanLight > 3 && r.NextDouble() < 0.7)
+            else if (humanLight > 3 && _rng.NextDouble() < 0.7)
                 unitType = "spearman";
             else
             {
                 if (Stage == 2)
-                    unitType = r.NextDouble() < 0.6 ? "grunt" : "spearman";
+                    unitType = _rng.NextDouble() < 0.6 ? "grunt" : "spearman";
                 else if (Stage >= 3)
                 {
-                    double roll = r.NextDouble();
+                    double roll = _rng.NextDouble();
                     unitType = roll < 0.4 ? "grunt" : (roll < 0.7 ? "spearman" : "rider");
                 }
             }
@@ -2292,4 +2292,3 @@ namespace WarcraftBattle.Engine
 
     }
 }
-
