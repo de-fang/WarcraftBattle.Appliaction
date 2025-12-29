@@ -108,6 +108,69 @@
   <data name="ToolboxTabBuildings" xml:space="preserve">
     <value>Buildings</value>
   </data>
+  <data name="ObjectEditorTitle" xml:space="preserve">
+    <value>Object Editor</value>
+  </data>
+  <data name="ObjectEditorPreview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="ObjectEditorDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ObjectCategoryUnits" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="ObjectCategoryBuildings" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="ObjectCategoryObstacles" xml:space="preserve">
+    <value>Obstacles</value>
+  </data>
+  <data name="ObjectCategoryProjectiles" xml:space="preserve">
+    <value>Projectiles</value>
+  </data>
+  <data name="ObjectNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ObjectImageLabel" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="UnitCostLabel" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="UnitHpLabel" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="UnitDamageLabel" xml:space="preserve">
+    <value>Damage</value>
+  </data>
+  <data name="UnitRangeLabel" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="BuildingWidthLabel" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="BuildingHeightLabel" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="BuildingHpLabel" xml:space="preserve">
+    <value>HP</value>
+  </data>
+  <data name="ObstacleWidthLabel" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="ObstacleHeightLabel" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="ObstacleCollisionLabel" xml:space="preserve">
+    <value>Has Collision</value>
+  </data>
+  <data name="ProjectileSpeedLabel" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="ProjectileScaleLabel" xml:space="preserve">
+    <value>Scale</value>
+  </data>
   <data name="ToolboxTabAssets" xml:space="preserve">
     <value>Assets</value>
   </data>

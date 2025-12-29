@@ -108,6 +108,69 @@
   <data name="ToolboxTabBuildings" xml:space="preserve">
     <value>建筑</value>
   </data>
+  <data name="ObjectEditorTitle" xml:space="preserve">
+    <value>物体编辑器</value>
+  </data>
+  <data name="ObjectEditorPreview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="ObjectEditorDetails" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="ObjectCategoryUnits" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="ObjectCategoryBuildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="ObjectCategoryObstacles" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="ObjectCategoryProjectiles" xml:space="preserve">
+    <value>投掷物</value>
+  </data>
+  <data name="ObjectNameLabel" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="ObjectImageLabel" xml:space="preserve">
+    <value>图像</value>
+  </data>
+  <data name="UnitCostLabel" xml:space="preserve">
+    <value>造价</value>
+  </data>
+  <data name="UnitHpLabel" xml:space="preserve">
+    <value>生命值</value>
+  </data>
+  <data name="UnitDamageLabel" xml:space="preserve">
+    <value>伤害</value>
+  </data>
+  <data name="UnitRangeLabel" xml:space="preserve">
+    <value>射程</value>
+  </data>
+  <data name="BuildingWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="BuildingHeightLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="BuildingHpLabel" xml:space="preserve">
+    <value>生命值</value>
+  </data>
+  <data name="ObstacleWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="ObstacleHeightLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="ObstacleCollisionLabel" xml:space="preserve">
+    <value>碰撞</value>
+  </data>
+  <data name="ProjectileSpeedLabel" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="ProjectileScaleLabel" xml:space="preserve">
+    <value>缩放</value>
+  </data>
   <data name="ToolboxTabAssets" xml:space="preserve">
     <value>资源</value>
   </data>

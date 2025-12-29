@@ -15,7 +15,7 @@ namespace WarcraftBattle.Editor.ViewModels
         {
             DisplayName = StringResources.AppTitle;
             _session = new EditorSessionViewModel();
-            Documents = new BindableCollection<MapViewModel>
+            Documents = new BindableCollection<IScreen>
             {
                 new MapViewModel(StringResources.DocumentDefaultTitle, _session)
             };
@@ -23,10 +23,10 @@ namespace WarcraftBattle.Editor.ViewModels
             Toolbox = new ToolboxViewModel(_session);
             Inspector = new InspectorViewModel();
             Output = new OutputViewModel();
-            Inspector.ActiveMap = Documents[0];
+            Inspector.ActiveMap = Documents[0] as MapViewModel;
         }
 
-        public BindableCollection<MapViewModel> Documents { get; }
+        public BindableCollection<IScreen> Documents { get; }
 
         public ToolboxViewModel Toolbox { get; }
 
@@ -175,6 +175,19 @@ namespace WarcraftBattle.Editor.ViewModels
 
         public void OpenObjectEditor()
         {
+            foreach (var document in Documents)
+            {
+                if (document is ObjectEditorViewModel existing)
+                {
+                    ActivateItemAsync(existing);
+                    StatusMessage = StringResources.StatusObjectEditor;
+                    return;
+                }
+            }
+
+            var editor = new ObjectEditorViewModel();
+            Documents.Add(editor);
+            ActivateItemAsync(editor);
             StatusMessage = StringResources.StatusObjectEditor;
         }
 
