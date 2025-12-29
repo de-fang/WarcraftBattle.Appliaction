@@ -99,6 +99,15 @@
   <data name="ToolboxTabPalette" xml:space="preserve">
     <value>画板</value>
   </data>
+  <data name="ToolboxTabTerrain" xml:space="preserve">
+    <value>地形</value>
+  </data>
+  <data name="ToolboxTabObstacles" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="ToolboxTabBuildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
   <data name="ToolboxTabAssets" xml:space="preserve">
     <value>资源</value>
   </data>
@@ -111,8 +120,20 @@
   <data name="PanelInspectorPlaceholder" xml:space="preserve">
     <value>检查器内容将在此显示。</value>
   </data>
+  <data name="PanelInspectorTitle" xml:space="preserve">
+    <value>检查器</value>
+  </data>
   <data name="PanelHierarchyPlaceholder" xml:space="preserve">
     <value>层级列表将在此显示。</value>
+  </data>
+  <data name="MapSizeTitle" xml:space="preserve">
+    <value>地图尺寸（格）</value>
+  </data>
+  <data name="MapWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="MapHeightLabel" xml:space="preserve">
+    <value>高度</value>
   </data>
   <data name="SceneEditorPlaceholder" xml:space="preserve">
     <value>场景编辑器预览区域。</value>
@@ -179,6 +200,12 @@
   </data>
   <data name="StatusEnvironmentSettings" xml:space="preserve">
     <value>正在打开环境设置。</value>
+  </data>
+  <data name="PaletteObstacle" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="PaletteBuilding" xml:space="preserve">
+    <value>建筑</value>
   </data>
   <data name="TitleBarMinimize" xml:space="preserve">
     <value>_</value>

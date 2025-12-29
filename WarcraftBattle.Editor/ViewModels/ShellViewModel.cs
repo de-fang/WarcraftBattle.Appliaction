@@ -9,18 +9,21 @@ namespace WarcraftBattle.Editor.ViewModels
         private bool _isInspectorVisible = true;
         private bool _isOutputVisible = true;
         private string _statusMessage = StringResources.StatusReady;
+        private readonly EditorSessionViewModel _session;
 
         public ShellViewModel()
         {
             DisplayName = StringResources.AppTitle;
+            _session = new EditorSessionViewModel();
             Documents = new BindableCollection<MapViewModel>
             {
-                new MapViewModel(StringResources.DocumentDefaultTitle)
+                new MapViewModel(StringResources.DocumentDefaultTitle, _session)
             };
             ActivateItemAsync(Documents[0]);
-            Toolbox = new ToolboxViewModel();
+            Toolbox = new ToolboxViewModel(_session);
             Inspector = new InspectorViewModel();
             Output = new OutputViewModel();
+            Inspector.ActiveMap = Documents[0];
         }
 
         public BindableCollection<MapViewModel> Documents { get; }
@@ -91,9 +94,15 @@ namespace WarcraftBattle.Editor.ViewModels
             }
         }
 
+        protected override void OnActiveItemChanged(object oldItem, object newItem)
+        {
+            base.OnActiveItemChanged(oldItem, newItem);
+            Inspector.ActiveMap = newItem as MapViewModel;
+        }
+
         public void NewMap()
         {
-            var map = new MapViewModel(StringResources.DocumentUntitled);
+            var map = new MapViewModel(StringResources.DocumentUntitled, _session);
             Documents.Add(map);
             ActivateItemAsync(map);
             StatusMessage = StringResources.StatusNewMap;

@@ -5,13 +5,25 @@
              Background="{StaticResource Brush.Panel.Background}">
     <Grid>
         <TabControl Style="{StaticResource DarkTabControlStyle}">
-            <TabItem Header="{x:Static properties:StringResources.ToolboxTabPalette}">
-                <TextBlock Text="{x:Static properties:StringResources.PanelToolboxPlaceholder}"
-                           Margin="12" />
+            <TabItem Header="{x:Static properties:StringResources.ToolboxTabTerrain}">
+                <ListBox ItemsSource="{Binding Session.Terrains}"
+                         SelectedItem="{Binding Session.SelectedTerrain}"
+                         DisplayMemberPath="Name"
+                         Margin="8" />
             </TabItem>
-            <TabItem Header="{x:Static properties:StringResources.ToolboxTabAssets}">
-                <TextBlock Text="{x:Static properties:StringResources.PanelAssetsPlaceholder}"
-                           Margin="12" />
+            <TabItem Header="{x:Static properties:StringResources.ToolboxTabObstacles}">
+                <ListBox x:Name="ObstacleList"
+                         ItemsSource="{Binding Session.Obstacles}"
+                         SelectedItem="{Binding Session.SelectedObstacle}"
+                         DisplayMemberPath="Name"
+                         Margin="8" />
+            </TabItem>
+            <TabItem Header="{x:Static properties:StringResources.ToolboxTabBuildings}">
+                <ListBox x:Name="BuildingList"
+                         ItemsSource="{Binding Session.Buildings}"
+                         SelectedItem="{Binding Session.SelectedBuilding}"
+                         DisplayMemberPath="Name"
+                         Margin="8" />
             </TabItem>
         </TabControl>
     </Grid>

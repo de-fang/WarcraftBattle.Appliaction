@@ -99,6 +99,15 @@
   <data name="ToolboxTabPalette" xml:space="preserve">
     <value>Palette</value>
   </data>
+  <data name="ToolboxTabTerrain" xml:space="preserve">
+    <value>Terrain</value>
+  </data>
+  <data name="ToolboxTabObstacles" xml:space="preserve">
+    <value>Obstacles</value>
+  </data>
+  <data name="ToolboxTabBuildings" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
   <data name="ToolboxTabAssets" xml:space="preserve">
     <value>Assets</value>
   </data>
@@ -111,8 +120,20 @@
   <data name="PanelInspectorPlaceholder" xml:space="preserve">
     <value>Inspector content will appear here.</value>
   </data>
+  <data name="PanelInspectorTitle" xml:space="preserve">
+    <value>Inspector</value>
+  </data>
   <data name="PanelHierarchyPlaceholder" xml:space="preserve">
     <value>Hierarchy will appear here.</value>
+  </data>
+  <data name="MapSizeTitle" xml:space="preserve">
+    <value>Map Size (Tiles)</value>
+  </data>
+  <data name="MapWidthLabel" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="MapHeightLabel" xml:space="preserve">
+    <value>Height</value>
   </data>
   <data name="SceneEditorPlaceholder" xml:space="preserve">
     <value>Scene editor preview area.</value>
@@ -179,6 +200,12 @@
   </data>
   <data name="StatusEnvironmentSettings" xml:space="preserve">
     <value>Opening environment settings.</value>
+  </data>
+  <data name="PaletteObstacle" xml:space="preserve">
+    <value>Obstacle</value>
+  </data>
+  <data name="PaletteBuilding" xml:space="preserve">
+    <value>Building</value>
   </data>
   <data name="TitleBarMinimize" xml:space="preserve">
     <value>_</value>

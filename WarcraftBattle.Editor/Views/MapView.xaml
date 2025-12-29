@@ -5,16 +5,67 @@
              Background="{StaticResource Brush.Window.Background}">
     <Grid>
         <Border Background="{StaticResource Brush.Panel.Background}" Margin="8">
-            <Grid>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Canvas Width="1200" Height="800" Background="{StaticResource Brush.Control.Background}">
-                        <TextBlock Text="{x:Static properties:StringResources.SceneEditorPlaceholder}"
-                                   Foreground="{StaticResource Brush.Control.Foreground}"
-                                   FontSize="16"
-                                   Canvas.Left="24" Canvas.Top="24" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <ItemsControl ItemsSource="{Binding Tiles}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding TilesWide}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="{StaticResource TileSize}"
+                                        Height="{StaticResource TileSize}"
+                                        Background="{Binding Brush}"
+                                        BorderBrush="{StaticResource Brush.Grid.Line}"
+                                        BorderThickness="0.5"
+                                        MouseLeftButtonDown="OnTileMouseDown" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Canvas Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                            Background="Transparent"
+                            AllowDrop="True"
+                            Drop="OnMapDrop">
+                        <ItemsControl ItemsSource="{Binding Placements}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Thumb Width="{Binding Width}"
+                                           Height="{Binding Height}"
+                                           Tag="{Binding}"
+                                           DragDelta="OnDragDelta">
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="#4E7EA8" BorderBrush="#E0E0E0" BorderThickness="1">
+                                                    <TextBlock Text="{Binding Name}"
+                                                               Foreground="White"
+                                                               FontSize="11"
+                                                               TextWrapping="Wrap"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Margin="4" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Canvas>
-                </ScrollViewer>
-            </Grid>
+                </Grid>
+            </ScrollViewer>
         </Border>
     </Grid>
 </UserControl>

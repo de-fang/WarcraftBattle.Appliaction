@@ -5,9 +5,12 @@ namespace WarcraftBattle.Editor.ViewModels
 {
     public class ToolboxViewModel : Screen
     {
-        public ToolboxViewModel()
+        public ToolboxViewModel(EditorSessionViewModel session)
         {
             DisplayName = StringResources.ToolboxTitle;
+            Session = session;
         }
+
+        public EditorSessionViewModel Session { get; }
     }
 }
