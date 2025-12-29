@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>WarcraftBattle 世界编辑器</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="MenuFileNewMap" xml:space="preserve">
+    <value>新建地图</value>
+  </data>
+  <data name="MenuFileOpen" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="MenuFileSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="MenuFileSaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="MenuFileExport" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="MenuEditUndo" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+  <data name="MenuEditRedo" xml:space="preserve">
+    <value>重做</value>
+  </data>
+  <data name="MenuEditCut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="MenuEditCopy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="MenuEditPaste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="MenuViewShowToolbox" xml:space="preserve">
+    <value>显示工具箱</value>
+  </data>
+  <data name="MenuViewShowInspector" xml:space="preserve">
+    <value>显示检查器</value>
+  </data>
+  <data name="MenuViewShowOutput" xml:space="preserve">
+    <value>显示输出</value>
+  </data>
+  <data name="MenuViewToggleGrid" xml:space="preserve">
+    <value>切换网格</value>
+  </data>
+  <data name="MenuViewToggleFog" xml:space="preserve">
+    <value>切换迷雾</value>
+  </data>
+  <data name="MenuViewZoomIn" xml:space="preserve">
+    <value>放大</value>
+  </data>
+  <data name="MenuViewZoomOut" xml:space="preserve">
+    <value>缩小</value>
+  </data>
+  <data name="MenuData" xml:space="preserve">
+    <value>数据</value>
+  </data>
+  <data name="MenuDataObjectEditor" xml:space="preserve">
+    <value>物体编辑器</value>
+  </data>
+  <data name="MenuDataTriggerEditor" xml:space="preserve">
+    <value>触发器编辑器</value>
+  </data>
+  <data name="MenuDataEnvironmentSettings" xml:space="preserve">
+    <value>环境设置</value>
+  </data>
+  <data name="ToolboxTitle" xml:space="preserve">
+    <value>工具箱</value>
+  </data>
+  <data name="InspectorTitle" xml:space="preserve">
+    <value>检查器</value>
+  </data>
+  <data name="OutputTitle" xml:space="preserve">
+    <value>输出</value>
+  </data>
+  <data name="ToolboxTabPalette" xml:space="preserve">
+    <value>画板</value>
+  </data>
+  <data name="ToolboxTabTerrain" xml:space="preserve">
+    <value>地形</value>
+  </data>
+  <data name="ToolboxTabObstacles" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="ToolboxTabBuildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="ObjectEditorTitle" xml:space="preserve">
+    <value>物体编辑器</value>
+  </data>
+  <data name="ObjectEditorPreview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="ObjectEditorDetails" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="ObjectCategoryUnits" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="ObjectCategoryBuildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="ObjectCategoryObstacles" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="ObjectCategoryProjectiles" xml:space="preserve">
+    <value>投掷物</value>
+  </data>
+  <data name="ObjectNameLabel" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="ObjectImageLabel" xml:space="preserve">
+    <value>图像</value>
+  </data>
+  <data name="UnitCostLabel" xml:space="preserve">
+    <value>造价</value>
+  </data>
+  <data name="UnitHpLabel" xml:space="preserve">
+    <value>生命值</value>
+  </data>
+  <data name="UnitDamageLabel" xml:space="preserve">
+    <value>伤害</value>
+  </data>
+  <data name="UnitRangeLabel" xml:space="preserve">
+    <value>射程</value>
+  </data>
+  <data name="BuildingWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="BuildingHeightLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="BuildingHpLabel" xml:space="preserve">
+    <value>生命值</value>
+  </data>
+  <data name="ObstacleWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="ObstacleHeightLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="ObstacleCollisionLabel" xml:space="preserve">
+    <value>碰撞</value>
+  </data>
+  <data name="ProjectileSpeedLabel" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="ProjectileScaleLabel" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="ToolboxTabAssets" xml:space="preserve">
+    <value>资源</value>
+  </data>
+  <data name="PanelToolboxPlaceholder" xml:space="preserve">
+    <value>工具面板将在此显示。</value>
+  </data>
+  <data name="PanelAssetsPlaceholder" xml:space="preserve">
+    <value>资源浏览器将在此显示。</value>
+  </data>
+  <data name="PanelInspectorPlaceholder" xml:space="preserve">
+    <value>检查器内容将在此显示。</value>
+  </data>
+  <data name="PanelInspectorTitle" xml:space="preserve">
+    <value>检查器</value>
+  </data>
+  <data name="PanelHierarchyPlaceholder" xml:space="preserve">
+    <value>层级列表将在此显示。</value>
+  </data>
+  <data name="MapSizeTitle" xml:space="preserve">
+    <value>地图尺寸（格）</value>
+  </data>
+  <data name="MapWidthLabel" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="MapHeightLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="SceneEditorPlaceholder" xml:space="preserve">
+    <value>场景编辑器预览区域。</value>
+  </data>
+  <data name="OutputPlaceholder" xml:space="preserve">
+    <value>输出日志已准备。</value>
+  </data>
+  <data name="DocumentDefaultTitle" xml:space="preserve">
+    <value>地图 01</value>
+  </data>
+  <data name="DocumentUntitled" xml:space="preserve">
+    <value>未命名地图</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>就绪。</value>
+  </data>
+  <data name="StatusNewMap" xml:space="preserve">
+    <value>已创建新地图。</value>
+  </data>
+  <data name="StatusOpenNotImplemented" xml:space="preserve">
+    <value>打开功能尚未实现。</value>
+  </data>
+  <data name="StatusSaveNotImplemented" xml:space="preserve">
+    <value>保存功能尚未实现。</value>
+  </data>
+  <data name="StatusSaveAsNotImplemented" xml:space="preserve">
+    <value>另存为功能尚未实现。</value>
+  </data>
+  <data name="StatusExportNotImplemented" xml:space="preserve">
+    <value>导出功能尚未实现。</value>
+  </data>
+  <data name="StatusUndoNotImplemented" xml:space="preserve">
+    <value>撤销功能尚未实现。</value>
+  </data>
+  <data name="StatusRedoNotImplemented" xml:space="preserve">
+    <value>重做功能尚未实现。</value>
+  </data>
+  <data name="StatusCutNotImplemented" xml:space="preserve">
+    <value>剪切功能尚未实现。</value>
+  </data>
+  <data name="StatusCopyNotImplemented" xml:space="preserve">
+    <value>复制功能尚未实现。</value>
+  </data>
+  <data name="StatusPasteNotImplemented" xml:space="preserve">
+    <value>粘贴功能尚未实现。</value>
+  </data>
+  <data name="StatusToggleGrid" xml:space="preserve">
+    <value>已请求切换网格。</value>
+  </data>
+  <data name="StatusToggleFog" xml:space="preserve">
+    <value>已请求切换迷雾。</value>
+  </data>
+  <data name="StatusZoomIn" xml:space="preserve">
+    <value>已请求放大。</value>
+  </data>
+  <data name="StatusZoomOut" xml:space="preserve">
+    <value>已请求缩小。</value>
+  </data>
+  <data name="StatusObjectEditor" xml:space="preserve">
+    <value>正在打开物体编辑器。</value>
+  </data>
+  <data name="StatusTriggerEditor" xml:space="preserve">
+    <value>正在打开触发器编辑器。</value>
+  </data>
+  <data name="StatusEnvironmentSettings" xml:space="preserve">
+    <value>正在打开环境设置。</value>
+  </data>
+  <data name="PaletteObstacle" xml:space="preserve">
+    <value>障碍物</value>
+  </data>
+  <data name="PaletteBuilding" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="TitleBarMinimize" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="TitleBarMaximize" xml:space="preserve">
+    <value>□</value>
+  </data>
+  <data name="TitleBarClose" xml:space="preserve">
+    <value>×</value>
+  </data>
+</root>

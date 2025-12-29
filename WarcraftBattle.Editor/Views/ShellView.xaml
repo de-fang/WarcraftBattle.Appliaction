@@ -1,0 +1,121 @@
+<Window x:Class="WarcraftBattle.Editor.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:properties="clr-namespace:WarcraftBattle.Editor.Properties"
+        Title="{Binding DisplayName}"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="{StaticResource Brush.Window.Background}"
+        Foreground="{StaticResource Brush.Control.Foreground}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{Binding IsOutputVisible, Converter={StaticResource BoolToGridLengthConverter}, ConverterParameter=150}" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding IsToolboxVisible, Converter={StaticResource BoolToGridLengthConverter}, ConverterParameter=250}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{Binding IsInspectorVisible, Converter={StaticResource BoolToGridLengthConverter}, ConverterParameter=300}" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="5" Background="{StaticResource Brush.Panel.Background}" Height="36"
+                MouseLeftButtonDown="OnTitleBarMouseDown">
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="{x:Static properties:StringResources.AppTitle}"
+                           VerticalAlignment="Center"
+                           Margin="12,0"
+                           FontWeight="SemiBold" />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Style="{StaticResource FlatTitleBarButtonStyle}"
+                            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{x:Static properties:StringResources.TitleBarMinimize}" />
+                    <Button Style="{StaticResource FlatTitleBarButtonStyle}"
+                            Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{x:Static properties:StringResources.TitleBarMaximize}" />
+                    <Button Style="{StaticResource FlatTitleBarButtonStyle}"
+                            Command="{x:Static SystemCommands.CloseWindowCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{x:Static properties:StringResources.TitleBarClose}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Menu Grid.Row="1" Grid.ColumnSpan="5" Background="{StaticResource Brush.Panel.Background}"
+              Foreground="{StaticResource Brush.Control.Foreground}">
+            <MenuItem Header="{x:Static properties:StringResources.MenuFile}">
+                <MenuItem Header="{x:Static properties:StringResources.MenuFileNewMap}" cal:Message.Attach="NewMap" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuFileOpen}" cal:Message.Attach="Open" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuFileSave}" cal:Message.Attach="Save" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuFileSaveAs}" cal:Message.Attach="SaveAs" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:StringResources.MenuFileExport}" cal:Message.Attach="Export" />
+            </MenuItem>
+            <MenuItem Header="{x:Static properties:StringResources.MenuEdit}">
+                <MenuItem Header="{x:Static properties:StringResources.MenuEditUndo}" cal:Message.Attach="Undo" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuEditRedo}" cal:Message.Attach="Redo" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:StringResources.MenuEditCut}" cal:Message.Attach="Cut" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuEditCopy}" cal:Message.Attach="Copy" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuEditPaste}" cal:Message.Attach="Paste" />
+            </MenuItem>
+            <MenuItem Header="{x:Static properties:StringResources.MenuView}">
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewShowToolbox}"
+                          IsCheckable="True"
+                          IsChecked="{Binding IsToolboxVisible}" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewShowInspector}"
+                          IsCheckable="True"
+                          IsChecked="{Binding IsInspectorVisible}" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewShowOutput}"
+                          IsCheckable="True"
+                          IsChecked="{Binding IsOutputVisible}" />
+                <Separator />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewToggleGrid}" cal:Message.Attach="ToggleGrid" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewToggleFog}" cal:Message.Attach="ToggleFog" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewZoomIn}" cal:Message.Attach="ZoomIn" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuViewZoomOut}" cal:Message.Attach="ZoomOut" />
+            </MenuItem>
+            <MenuItem Header="{x:Static properties:StringResources.MenuData}">
+                <MenuItem Header="{x:Static properties:StringResources.MenuDataObjectEditor}" cal:Message.Attach="OpenObjectEditor" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuDataTriggerEditor}" cal:Message.Attach="OpenTriggerEditor" />
+                <MenuItem Header="{x:Static properties:StringResources.MenuDataEnvironmentSettings}" cal:Message.Attach="OpenEnvironmentSettings" />
+            </MenuItem>
+        </Menu>
+
+        <ContentControl Grid.Row="2" Grid.Column="0" cal:View.Model="{Binding Toolbox}"
+                        Visibility="{Binding IsToolboxVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <GridSplitter Grid.Row="2" Grid.Column="1"
+                      Width="5"
+                      Visibility="{Binding IsToolboxVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Style="{StaticResource GridSplitterStyle}" />
+
+        <TabControl Grid.Row="2" Grid.Column="2" x:Name="Documents" Style="{StaticResource DarkTabControlStyle}" />
+
+        <GridSplitter Grid.Row="2" Grid.Column="3"
+                      Width="5"
+                      Visibility="{Binding IsInspectorVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Style="{StaticResource GridSplitterStyle}" />
+        <ContentControl Grid.Row="2" Grid.Column="4" cal:View.Model="{Binding Inspector}"
+                        Visibility="{Binding IsInspectorVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <GridSplitter Grid.Row="3" Grid.ColumnSpan="5"
+                      Height="5"
+                      Visibility="{Binding IsOutputVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Style="{StaticResource GridSplitterStyle}" />
+
+        <ContentControl Grid.Row="4" Grid.ColumnSpan="5" cal:View.Model="{Binding Output}"
+                        Visibility="{Binding IsOutputVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <Border Grid.Row="5" Grid.ColumnSpan="5" Background="{StaticResource Brush.Panel.Background}" Padding="8">
+            <TextBlock Text="{Binding StatusMessage}" />
+        </Border>
+    </Grid>
+</Window>
