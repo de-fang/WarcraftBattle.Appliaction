@@ -1,0 +1,20 @@
+<UserControl x:Class="WarcraftBattle.Editor.Views.MapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:properties="clr-namespace:WarcraftBattle.Editor.Properties"
+             Background="{StaticResource Brush.Window.Background}">
+    <Grid>
+        <Border Background="{StaticResource Brush.Panel.Background}" Margin="8">
+            <Grid>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Canvas Width="1200" Height="800" Background="{StaticResource Brush.Control.Background}">
+                        <TextBlock Text="{x:Static properties:StringResources.SceneEditorPlaceholder}"
+                                   Foreground="{StaticResource Brush.Control.Foreground}"
+                                   FontSize="16"
+                                   Canvas.Left="24" Canvas.Top="24" />
+                    </Canvas>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

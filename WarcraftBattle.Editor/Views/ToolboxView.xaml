@@ -1,0 +1,18 @@
+<UserControl x:Class="WarcraftBattle.Editor.Views.ToolboxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:properties="clr-namespace:WarcraftBattle.Editor.Properties"
+             Background="{StaticResource Brush.Panel.Background}">
+    <Grid>
+        <TabControl Style="{StaticResource DarkTabControlStyle}">
+            <TabItem Header="{x:Static properties:StringResources.ToolboxTabPalette}">
+                <TextBlock Text="{x:Static properties:StringResources.PanelToolboxPlaceholder}"
+                           Margin="12" />
+            </TabItem>
+            <TabItem Header="{x:Static properties:StringResources.ToolboxTabAssets}">
+                <TextBlock Text="{x:Static properties:StringResources.PanelAssetsPlaceholder}"
+                           Margin="12" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
