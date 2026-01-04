@@ -1,0 +1,1986 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<AIProfile Aggressiveness="1.2" WaveInterval="15.0">
+		<BuildOrder>
+			<Item>orc_burrow</Item>
+			<Item>orc_barracks</Item>
+			<Item>orc_tower</Item>
+		</BuildOrder>
+	</AIProfile>
+	<Units>
+		<Unit Key="footman" Name="联盟士兵" Faction="Human" Cost="100" HP="400" Dmg="25" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0"
+			SightRadius="400">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="footman/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="footman/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="footman/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="footman/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="swordsman" Name="皇家剑士" Faction="Human" Cost="120" HP="480" Dmg="30" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="swordsman/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="swordsman/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="swordsman/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="swordsman/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="lancer" Name="禁卫长矛手" Faction="Human" Cost="100" HP="400" Dmg="25" Range="60"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="lancer/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="lancer/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="lancer/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="lancer/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="archer" Name="长弓手" Faction="Human" Cost="120" HP="250" Dmg="28" Range="220"
+			Speed="45" CD="60" Type="Ranged" AtkType="Pierce" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0"
+			SightRadius="550">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="archer/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="archer/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="archer/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="archer/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Image="Arrow.png" Speed="15" Count="1" Scale="1" FrameW="32"
+				FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="knight" Name="铁甲卫士" Faction="Human" Cost="150" HP="700" Dmg="15" Range="40"
+			Speed="30" CD="90" Type="Melee" AtkType="Normal" DefType="Heavy" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="knight/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="knight/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="knight/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="knight/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="mage" Name="肯瑞托法师" Faction="Human" Cost="140" HP="200" Dmg="40" Range="200"
+			Speed="35" CD="108" Type="Ranged" AtkType="Magic" DefType="Unarmored" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="mage/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="mage/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="mage/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="mage/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Image="Charge.png" Speed="15" Count="1" Scale="1" FrameW="32"
+				FrameH="32">
+				<Light Color="#FF8800" Radius="150" FlickerIntensity="15" FlickerFrequency="10" />
+			</ProjectileSprite>
+			<Skills />
+		</Unit>
+		<Unit Key="healer" Name="高阶牧师" Faction="Human" Cost="130" HP="250" Dmg="10" Range="200"
+			Speed="35" CD="120" Type="Support" AtkType="Magic" DefType="Unarmored" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="healer/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="healer/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="healer/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="healer/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Image="Charge.png" Speed="15" Count="1" Scale="1" FrameW="32"
+				FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="druid_bear" Name="利爪德鲁伊" Faction="Human" Cost="195" HP="910" Dmg="19" Range="40"
+			Speed="30" CD="90" Type="Melee" AtkType="Normal" DefType="Heavy" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="druid_bear/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="druid_bear/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="druid_bear/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="druid_bear/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="paladin" Name="光明使者" Faction="Human" Cost="0" HP="1800" Dmg="45" Range="50"
+			Speed="40" CD="84" Type="Melee" AtkType="Hero" DefType="Hero" IsHero="true"
+			IsMounted="false" MaxMana="200" ManaRegen="2" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="paladin/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="paladin/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="paladin/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="paladin/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="grunt" Name="兽人步兵" Faction="Orc" Cost="100" HP="400" Dmg="25" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="grunt/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="grunt/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="grunt/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="grunt/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="raider" Name="狼骑兵" Faction="Orc" Cost="100" HP="400" Dmg="25" Range="40"
+			Speed="70" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="true" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="raider/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="raider/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="raider/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="raider/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="orc_captain" Name="库卡隆卫士" Faction="Orc" Cost="150" HP="700" Dmg="15" Range="40"
+			Speed="30" CD="90" Type="Melee" AtkType="Normal" DefType="Heavy" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="orc_captain/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="orc_captain/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="orc_captain/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="orc_captain/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="chaos_warrior" Name="混沌斧兵" Faction="Orc" Cost="125" HP="500" Dmg="31" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="chaos_warrior/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="chaos_warrior/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="chaos_warrior/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="chaos_warrior/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="skeleton" Name="骷髅兵" Faction="Orc" Cost="50" HP="200" Dmg="12" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="skeleton/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="skeleton/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="skeleton_archer" Name="骷髅射手" Faction="Orc" Cost="72" HP="150" Dmg="16"
+			Range="220" Speed="45" CD="60" Type="Ranged" AtkType="Pierce" DefType="Medium"
+			IsHero="false" IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0"
+			CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="skeleton_archer/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="skeleton_archer/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_archer/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_archer/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Image="Arrow.png" Speed="15" Count="1" Scale="1" FrameW="32"
+				FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="skeleton_guard" Name="亡灵守卫" Faction="Orc" Cost="135" HP="630" Dmg="13" Range="40"
+			Speed="30" CD="90" Type="Melee" AtkType="Normal" DefType="Heavy" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="skeleton_guard/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="skeleton_guard/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_guard/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_guard/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="werewolf" Name="狂暴狼人" Faction="Orc" Cost="100" HP="400" Dmg="25" Range="40"
+			Speed="55" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0.3">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="werewolf/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="werewolf/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="werewolf/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="werewolf/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="slime" Name="酸液史莱姆" Faction="Orc" Cost="40" HP="160" Dmg="10" Range="40"
+			Speed="40" CD="72" Type="Melee" AtkType="Normal" DefType="Medium" IsHero="false"
+			IsMounted="false" MaxMana="0" ManaRegen="0" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true" Image="slime/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true" Image="slime/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="slime/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false" Image="slime/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="blademaster" Name="剑圣" Faction="Orc" Cost="0" HP="1200" Dmg="70" Range="50"
+			Speed="60" CD="60" Type="Melee" AtkType="Hero" DefType="Hero" IsHero="true"
+			IsMounted="false" MaxMana="200" ManaRegen="2" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="blademaster/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="blademaster/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="blademaster/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="blademaster/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+		<Unit Key="skeleton_king" Name="骷髅王" Faction="Orc" Cost="0" HP="1800" Dmg="45" Range="50"
+			Speed="40" CD="84" Type="Melee" AtkType="Hero" DefType="Hero" IsHero="true"
+			IsMounted="false" MaxMana="200" ManaRegen="2" BlockChance="0" CritChance="0">
+			<SpriteSheet Image="" FrameW="100" FrameH="100" Scale="1.5" Count="1">
+				<State Name="Idle" Row="0" Count="6" Speed="100" Loop="true"
+					Image="skeleton_king/Idle.png" />
+				<State Name="Move" Row="0" Count="8" Speed="100" Loop="true"
+					Image="skeleton_king/Move.png" />
+				<State Name="Attack" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_king/Attack.png" />
+				<State Name="Die" Row="0" Count="6" Speed="100" Loop="false"
+					Image="skeleton_king/Die.png" />
+			</SpriteSheet>
+			<ProjectileSprite Speed="10" Count="1" Scale="1" FrameW="32" FrameH="32" />
+			<Skills />
+		</Unit>
+	</Units>
+	<Buildings>
+		<Building Id="castle" Name="暴风城" Image="Buildings/human_castle.png" Scale="0.8" Cost="0"
+			Hp="5000" Max="1" Produces="footman,archer,knight,paladin" Width="180" Height="180"
+			OffsetY="60" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="house" Name="民居" Image="Buildings/human_house.png" Scale="0.8" Cost="100"
+			Hp="800" Max="8" Produces="" Width="80" Height="80" OffsetY="20" Damage="0" Range="0"
+			CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="barracks" Name="皇家兵营" Image="Buildings/human_barracks.png" Scale="0.8"
+			Cost="250" Hp="1500" Max="2" Produces="footman,swordsman,lancer,knight" Width="120"
+			Height="120" OffsetY="30" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="sanctum" Name="神秘圣所" Image="Buildings/human_sanctum.png" Scale="0.8"
+			Cost="300" Hp="1200" Max="1" Produces="mage,healer,druid_bear" Width="110" Height="110"
+			OffsetY="30" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="cannon_tower" Name="防御哨塔" Image="Buildings/human_tower.png" Scale="0.8"
+			Cost="200" Hp="1000" Max="4" Produces="" Width="60" Height="100" OffsetY="20"
+			Damage="40" Range="300" CD="1.5">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+			<Light Color="#FFFF88" Radius="250" FlickerIntensity="20" FlickerFrequency="5" />
+			<ProjectileSprite Image="Arrow.png" Speed="20" Count="1" Scale="1" FrameW="32"
+				FrameH="32" />
+		</Building>
+
+		<Building Id="stronghold" Name="奥格瑞玛" Image="Buildings/orc_stronghold.png" Scale="0.8"
+			Cost="0" Hp="5000" Max="1" Produces="grunt,skeleton,blademaster,skeleton_king"
+			Width="180" Height="180" OffsetY="60" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="orc_burrow" Name="兽人地洞" Image="Buildings/orc_burrow.png" Scale="0.8"
+			Cost="100" Hp="900" Max="8" Produces="" Width="90" Height="90" OffsetY="20" Damage="0"
+			Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="orc_barracks" Name="战争磨坊" Image="Buildings/orc_barracks.png" Scale="0.8"
+			Cost="250" Hp="1600" Max="2" Produces="grunt,raider,chaos_warrior,werewolf" Width="130"
+			Height="110" OffsetY="30" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="orc_altar" Name="黑暗祭坛" Image="Buildings/orc_altar.png" Scale="0.8" Cost="350"
+			Hp="1100" Max="1" Produces="shaman,skeleton_archer,skeleton_guard,slime" Width="100"
+			Height="100" OffsetY="20" Damage="0" Range="0" CD="0">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Building>
+
+		<Building Id="orc_tower" Name="瞭望塔" Image="Buildings/orc_tower.png" Scale="0.8" Cost="180"
+			Hp="1100" Max="4" Produces="" Width="70" Height="120" OffsetY="20" Damage="45"
+			Range="300" CD="1.8">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+			<ProjectileSprite Image="Arrow.png" Speed="20" Count="1" Scale="1" FrameW="32"
+				FrameH="32" />
+		</Building>
+	</Buildings>
+
+	<Effects>
+		<Effect Key="Blizzard" Image="Blizzard.png" FrameW="64" FrameH="128" Count="10" Speed="15" />
+		<Effect Key="SuperExplosion" Image="Explosion.png" FrameW="100" FrameH="100" Count="5"
+			Speed="20">
+			<Light Color="#FF4500" Radius="300" FlickerIntensity="50" FlickerFrequency="15" />
+		</Effect>
+		<Effect Key="cute" Image="cute.png" FrameW="300" FrameH="198" Count="60" Speed="15" />
+		<Effect Key="ClickAttack" Image="Explosion.png" FrameW="100" FrameH="100" Count="5"
+			Speed="20" />
+	</Effects>
+	<UnitUpgrades>
+		<Tree Key="footman">
+			<Level Cost="50" Type="HP" Value="20" Desc="新兵训练: 生命上限 +20" />
+			<Level Cost="60" Type="Dmg" Value="2" Desc="磨刀石: 攻击力 +2" />
+			<Level Cost="70" Type="Def" Value="1" Desc="皮甲加固: 护甲 +1" />
+			<Level Cost="80" Type="HP" Value="30" Desc="强健体魄: 生命上限 +30" />
+			<Level Cost="100" Type="Block" Value="0.05" Desc="木盾防御: 格挡几率 +5%" />
+			<Level Cost="120" Type="HP" Value="40" Desc="精良口粮: 生命上限 +40" />
+			<Level Cost="140" Type="Dmg" Value="3" Desc="铁剑锻造: 攻击力 +3" />
+			<Level Cost="160" Type="Speed" Value="2" Desc="行军训练: 移动速度 +2" />
+			<Level Cost="180" Type="HP" Value="50" Desc="老兵伤痕: 生命上限 +50" />
+			<Level Cost="200" Type="Block" Value="0.05" Desc="铁盾换装: 格挡几率 +5%" />
+			<Level Cost="250" Type="HP" Value="60" Desc="精钢板甲: 生命上限 +60" />
+			<Level Cost="300" Type="Dmg" Value="5" Desc="锋利剑刃: 攻击力 +5" />
+			<Level Cost="350" Type="HP" Value="80" Desc="生命源泉: 生命上限 +80" />
+			<Level Cost="400" Type="CD" Value="-0.1" Desc="娴熟技巧: 攻击间隔 -0.1秒" />
+			<Level Cost="450" Type="Block" Value="0.05" Desc="塔盾战术: 格挡几率 +5%" />
+			<Level Cost="500" Type="HP" Value="100" Desc="英雄体质: 生命上限 +100" />
+			<Level Cost="600" Type="Dmg" Value="8" Desc="百战之剑: 攻击力 +8" />
+			<Level Cost="700" Type="Block" Value="0.1" Desc="绝对防御: 格挡几率 +10%" />
+			<Level Cost="800" Type="HP" Value="150" Desc="泰坦之力: 生命上限 +150" />
+			<Level Cost="1000" Type="Resurrect" Value="1" Desc="不屈意志: 死亡后几率复活 (假定逻辑)" />
+		</Tree>
+
+		<Tree Key="swordsman">
+			<Level Cost="60" Type="Dmg" Value="4" Desc="剑术入门: 攻击力 +4" />
+			<Level Cost="70" Type="CD" Value="-0.05" Desc="挥剑练习: 攻速 +5%" />
+			<Level Cost="80" Type="Crit" Value="0.05" Desc="弱点洞察: 暴击率 +5%" />
+			<Level Cost="90" Type="Dmg" Value="5" Desc="精钢长剑: 攻击力 +5" />
+			<Level Cost="110" Type="Speed" Value="3" Desc="轻盈步伐: 移速 +3" />
+			<Level Cost="130" Type="Dmg" Value="6" Desc="剑舞: 攻击力 +6" />
+			<Level Cost="150" Type="CD" Value="-0.05" Desc="连击技巧: 攻速 +5%" />
+			<Level Cost="180" Type="Crit" Value="0.05" Desc="致命一击: 暴击率 +5%" />
+			<Level Cost="210" Type="Dmg" Value="8" Desc="皇家剑术: 攻击力 +8" />
+			<Level Cost="240" Type="HP" Value="50" Desc="格斗体能: 生命值 +50" />
+			<Level Cost="280" Type="CD" Value="-0.05" Desc="狂风剑法: 攻速 +5%" />
+			<Level Cost="320" Type="Crit" Value="0.05" Desc="剑圣教导: 暴击率 +5%" />
+			<Level Cost="360" Type="Dmg" Value="10" Desc="秘银剑刃: 攻击力 +10" />
+			<Level Cost="400" Type="Speed" Value="5" Desc="疾风步: 移速 +5" />
+			<Level Cost="450" Type="CD" Value="-0.1" Desc="无影剑: 攻速 +10%" />
+			<Level Cost="500" Type="Dmg" Value="15" Desc="破甲一击: 攻击力 +15" />
+			<Level Cost="600" Type="Crit" Value="0.1" Desc="处决: 暴击率 +10%" />
+			<Level Cost="700" Type="HP" Value="100" Desc="剑豪之躯: 生命值 +100" />
+			<Level Cost="800" Type="CD" Value="-0.1" Desc="光速挥砍: 攻速 +10%" />
+			<Level Cost="1000" Type="Dmg" Value="25" Desc="剑神降临: 攻击力 +25" />
+		</Tree>
+
+		<Tree Key="lancer">
+			<Level Cost="60" Type="Dmg" Value="3" Desc="矛尖打磨: 攻击力 +3" />
+			<Level Cost="70" Type="Range" Value="10" Desc="长柄优势: 射程 +10" />
+			<Level Cost="80" Type="HP" Value="30" Desc="阵列训练: 生命值 +30" />
+			<Level Cost="100" Type="Dmg" Value="5" Desc="精铁枪头: 攻击力 +5" />
+			<Level Cost="120" Type="Crit" Value="0.05" Desc="精准刺击: 暴击率 +5%" />
+			<Level Cost="140" Type="Range" Value="10" Desc="加长枪杆: 射程 +10" />
+			<Level Cost="160" Type="HP" Value="40" Desc="护卫甲胄: 生命值 +40" />
+			<Level Cost="190" Type="Dmg" Value="8" Desc="透甲长矛: 攻击力 +8" />
+			<Level Cost="220" Type="CD" Value="-0.1" Desc="快速突刺: 攻速 +10%" />
+			<Level Cost="250" Type="Range" Value="15" Desc="特制长矛: 射程 +15" />
+			<Level Cost="300" Type="Dmg" Value="10" Desc="骑士杀手: 攻击力 +10" />
+			<Level Cost="350" Type="Crit" Value="0.05" Desc="要害穿刺: 暴击率 +5%" />
+			<Level Cost="400" Type="HP" Value="80" Desc="禁卫荣耀: 生命值 +80" />
+			<Level Cost="450" Type="Range" Value="15" Desc="龙枪: 射程 +15" />
+			<Level Cost="500" Type="Dmg" Value="15" Desc="贯穿之力: 攻击力 +15" />
+			<Level Cost="600" Type="Block" Value="0.1" Desc="招架技巧: 格挡率 +10%" />
+			<Level Cost="700" Type="Crit" Value="0.1" Desc="必杀一击: 暴击率 +10%" />
+			<Level Cost="800" Type="Range" Value="20" Desc="神圣之矛: 射程 +20" />
+			<Level Cost="900" Type="CD" Value="-0.2" Desc="暴雨梨花: 攻速 +20%" />
+			<Level Cost="1000" Type="Dmg" Value="30" Desc="弑神之枪: 攻击力 +30" />
+		</Tree>
+
+		<Tree Key="archer">
+			<Level Cost="50" Type="Range" Value="10" Desc="鹰眼训练: 射程 +10" />
+			<Level Cost="60" Type="Dmg" Value="3" Desc="铁簇箭: 攻击力 +3" />
+			<Level Cost="70" Type="CD" Value="-0.05" Desc="快速抽箭: 攻速 +5%" />
+			<Level Cost="90" Type="Range" Value="15" Desc="长弓改良: 射程 +15" />
+			<Level Cost="110" Type="Crit" Value="0.05" Desc="弱点瞄准: 暴击率 +5%" />
+			<Level Cost="130" Type="Dmg" Value="5" Desc="锯齿箭: 攻击力 +5" />
+			<Level Cost="150" Type="Range" Value="20" Desc="复合弓: 射程 +20" />
+			<Level Cost="180" Type="Speed" Value="5" Desc="游侠步伐: 移速 +5" />
+			<Level Cost="210" Type="Dmg" Value="8" Desc="穿甲重箭: 攻击力 +8" />
+			<Level Cost="250" Type="Crit" Value="0.05" Desc="狙击本能: 暴击率 +5%" />
+			<Level Cost="300" Type="Range" Value="25" Desc="精灵弓弦: 射程 +25" />
+			<Level Cost="350" Type="CD" Value="-0.1" Desc="速射技巧: 攻速 +10%" />
+			<Level Cost="400" Type="Dmg" Value="12" Desc="秘银箭头: 攻击力 +12" />
+			<Level Cost="450" Type="Range" Value="30" Desc="鹰眼术: 射程 +30" />
+			<Level Cost="500" Type="Crit" Value="0.1" Desc="致命射击: 暴击率 +10%" />
+			<Level Cost="600" Type="Dmg" Value="15" Desc="爆裂箭: 攻击力 +15" />
+			<Level Cost="700" Type="CD" Value="-0.15" Desc="幻影射手: 攻速 +15%" />
+			<Level Cost="800" Type="Range" Value="40" Desc="超视距打击: 射程 +40" />
+			<Level Cost="900" Type="HP" Value="100" Desc="求生本能: 生命值 +100" />
+			<Level Cost="1200" Type="Dmg" Value="40" Desc="群星之怒: 攻击力 +40" />
+		</Tree>
+
+		<Tree Key="knight">
+			<Level Cost="80" Type="HP" Value="50" Desc="扈从训练: 生命 +50" />
+			<Level Cost="100" Type="Block" Value="0.05" Desc="举盾防御: 格挡 +5%" />
+			<Level Cost="120" Type="HP" Value="60" Desc="加厚板甲: 生命 +60" />
+			<Level Cost="140" Type="Def" Value="2" Desc="锁子甲内衬: 护甲 +2" />
+			<Level Cost="160" Type="HP" Value="80" Desc="骑士体格: 生命 +80" />
+			<Level Cost="200" Type="Block" Value="0.05" Desc="格挡技巧: 格挡 +5%" />
+			<Level Cost="240" Type="HP" Value="100" Desc="精工盔甲: 生命 +100" />
+			<Level Cost="280" Type="Dmg" Value="5" Desc="重剑猛击: 攻击 +5" />
+			<Level Cost="320" Type="HP" Value="120" Desc="生命强化: 生命 +120" />
+			<Level Cost="360" Type="Block" Value="0.05" Desc="塔盾专精: 格挡 +5%" />
+			<Level Cost="400" Type="HP" Value="150" Desc="附魔铠甲: 生命 +150" />
+			<Level Cost="450" Type="Speed" Value="5" Desc="冲锋姿态: 移速 +5" />
+			<Level Cost="500" Type="HP" Value="180" Desc="钢铁壁垒: 生命 +180" />
+			<Level Cost="550" Type="Block" Value="0.1" Desc="绝对防御: 格挡 +10%" />
+			<Level Cost="600" Type="HP" Value="200" Desc="巨人之血: 生命 +200" />
+			<Level Cost="700" Type="Def" Value="5" Desc="神圣护甲: 护甲 +5" />
+			<Level Cost="800" Type="HP" Value="250" Desc="不朽身躯: 生命 +250" />
+			<Level Cost="900" Type="Block" Value="0.1" Desc="不动如山: 格挡 +10%" />
+			<Level Cost="1000" Type="Dmg" Value="20" Desc="复仇反击: 攻击 +20" />
+			<Level Cost="1200" Type="HP" Value="500" Desc="传说之盾: 生命 +500" />
+		</Tree>
+
+		<Tree Key="mage">
+			<Level Cost="80" Type="Dmg" Value="5" Desc="冥想: 魔法伤害 +5" />
+			<Level Cost="100" Type="ManaRegen" Value="0.5" Desc="清晰术: 回蓝 +0.5" />
+			<Level Cost="120" Type="Dmg" Value="8" Desc="火球术强化: 伤害 +8" />
+			<Level Cost="140" Type="Range" Value="10" Desc="射程延伸: 射程 +10" />
+			<Level Cost="160" Type="Dmg" Value="10" Desc="奥术强化: 伤害 +10" />
+			<Level Cost="200" Type="Crit" Value="0.05" Desc="法术暴击: 暴击 +5%" />
+			<Level Cost="240" Type="Dmg" Value="12" Desc="烈焰风暴: 伤害 +12" />
+			<Level Cost="280" Type="ManaRegen" Value="1" Desc="唤醒: 回蓝 +1" />
+			<Level Cost="320" Type="Dmg" Value="15" Desc="专注施法: 伤害 +15" />
+			<Level Cost="360" Type="Range" Value="15" Desc="鹰眼术: 射程 +15" />
+			<Level Cost="400" Type="Crit" Value="0.05" Desc="燃烧意志: 暴击 +5%" />
+			<Level Cost="450" Type="Dmg" Value="20" Desc="炎爆术: 伤害 +20" />
+			<Level Cost="500" Type="CD" Value="-0.2" Desc="急速冷却: CD -0.2秒" />
+			<Level Cost="600" Type="Dmg" Value="25" Desc="大法师之力: 伤害 +25" />
+			<Level Cost="700" Type="ManaRegen" Value="2" Desc="奥术智慧: 回蓝 +2" />
+			<Level Cost="800" Type="Crit" Value="0.1" Desc="毁灭魔法: 暴击 +10%" />
+			<Level Cost="900" Type="Dmg" Value="35" Desc="能量聚焦: 伤害 +35" />
+			<Level Cost="1000" Type="Range" Value="25" Desc="超视距魔法: 射程 +25" />
+			<Level Cost="1200" Type="HP" Value="100" Desc="法力护盾: 生命 +100" />
+			<Level Cost="1500" Type="Dmg" Value="50" Desc="禁咒·末日: 伤害 +50" />
+		</Tree>
+
+		<Tree Key="healer">
+			<Level Cost="80" Type="Dmg" Value="2" Desc="信仰: 治疗量 +2" />
+			<Level Cost="100" Type="Range" Value="15" Desc="爱心延伸: 射程 +15" />
+			<Level Cost="120" Type="ManaRegen" Value="0.5" Desc="精神集中: 回蓝 +0.5" />
+			<Level Cost="140" Type="Dmg" Value="3" Desc="强化治疗: 治疗量 +3" />
+			<Level Cost="160" Type="CD" Value="-0.1" Desc="快速包扎: 间隔 -0.1秒" />
+			<Level Cost="200" Type="Dmg" Value="5" Desc="神圣之光: 治疗量 +5" />
+			<Level Cost="240" Type="HP" Value="50" Desc="自保训练: 生命 +50" />
+			<Level Cost="280" Type="Range" Value="20" Desc="远距支援: 射程 +20" />
+			<Level Cost="320" Type="ManaRegen" Value="1" Desc="冥想光环: 回蓝 +1" />
+			<Level Cost="360" Type="Dmg" Value="8" Desc="强效治疗: 治疗量 +8" />
+			<Level Cost="400" Type="CD" Value="-0.2" Desc="急速祷言: 间隔 -0.2秒" />
+			<Level Cost="450" Type="Dmg" Value="10" Desc="治疗祷言: 治疗量 +10" />
+			<Level Cost="500" Type="HP" Value="100" Desc="天使守护: 生命 +100" />
+			<Level Cost="600" Type="Range" Value="25" Desc="神圣干涉: 射程 +25" />
+			<Level Cost="700" Type="ManaRegen" Value="2" Desc="智慧祝福: 回蓝 +2" />
+			<Level Cost="800" Type="Dmg" Value="15" Desc="圣光术: 治疗量 +15" />
+			<Level Cost="900" Type="CD" Value="-0.3" Desc="光之优雅: 间隔 -0.3秒" />
+			<Level Cost="1000" Type="HP" Value="200" Desc="殉道者: 生命 +200" />
+			<Level Cost="1200" Type="Dmg" Value="25" Desc="神圣赞美诗: 治疗量 +25" />
+			<Level Cost="1500" Type="Range" Value="50" Desc="全图支援: 射程 +50" />
+		</Tree>
+
+		<Tree Key="druid_bear">
+			<Level Cost="80" Type="HP" Value="40" Desc="野性印记: 生命 +40" />
+			<Level Cost="100" Type="Dmg" Value="3" Desc="利爪打磨: 攻击 +3" />
+			<Level Cost="120" Type="HP" Value="60" Desc="厚皮: 生命 +60" />
+			<Level Cost="140" Type="Def" Value="2" Desc="树皮术: 护甲 +2" />
+			<Level Cost="160" Type="HP" Value="80" Desc="巨熊形态: 生命 +80" />
+			<Level Cost="200" Type="Dmg" Value="5" Desc="猛击: 攻击 +5" />
+			<Level Cost="240" Type="HP" Value="100" Desc="自然健壮: 生命 +100" />
+			<Level Cost="280" Type="ManaRegen" Value="1" Desc="清晰预兆: 回蓝 +1" />
+			<Level Cost="320" Type="HP" Value="120" Desc="乌索克之力: 生命 +120" />
+			<Level Cost="360" Type="Crit" Value="0.05" Desc="野蛮暴击: 暴击 +5%" />
+			<Level Cost="400" Type="HP" Value="150" Desc="强化皮毛: 生命 +150" />
+			<Level Cost="450" Type="Dmg" Value="10" Desc="裂伤: 攻击 +10" />
+			<Level Cost="500" Type="HP" Value="200" Desc="生存本能: 生命 +200" />
+			<Level Cost="600" Type="Block" Value="0.1" Desc="物理闪避: 格挡/闪避 +10%" />
+			<Level Cost="700" Type="HP" Value="250" Desc="巨兽体型: 生命 +250" />
+			<Level Cost="800" Type="Dmg" Value="15" Desc="狂暴: 攻击 +15" />
+			<Level Cost="900" Type="HP" Value="300" Desc="自然守护者: 生命 +300" />
+			<Level Cost="1000" Type="ManaRegen" Value="2" Desc="激活: 回蓝 +2" />
+			<Level Cost="1200" Type="HP" Value="400" Desc="森林之王: 生命 +400" />
+			<Level Cost="1500" Type="Dmg" Value="30" Desc="半神之力: 攻击 +30" />
+		</Tree>
+
+		<Tree Key="paladin">
+			<Level Cost="200" Type="HP" Value="100" Desc="英雄体魄: 生命 +100" />
+			<Level Cost="250" Type="Dmg" Value="10" Desc="圣光之力: 攻击 +10" />
+			<Level Cost="300" Type="ManaRegen" Value="1" Desc="虔诚: 回蓝 +1" />
+			<Level Cost="350" Type="HP" Value="150" Desc="光环强化: 生命 +150" />
+			<Level Cost="400" Type="Dmg" Value="15" Desc="正义审判: 攻击 +15" />
+			<Level Cost="450" Type="Block" Value="0.05" Desc="神盾: 格挡 +5%" />
+			<Level Cost="500" Type="HP" Value="200" Desc="王者祝福: 生命 +200" />
+			<Level Cost="600" Type="Crit" Value="0.05" Desc="定罪: 暴击 +5%" />
+			<Level Cost="700" Type="Dmg" Value="20" Desc="复仇之怒: 攻击 +20" />
+			<Level Cost="800" Type="ManaRegen" Value="2" Desc="神圣恳求: 回蓝 +2" />
+			<Level Cost="900" Type="HP" Value="300" Desc="圣殿守护: 生命 +300" />
+			<Level Cost="1000" Type="CD" Value="-0.1" Desc="十字军打击: 攻速 +10%" />
+			<Level Cost="1200" Type="Dmg" Value="30" Desc="灰烬使者: 攻击 +30" />
+			<Level Cost="1400" Type="HP" Value="400" Desc="大十字军: 生命 +400" />
+			<Level Cost="1600" Type="Block" Value="0.1" Desc="无敌护盾: 格挡 +10%" />
+			<Level Cost="1800" Type="Crit" Value="0.1" Desc="神圣风暴: 暴击 +10%" />
+			<Level Cost="2000" Type="HP" Value="500" Desc="圣光化身: 生命 +500" />
+			<Level Cost="2500" Type="Dmg" Value="50" Desc="最终审判: 攻击 +50" />
+			<Level Cost="3000" Type="ManaRegen" Value="5" Desc="无限光辉: 回蓝 +5" />
+			<Level Cost="5000" Type="HP" Value="1000" Desc="不朽传说: 生命 +1000" />
+		</Tree>
+	</UnitUpgrades>
+	<Upgrades>
+		<Upgrade Id="hp" Name="精钢护甲" Desc="生命 +10%" Cost="100" />
+		<Upgrade Id="dmg" Name="秘银武器" Desc="攻击 +10%" Cost="100" />
+		<Upgrade Id="gold" Name="战争红利" Desc="初始金币 +100" Cost="200" />
+	</Upgrades>
+
+
+	<ObstacleDefinitions>
+		<Obstacle Key="通天塔入口3" Name="通天塔入口3" Image="Environment/Obstacles/TowerObj_通天塔入口3.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔入口4" Name="通天塔入口4" Image="Environment/Obstacles/TowerObj_通天塔入口4.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔入口5" Name="通天塔入口5" Image="Environment/Obstacles/TowerObj_通天塔入口5.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔入口6" Name="通天塔入口6" Image="Environment/Obstacles/TowerObj_通天塔入口6.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔四层a外景tga修改" Name="通天塔四层a外景tga修改"
+			Image="Environment/Obstacles/TowerObj_通天塔四层a外景tga修改.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔外景八层tga修改" Name="通天塔外景八层tga修改"
+			Image="Environment/Obstacles/TowerObj_通天塔外景八层tga修改.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔外景六层tga修改" Name="通天塔外景六层tga修改"
+			Image="Environment/Obstacles/TowerObj_通天塔外景六层tga修改.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-大树_01-01_12767" Name="野外-大树_01-01_12767"
+			Image="Environment/Obstacles/Tree_野外-大树_01-01_12767.png" HasCollision="true" Width="120"
+			Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-大树_01-02_12795" Name="野外-大树_01-02_12795"
+			Image="Environment/Obstacles/Tree_野外-大树_01-02_12795.png" HasCollision="true" Width="120"
+			Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-大树_01-03_12823" Name="野外-大树_01-03_12823"
+			Image="Environment/Obstacles/Tree_野外-大树_01-03_12823.png" HasCollision="true" Width="120"
+			Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-大树_01-04_12855" Name="野外-大树_01-04_12855"
+			Image="Environment/Obstacles/Tree_野外-大树_01-04_12855.png" HasCollision="true" Width="120"
+			Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-大树_01_12885" Name="野外-大树_01_12885"
+			Image="Environment/Obstacles/Tree_野外-大树_01_12885.png" HasCollision="true" Width="120"
+			Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石01_12998" Name="野外-山石01_12998"
+			Image="Environment/Obstacles/Rock_野外-山石01_12998.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石02_13027" Name="野外-山石02_13027"
+			Image="Environment/Obstacles/Rock_野外-山石02_13027.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石03_13046" Name="野外-山石03_13046"
+			Image="Environment/Obstacles/Rock_野外-山石03_13046.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石04_13074" Name="野外-山石04_13074"
+			Image="Environment/Obstacles/Rock_野外-山石04_13074.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石05_13102" Name="野外-山石05_13102"
+			Image="Environment/Obstacles/Rock_野外-山石05_13102.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石06_13117" Name="野外-山石06_13117"
+			Image="Environment/Obstacles/Rock_野外-山石06_13117.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石07_13133" Name="野外-山石07_13133"
+			Image="Environment/Obstacles/Rock_野外-山石07_13133.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石08_13154" Name="野外-山石08_13154"
+			Image="Environment/Obstacles/Rock_野外-山石08_13154.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-山石09_13179" Name="野外-山石09_13179"
+			Image="Environment/Obstacles/Rock_野外-山石09_13179.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-洞口-01_13283" Name="野外-洞口-01_13283"
+			Image="Environment/Obstacles/Gate_野外-洞口-01_13283.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-洞口-02_13330" Name="野外-洞口-02_13330"
+			Image="Environment/Obstacles/Gate_野外-洞口-02_13330.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外-洞口_13369" Name="野外-洞口_13369"
+			Image="Environment/Obstacles/Gate_野外-洞口_13369.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="野外大型山01" Name="野外大型山01" Image="Environment/Obstacles/Rock_野外大型山01.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石1" Name="黄色山石1" Image="Environment/Obstacles/Rock_黄色山石1.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石10" Name="黄色山石10" Image="Environment/Obstacles/Rock_黄色山石10.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石11" Name="黄色山石11" Image="Environment/Obstacles/Rock_黄色山石11.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石12" Name="黄色山石12" Image="Environment/Obstacles/Rock_黄色山石12.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石13" Name="黄色山石13" Image="Environment/Obstacles/Rock_黄色山石13.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石14" Name="黄色山石14" Image="Environment/Obstacles/Rock_黄色山石14.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石15" Name="黄色山石15" Image="Environment/Obstacles/Rock_黄色山石15.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石16" Name="黄色山石16" Image="Environment/Obstacles/Rock_黄色山石16.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石17" Name="黄色山石17" Image="Environment/Obstacles/Rock_黄色山石17.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石18" Name="黄色山石18" Image="Environment/Obstacles/Rock_黄色山石18.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石19" Name="黄色山石19" Image="Environment/Obstacles/Rock_黄色山石19.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石2" Name="黄色山石2" Image="Environment/Obstacles/Rock_黄色山石2.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石20" Name="黄色山石20" Image="Environment/Obstacles/Rock_黄色山石20.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石21" Name="黄色山石21" Image="Environment/Obstacles/Rock_黄色山石21.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石22" Name="黄色山石22" Image="Environment/Obstacles/Rock_黄色山石22.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石23" Name="黄色山石23" Image="Environment/Obstacles/Rock_黄色山石23.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石24" Name="黄色山石24" Image="Environment/Obstacles/Rock_黄色山石24.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石25" Name="黄色山石25" Image="Environment/Obstacles/Rock_黄色山石25.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石26" Name="黄色山石26" Image="Environment/Obstacles/Rock_黄色山石26.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石27" Name="黄色山石27" Image="Environment/Obstacles/Rock_黄色山石27.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石28" Name="黄色山石28" Image="Environment/Obstacles/Rock_黄色山石28.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石29" Name="黄色山石29" Image="Environment/Obstacles/Rock_黄色山石29.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石3" Name="黄色山石3" Image="Environment/Obstacles/Rock_黄色山石3.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石30" Name="黄色山石30" Image="Environment/Obstacles/Rock_黄色山石30.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石31" Name="黄色山石31" Image="Environment/Obstacles/Rock_黄色山石31.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石32" Name="黄色山石32" Image="Environment/Obstacles/Rock_黄色山石32.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石33" Name="黄色山石33" Image="Environment/Obstacles/Rock_黄色山石33.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石34" Name="黄色山石34" Image="Environment/Obstacles/Rock_黄色山石34.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石35" Name="黄色山石35" Image="Environment/Obstacles/Rock_黄色山石35.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石36" Name="黄色山石36" Image="Environment/Obstacles/Rock_黄色山石36.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石37" Name="黄色山石37" Image="Environment/Obstacles/Rock_黄色山石37.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石38" Name="黄色山石38" Image="Environment/Obstacles/Rock_黄色山石38.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石39" Name="黄色山石39" Image="Environment/Obstacles/Rock_黄色山石39.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石4" Name="黄色山石4" Image="Environment/Obstacles/Rock_黄色山石4.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石40" Name="黄色山石40" Image="Environment/Obstacles/Rock_黄色山石40.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石41" Name="黄色山石41" Image="Environment/Obstacles/Rock_黄色山石41.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石42" Name="黄色山石42" Image="Environment/Obstacles/Rock_黄色山石42.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石43" Name="黄色山石43" Image="Environment/Obstacles/Rock_黄色山石43.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石44" Name="黄色山石44" Image="Environment/Obstacles/Rock_黄色山石44.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石45" Name="黄色山石45" Image="Environment/Obstacles/Rock_黄色山石45.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石46" Name="黄色山石46" Image="Environment/Obstacles/Rock_黄色山石46.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石47" Name="黄色山石47" Image="Environment/Obstacles/Rock_黄色山石47.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石48" Name="黄色山石48" Image="Environment/Obstacles/Rock_黄色山石48.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石49" Name="黄色山石49" Image="Environment/Obstacles/Rock_黄色山石49.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石5" Name="黄色山石5" Image="Environment/Obstacles/Rock_黄色山石5.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石50" Name="黄色山石50" Image="Environment/Obstacles/Rock_黄色山石50.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石6" Name="黄色山石6" Image="Environment/Obstacles/Rock_黄色山石6.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石7" Name="黄色山石7" Image="Environment/Obstacles/Rock_黄色山石7.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石8" Name="黄色山石8" Image="Environment/Obstacles/Rock_黄色山石8.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="黄色山石9" Name="黄色山石9" Image="Environment/Obstacles/Rock_黄色山石9.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="墙3-4_1955" Name="墙3-4_1955" Image="Environment/Obstacles/Wall_墙3-4_1955.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="墙4-4_1963" Name="墙4-4_1963" Image="Environment/Obstacles/Wall_墙4-4_1963.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="墩子_1509" Name="墩子_1509" Image="Environment/Obstacles/Pillar_墩子_1509.png"
+			HasCollision="true" Width="60" Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头1_1324" Name="大石头1_1324" Image="Environment/Obstacles/Rock_大石头1_1324.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头2_1329" Name="大石头2_1329" Image="Environment/Obstacles/Rock_大石头2_1329.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头3_1333" Name="大石头3_1333" Image="Environment/Obstacles/Rock_大石头3_1333.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头4_1338" Name="大石头4_1338" Image="Environment/Obstacles/Rock_大石头4_1338.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头5_1341" Name="大石头5_1341" Image="Environment/Obstacles/Rock_大石头5_1341.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头6_1345" Name="大石头6_1345" Image="Environment/Obstacles/Rock_大石头6_1345.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="大石头7_1348" Name="大石头7_1348" Image="Environment/Obstacles/Rock_大石头7_1348.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="枯树2_objects3_00959" Name="枯树2_objects3_00959"
+			Image="Environment/Obstacles/Tree_枯树2_objects3_00959.png" HasCollision="true"
+			Width="120" Height="180" OffsetY="40">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="民居01-井" Name="民居01-井" Image="Environment/Obstacles/BuildingObj_民居01-井.png"
+			HasCollision="true" Width="200" Height="180" OffsetY="50">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="民居01-墙01" Name="民居01-墙01" Image="Environment/Obstacles/Wall_民居01-墙01.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="民居01-墙02" Name="民居01-墙02" Image="Environment/Obstacles/Wall_民居01-墙02.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="民居01-墙03" Name="民居01-墙03" Image="Environment/Obstacles/Wall_民居01-墙03.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="民居01-门" Name="民居01-门" Image="Environment/Obstacles/BuildingObj_民居01-门.png"
+			HasCollision="true" Width="200" Height="180" OffsetY="50">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="05柱_2670" Name="05柱_2670" Image="Environment/Obstacles/Pillar_05柱_2670.png"
+			HasCollision="true" Width="60" Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="06柱_2680" Name="06柱_2680" Image="Environment/Obstacles/Pillar_06柱_2680.png"
+			HasCollision="true" Width="60" Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="柱子01_1401" Name="柱子01_1401"
+			Image="Environment/Obstacles/Pillar_柱子01_1401.png" HasCollision="true" Width="60"
+			Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="柱子02_1411" Name="柱子02_1411"
+			Image="Environment/Obstacles/Pillar_柱子02_1411.png" HasCollision="true" Width="60"
+			Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="柱子_1462" Name="柱子_1462" Image="Environment/Obstacles/Pillar_柱子_1462.png"
+			HasCollision="true" Width="60" Height="150" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="栅栏001" Name="栅栏001" Image="Environment/Obstacles/Wall_栅栏001.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="栅栏004" Name="栅栏004" Image="Environment/Obstacles/Wall_栅栏004.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="栅栏火盆" Name="栅栏火盆" Image="Environment/Obstacles/Wall_栅栏火盆.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="栅栏门01" Name="栅栏门01" Image="Environment/Obstacles/Wall_栅栏门01.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="栅栏门02" Name="栅栏门02" Image="Environment/Obstacles/Wall_栅栏门02.png"
+			HasCollision="true" Width="60" Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="瀑布大浮石_1221" Name="瀑布大浮石_1221"
+			Image="Environment/Obstacles/Rock_瀑布大浮石_1221.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="瀑布浮石1_1227" Name="瀑布浮石1_1227"
+			Image="Environment/Obstacles/Rock_瀑布浮石1_1227.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="瀑布浮石2_1228" Name="瀑布浮石2_1228"
+			Image="Environment/Obstacles/Rock_瀑布浮石2_1228.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石01_objects2_03228" Name="石01_objects2_03228"
+			Image="Environment/Obstacles/Rock_石01_objects2_03228.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石03_objects2_03234" Name="石03_objects2_03234"
+			Image="Environment/Obstacles/Rock_石03_objects2_03234.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石05_objects3_00994" Name="石05_objects3_00994"
+			Image="Environment/Obstacles/Rock_石05_objects3_00994.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像1_1818" Name="石像1_1818" Image="Environment/Obstacles/Rock_石像1_1818.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像2_objects3_01099" Name="石像2_objects3_01099"
+			Image="Environment/Obstacles/Rock_石像2_objects3_01099.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像3_objects4_00824" Name="石像3_objects4_00824"
+			Image="Environment/Obstacles/Rock_石像3_objects4_00824.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石塔3_objects2_01998" Name="石塔3_objects2_01998"
+			Image="Environment/Obstacles/Rock_石塔3_objects2_01998.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石墙-01_1754" Name="石墙-01_1754"
+			Image="Environment/Obstacles/Rock_石墙-01_1754.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石墙-02_1765" Name="石墙-02_1765"
+			Image="Environment/Obstacles/Rock_石墙-02_1765.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石墙-04_1786" Name="石墙-04_1786"
+			Image="Environment/Obstacles/Rock_石墙-04_1786.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石墙-05_1795" Name="石墙-05_1795"
+			Image="Environment/Obstacles/Rock_石墙-05_1795.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石墙-06-1_1807" Name="石墙-06-1_1807"
+			Image="Environment/Obstacles/Rock_石墙-06-1_1807.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石壁接悬崖右_2275" Name="石壁接悬崖右_2275"
+			Image="Environment/Obstacles/Rock_石壁接悬崖右_2275.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石壁接悬崖右上_2374" Name="石壁接悬崖右上_2374"
+			Image="Environment/Obstacles/Rock_石壁接悬崖右上_2374.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石壁接悬崖左_2269" Name="石壁接悬崖左_2269"
+			Image="Environment/Obstacles/Rock_石壁接悬崖左_2269.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石壁接悬崖左上_2365" Name="石壁接悬崖左上_2365"
+			Image="Environment/Obstacles/Rock_石壁接悬崖左上_2365.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石门2_1503" Name="石门2_1503" Image="Environment/Obstacles/Rock_石门2_1503.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石门_1496" Name="石门_1496" Image="Environment/Obstacles/Rock_石门_1496.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="矿石堆2_546" Name="矿石堆2_546" Image="Environment/Obstacles/Rock_矿石堆2_546.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="迷仙石碑_1218" Name="迷仙石碑_1218" Image="Environment/Obstacles/Rock_迷仙石碑_1218.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="迷仙石碑_1353" Name="迷仙石碑_1353" Image="Environment/Obstacles/Rock_迷仙石碑_1353.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="上口_2253" Name="上口_2253" Image="Environment/Obstacles/Gate_上口_2253.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="上口左_2233" Name="上口左_2233" Image="Environment/Obstacles/Gate_上口左_2233.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="主殿-石柱01" Name="主殿-石柱01" Image="Environment/Obstacles/Rock_主殿-石柱01.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="主殿-石柱02-xin" Name="主殿-石柱02-xin"
+			Image="Environment/Obstacles/Rock_主殿-石柱02-xin.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="主殿-石柱02" Name="主殿-石柱02" Image="Environment/Obstacles/Rock_主殿-石柱02.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="传送阵浮石_984" Name="传送阵浮石_984" Image="Environment/Obstacles/Rock_传送阵浮石_984.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="佛像1_objects5_00477" Name="佛像1_objects5_00477"
+			Image="Environment/Obstacles/Statue_佛像1_objects5_00477.png" HasCollision="true"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="佛像2_objects3_00826" Name="佛像2_objects3_00826"
+			Image="Environment/Obstacles/Statue_佛像2_objects3_00826.png" HasCollision="true"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="佛像5_objects2_02010" Name="佛像5_objects2_02010"
+			Image="Environment/Obstacles/Statue_佛像5_objects2_02010.png" HasCollision="true"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口-1_2454" Name="入口-1_2454" Image="Environment/Obstacles/Gate_入口-1_2454.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口2_2160" Name="入口2_2160" Image="Environment/Obstacles/Gate_入口2_2160.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口右_1349" Name="入口右_1349" Image="Environment/Obstacles/Gate_入口右_1349.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口右楼梯下_1523" Name="入口右楼梯下_1523"
+			Image="Environment/Obstacles/Gate_入口右楼梯下_1523.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口大地图1" Name="入口大地图1" Image="Environment/Obstacles/Gate_入口大地图1.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口大地图2" Name="入口大地图2" Image="Environment/Obstacles/Gate_入口大地图2.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口大地图3" Name="入口大地图3" Image="Environment/Obstacles/Gate_入口大地图3.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口大地图4" Name="入口大地图4" Image="Environment/Obstacles/Gate_入口大地图4.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口左_1376" Name="入口左_1376" Image="Environment/Obstacles/Gate_入口左_1376.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="入口左楼梯下_1536" Name="入口左楼梯下_1536"
+			Image="Environment/Obstacles/Gate_入口左楼梯下_1536.png" HasCollision="true" Width="60"
+			Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="出口_747" Name="出口_747" Image="Environment/Obstacles/Gate_出口_747.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-城内大石块" Name="右-城内大石块" Image="Environment/Obstacles/Rock_右-城内大石块.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-城内大石块灌木" Name="右-城内大石块灌木" Image="Environment/Obstacles/Rock_右-城内大石块灌木.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-横躺石块灌木" Name="右-横躺石块灌木" Image="Environment/Obstacles/Rock_右-横躺石块灌木.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="吊桥右栏杆_1296" Name="吊桥右栏杆_1296"
+			Image="Environment/Obstacles/Wall_吊桥右栏杆_1296.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="吊桥左栏杆_1309" Name="吊桥左栏杆_1309"
+			Image="Environment/Obstacles/Wall_吊桥左栏杆_1309.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="外围大石块" Name="外围大石块" Image="Environment/Obstacles/Rock_外围大石块.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="小墓碑_1239" Name="小墓碑_1239" Image="Environment/Obstacles/Statue_小墓碑_1239.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="小石台_1242" Name="小石台_1242" Image="Environment/Obstacles/Rock_小石台_1242.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="小石塔_1240" Name="小石塔_1240" Image="Environment/Obstacles/Rock_小石塔_1240.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石1" Name="山石1" Image="Environment/Obstacles/Rock_山石1.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石10" Name="山石10" Image="Environment/Obstacles/Rock_山石10.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石11" Name="山石11" Image="Environment/Obstacles/Rock_山石11.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石12" Name="山石12" Image="Environment/Obstacles/Rock_山石12.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石13" Name="山石13" Image="Environment/Obstacles/Rock_山石13.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石14" Name="山石14" Image="Environment/Obstacles/Rock_山石14.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石15" Name="山石15" Image="Environment/Obstacles/Rock_山石15.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石16" Name="山石16" Image="Environment/Obstacles/Rock_山石16.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石17" Name="山石17" Image="Environment/Obstacles/Rock_山石17.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石18" Name="山石18" Image="Environment/Obstacles/Rock_山石18.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石19" Name="山石19" Image="Environment/Obstacles/Rock_山石19.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石2" Name="山石2" Image="Environment/Obstacles/Rock_山石2.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石20" Name="山石20" Image="Environment/Obstacles/Rock_山石20.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石21" Name="山石21" Image="Environment/Obstacles/Rock_山石21.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石22" Name="山石22" Image="Environment/Obstacles/Rock_山石22.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石24" Name="山石24" Image="Environment/Obstacles/Rock_山石24.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石25" Name="山石25" Image="Environment/Obstacles/Rock_山石25.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石3" Name="山石3" Image="Environment/Obstacles/Rock_山石3.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石4" Name="山石4" Image="Environment/Obstacles/Rock_山石4.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石5" Name="山石5" Image="Environment/Obstacles/Rock_山石5.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石6" Name="山石6" Image="Environment/Obstacles/Rock_山石6.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石7" Name="山石7" Image="Environment/Obstacles/Rock_山石7.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石8" Name="山石8" Image="Environment/Obstacles/Rock_山石8.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="山石9" Name="山石9" Image="Environment/Obstacles/Rock_山石9.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="水面浮石1_1231" Name="水面浮石1_1231"
+			Image="Environment/Obstacles/Rock_水面浮石1_1231.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="水面浮石2_1235" Name="水面浮石2_1235"
+			Image="Environment/Obstacles/Rock_水面浮石2_1235.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="水面浮石3_1237" Name="水面浮石3_1237"
+			Image="Environment/Obstacles/Rock_水面浮石3_1237.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="水面浮石4_1238" Name="水面浮石4_1238"
+			Image="Environment/Obstacles/Rock_水面浮石4_1238.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-06_2221" Name="特殊墙-06_2221"
+			Image="Environment/Obstacles/Wall_特殊墙-06_2221.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-07_2206" Name="特殊墙-07_2206"
+			Image="Environment/Obstacles/Wall_特殊墙-07_2206.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-1_1970" Name="特殊墙-1_1970"
+			Image="Environment/Obstacles/Wall_特殊墙-1_1970.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-2_1982" Name="特殊墙-2_1982"
+			Image="Environment/Obstacles/Wall_特殊墙-2_1982.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-3_1998" Name="特殊墙-3_1998"
+			Image="Environment/Obstacles/Wall_特殊墙-3_1998.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="特殊墙-4_2013" Name="特殊墙-4_2013"
+			Image="Environment/Obstacles/Wall_特殊墙-4_2013.png" HasCollision="true" Width="60"
+			Height="100" OffsetY="10">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像4_objects4_00832" Name="石像4_objects4_00832"
+			Image="Environment/Obstacles/Rock_石像4_objects4_00832.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像5_objects4_00840" Name="石像5_objects4_00840"
+			Image="Environment/Obstacles/Rock_石像5_objects4_00840.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像6_objects3_01106" Name="石像6_objects3_01106"
+			Image="Environment/Obstacles/Rock_石像6_objects3_01106.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石像9_objects3_01127" Name="石像9_objects3_01127"
+			Image="Environment/Obstacles/Rock_石像9_objects3_01127.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石柱-03_2038" Name="石柱-03_2038"
+			Image="Environment/Obstacles/Rock_石柱-03_2038.png" HasCollision="true" Width="80"
+			Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石柱-1_2099" Name="石柱-1_2099" Image="Environment/Obstacles/Rock_石柱-1_2099.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="石柱头2_2525" Name="石柱头2_2525" Image="Environment/Obstacles/Rock_石柱头2_2525.png"
+			HasCollision="true" Width="80" Height="70" OffsetY="20">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔入口1" Name="通天塔入口1" Image="Environment/Obstacles/TowerObj_通天塔入口1.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="通天塔入口2" Name="通天塔入口2" Image="Environment/Obstacles/TowerObj_通天塔入口2.png"
+			HasCollision="true" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="药摊_objects4_00480" Name="药摊_objects4_00480"
+			Image="Environment/Decorations/Prop_药摊_objects4_00480.png" HasCollision="false"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="骨头_objects7_00451" Name="骨头_objects7_00451"
+			Image="Environment/Decorations/Bone_骨头_objects7_00451.png" HasCollision="false"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="骨头_objects7_00451_3827" Name="骨头_objects7_00451_3827"
+			Image="Environment/Decorations/Bone_骨头_objects7_00451_3827.png" HasCollision="false"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="杂物1" Name="杂物1" Image="Environment/Decorations/Prop_杂物1.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="车轮印" Name="车轮印" Image="Environment/Decorations/Prop_车轮印.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-八卦摊位" Name="右-八卦摊位" Image="Environment/Decorations/Prop_右-八卦摊位.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-瓦罐摊位" Name="右-瓦罐摊位" Image="Environment/Decorations/Prop_右-瓦罐摊位.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="右-箱子车子" Name="右-箱子车子" Image="Environment/Decorations/Prop_右-箱子车子.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="地毯01" Name="地毯01" Image="Environment/Decorations/GroundDeco_地毯01.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="地毯02" Name="地毯02" Image="Environment/Decorations/GroundDeco_地毯02.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="地毯03" Name="地毯03" Image="Environment/Decorations/GroundDeco_地毯03.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="地面杂物" Name="地面杂物" Image="Environment/Decorations/Prop_地面杂物.png"
+			HasCollision="false" Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+		<Obstacle Key="杂货摊_objects7_00132" Name="杂货摊_objects7_00132"
+			Image="Environment/Decorations/Prop_杂货摊_objects7_00132.png" HasCollision="false"
+			Width="60" Height="60" OffsetY="30">
+			<SpriteSheet Image="" FrameW="0" FrameH="0" Scale="1" Count="1" />
+		</Obstacle>
+	</ObstacleDefinitions>
+	<Environment>
+		<TerrainTextures>
+			<Texture Id="0" Path="Environment/Tiles/Tile_大地砖01.png" Weight="10" />
+			<Texture Id="1" Path="Environment/Tiles/Tile_野外-土坝01_12367.png" Weight="10" />
+			<Texture Id="2" Path="Environment/Tiles/Tile_野外-土坝02_12380.png" Weight="10" />
+			<Texture Id="3" Path="Environment/Tiles/Tile_野外-土坝03_12393.png" Weight="10" />
+			<Texture Id="4" Path="Environment/Tiles/Tile_野外-土坝05_12400.png" Weight="10" />
+			<Texture Id="5" Path="Environment/Tiles/Tile_野外-土坝06_12409.png" Weight="10" />
+			<Texture Id="6" Path="Environment/Tiles/Tile_野外-土坝07_12417.png" Weight="10" />
+			<Texture Id="7" Path="Environment/Tiles/Tile_野外-土坝08_12438.png" Weight="10" />
+			<Texture Id="8" Path="Environment/Tiles/Tile_野外-土坝09_12452.png" Weight="10" />
+			<Texture Id="9" Path="Environment/Tiles/Tile_野外-土坝10_12461.png" Weight="10" />
+			<Texture Id="10" Path="Environment/Tiles/Tile_野外-土坝11_12469.png" Weight="10" />
+			<Texture Id="11" Path="Environment/Tiles/Tile_野外-土坝12_12484.png" Weight="10" />
+			<Texture Id="12" Path="Environment/Tiles/Tile_野外-土坝13_12500.png" Weight="10" />
+			<Texture Id="13" Path="Environment/Tiles/Tile_野外-土坝14_12508.png" Weight="10" />
+			<Texture Id="14" Path="Environment/Tiles/Tile_野外-土坝15_12521.png" Weight="10" />
+			<Texture Id="15" Path="Environment/Tiles/Tile_野外-地表01_12536.png" Weight="10" />
+			<Texture Id="16" Path="Environment/Tiles/Tile_野外-地表02_12554.png" Weight="10" />
+			<Texture Id="17" Path="Environment/Tiles/Tile_野外-地表03_12572.png" Weight="10" />
+			<Texture Id="18" Path="Environment/Tiles/Tile_野外-地表04_12588.png" Weight="10" />
+			<Texture Id="19" Path="Environment/Tiles/Tile_野外-地表05_12614.png" Weight="10" />
+			<Texture Id="20" Path="Environment/Tiles/Tile_野外-地表06_12629.png" Weight="10" />
+			<Texture Id="21" Path="Environment/Tiles/Tile_野外-地表07_12645.png" Weight="10" />
+			<Texture Id="22" Path="Environment/Tiles/Tile_野外-地表08_12656.png" Weight="10" />
+			<Texture Id="23" Path="Environment/Tiles/Tile_野外-地表08_12673.png" Weight="10" />
+			<Texture Id="24" Path="Environment/Tiles/Tile_野外-地表09_12690.png" Weight="10" />
+			<Texture Id="25" Path="Environment/Tiles/Tile_沙城地表11.png" Weight="10" />
+			<Texture Id="26" Path="Environment/Tiles/Tile_沙城地表12.png" Weight="10" />
+			<Texture Id="27" Path="Environment/Tiles/Tile_沙城地表13.png" Weight="10" />
+			<Texture Id="28" Path="Environment/Tiles/Tile_沙城地表14.png" Weight="10" />
+			<Texture Id="29" Path="Environment/Tiles/Tile_沙城地表15.png" Weight="10" />
+			<Texture Id="30" Path="Environment/Tiles/Tile_沙城地表16大.png" Weight="10" />
+			<Texture Id="31" Path="Environment/Tiles/Tile_沙城地表17.png" Weight="10" />
+			<Texture Id="32" Path="Environment/Tiles/Tile_沙城地表18.png" Weight="10" />
+			<Texture Id="33" Path="Environment/Tiles/Tile_沙城地表19.png" Weight="10" />
+			<Texture Id="34" Path="Environment/Tiles/Tile_沙城地表20.png" Weight="10" />
+			<Texture Id="35" Path="Environment/Tiles/Tile_沙城地表21.png" Weight="10" />
+			<Texture Id="36" Path="Environment/Tiles/Tile_沙城地表22.png" Weight="10" />
+			<Texture Id="37" Path="Environment/Tiles/Tile_沙城地表23.png" Weight="10" />
+			<Texture Id="38" Path="Environment/Tiles/Tile_沙城地表1.png" Weight="10" />
+			<Texture Id="39" Path="Environment/Tiles/Tile_沙城地表2.png" Weight="10" />
+			<Texture Id="40" Path="Environment/Tiles/Tile_沙城地表3-01.png" Weight="10" />
+			<Texture Id="41" Path="Environment/Tiles/Tile_沙城地表3.png" Weight="10" />
+			<Texture Id="42" Path="Environment/Tiles/Tile_沙城地表8.png" Weight="10" />
+			<Texture Id="43" Path="Environment/Tiles/Tile_沙城地表9.png" Weight="10" />
+			<Texture Id="44" Path="Environment/Tiles/Tile_沙城架子1.png" Weight="10" />
+			<Texture Id="45" Path="Environment/Tiles/Tile_沙城架子2.png" Weight="10" />
+			<Texture Id="46" Path="Environment/Tiles/Tile_沙城架子3.png" Weight="10" />
+			<Texture Id="47" Path="Environment/Tiles/Tile_沙城架子4.png" Weight="10" />
+			<Texture Id="48" Path="Environment/Tiles/Tile_沙城架子5.png" Weight="10" />
+			<Texture Id="49" Path="Environment/Tiles/Tile_沙城架子6.png" Weight="10" />
+			<Texture Id="50" Path="Environment/Tiles/Tile_沙城架子7.png" Weight="10" />
+			<Texture Id="51" Path="Environment/Tiles/Tile_沙城背景01.png" Weight="10" />
+			<Texture Id="52" Path="Environment/Tiles/Tile_沙城茶铺.png" Weight="10" />
+			<Texture Id="53" Path="Environment/Tiles/Tile_深土01深土02.png" Weight="10" />
+			<Texture Id="54" Path="Environment/Tiles/Tile_深土01.png" Weight="10" />
+			<Texture Id="55" Path="Environment/Tiles/Tile_深土02.png" Weight="10" />
+			<Texture Id="56" Path="Environment/Tiles/Tile_深色沙地01.png" Weight="10" />
+			<Texture Id="57" Path="Environment/Tiles/Tile_深色碎砖01.png" Weight="10" />
+			<Texture Id="58" Path="Environment/Tiles/Tile_深色碎砖02.png" Weight="10" />
+			<Texture Id="59" Path="Environment/Tiles/Tile_深草01.png" Weight="10" />
+			<Texture Id="60" Path="Environment/Tiles/Tile_盟重建筑-热荒沙漠24.png" Weight="10" />
+			<Texture Id="61" Path="Environment/Tiles/Tile_盟重建筑-热荒沙漠25.png" Weight="10" />
+			<Texture Id="62" Path="Environment/Tiles/Tile_盟重建筑-热荒沙漠5.png" Weight="10" />
+			<Texture Id="63" Path="Environment/Tiles/Tile_神工坊-小地表.png" Weight="10" />
+			<Texture Id="64" Path="Environment/Tiles/Tile_冰石柱2_627.png" Weight="10" />
+			<Texture Id="65" Path="Environment/Tiles/Tile_冰石柱3_635.png" Weight="10" />
+			<Texture Id="66" Path="Environment/Tiles/Tile_冰石柱4_641.png" Weight="10" />
+			<Texture Id="67" Path="Environment/Tiles/Tile_冰石柱5_647.png" Weight="10" />
+			<Texture Id="68" Path="Environment/Tiles/Tile_冰石柱6_661.png" Weight="10" />
+			<Texture Id="69" Path="Environment/Tiles/Tile_冰石柱7_671.png" Weight="10" />
+			<Texture Id="70" Path="Environment/Tiles/Tile_冰石柱8_682.png" Weight="10" />
+			<Texture Id="71" Path="Environment/Tiles/Tile_小地表01.png" Weight="10" />
+			<Texture Id="72" Path="Environment/Tiles/Tile_小地表02.png" Weight="10" />
+			<Texture Id="73" Path="Environment/Tiles/Tile_沙地00.png" Weight="10" />
+			<Texture Id="74" Path="Environment/Tiles/Tile_沙地01.png" Weight="10" />
+			<Texture Id="75" Path="Environment/Tiles/Tile_沙城修建中民居2-小地表.png" Weight="10" />
+			<Texture Id="76" Path="Environment/Tiles/Tile_沙城修建中民居3.png" Weight="10" />
+			<Texture Id="77" Path="Environment/Tiles/Tile_沙城修建中民居4.png" Weight="10" />
+			<Texture Id="78" Path="Environment/Tiles/Tile_沙城修建中民居5-小地表.png" Weight="10" />
+			<Texture Id="79" Path="Environment/Tiles/Tile_沙城地表10.png" Weight="10" />
+			<Texture Id="80" Path="Environment/Tiles/Tile_沙城地表3-02.png" Weight="10" />
+			<Texture Id="81" Path="Environment/Tiles/Tile_沙城地表4-01.png" Weight="10" />
+			<Texture Id="82" Path="Environment/Tiles/Tile_沙城地表4-02.png" Weight="10" />
+			<Texture Id="83" Path="Environment/Tiles/Tile_沙城地表4.png" Weight="10" />
+			<Texture Id="84" Path="Environment/Tiles/Tile_沙城地表5.png" Weight="10" />
+			<Texture Id="85" Path="Environment/Tiles/Tile_沙城地表6.png" Weight="10" />
+			<Texture Id="86" Path="Environment/Tiles/Tile_沙城地表7.png" Weight="10" />
+			<Texture Id="87" Path="Environment/Tiles/Tile_沙城建造中杂物11.png" Weight="10" />
+			<Texture Id="88" Path="Environment/Tiles/Tile_沙城建造中杂物122.png" Weight="10" />
+			<Texture Id="89" Path="Environment/Tiles/Tile_沙城建造中杂物15.png" Weight="10" />
+			<Texture Id="90" Path="Environment/Tiles/Tile_沙城建造中杂物21-小地表.png" Weight="10" />
+			<Texture Id="91" Path="Environment/Tiles/Tile_沙城建造中杂物7.png" Weight="10" />
+			<Texture Id="92" Path="Environment/Tiles/Tile_沙城截图01.png" Weight="10" />
+			<Texture Id="93" Path="Environment/Tiles/Tile_沙城杂物1.png" Weight="10" />
+			<Texture Id="94" Path="Environment/Tiles/Tile_沙城杂物3.png" Weight="10" />
+			<Texture Id="95" Path="Environment/Tiles/Tile_沙城杂物5.png" Weight="10" />
+			<Texture Id="96" Path="Environment/Tiles/Tile_沙城杂物6.png" Weight="10" />
+			<Texture Id="97" Path="Environment/Tiles/Tile_沙城架子8.png" Weight="10" />
+			<Texture Id="98" Path="Environment/Tiles/Tile_沙城水果摊.png" Weight="10" />
+			<Texture Id="99" Path="Environment/Tiles/Tile_沙城肉铺.png" Weight="10" />
+			<Texture Id="100" Path="Environment/Tiles/Tile_沙石-长01.png" Weight="10" />
+			<Texture Id="101" Path="Environment/Tiles/Tile_沙石-长02.png" Weight="10" />
+			<Texture Id="102" Path="Environment/Tiles/Tile_沙石-长03.png" Weight="10" />
+			<Texture Id="103" Path="Environment/Tiles/Tile_沙石-长04.png" Weight="10" />
+			<Texture Id="104" Path="Environment/Tiles/Tile_沙石-长05.png" Weight="10" />
+			<Texture Id="105" Path="Environment/Tiles/Tile_沙石01.png" Weight="10" />
+			<Texture Id="106" Path="Environment/Tiles/Tile_沙石02.png" Weight="10" />
+			<Texture Id="107" Path="Environment/Tiles/Tile_沙石03.png" Weight="10" />
+			<Texture Id="108" Path="Environment/Tiles/Tile_沙石04.png" Weight="10" />
+			<Texture Id="109" Path="Environment/Tiles/Tile_沙石05.png" Weight="10" />
+			<Texture Id="110" Path="Environment/Tiles/Tile_沙石06.png" Weight="10" />
+			<Texture Id="111" Path="Environment/Tiles/Tile_沙石07.png" Weight="10" />
+			<Texture Id="112" Path="Environment/Tiles/Tile_沙石08.png" Weight="10" />
+			<Texture Id="113" Path="Environment/Tiles/Tile_沙石09.png" Weight="10" />
+			<Texture Id="114" Path="Environment/Tiles/Tile_沙石10.png" Weight="10" />
+			<Texture Id="115" Path="Environment/Tiles/Tile_沙石11.png" Weight="10" />
+			<Texture Id="116" Path="Environment/Tiles/Tile_沙石12.png" Weight="10" />
+			<Texture Id="117" Path="Environment/Tiles/Tile_沙石拱门01.png" Weight="10" />
+			<Texture Id="118" Path="Environment/Tiles/Tile_沙石拱门02.png" Weight="10" />
+			<Texture Id="119" Path="Environment/Tiles/Tile_蛇人洞地表带土01.png" Weight="10" />
+			<Texture Id="120" Path="Environment/Tiles/Tile_蛇人洞地表带土02.png" Weight="10" />
+		</TerrainTextures>
+	</Environment>
+	<Stages>
+		<Stage Id="1" Title="迷雾森林" Hp="2000" Width="3000" Height="1800" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="900" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="2800" Y="900" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="862" Y="183" Type="右-城内大石块" />
+				<Obstacle X="2410" Y="889" Type="黄色山石20" />
+				<Obstacle X="608" Y="791" Type="杂物1" />
+				<Obstacle X="2465" Y="253" Type="骨头_objects7_00451_3827" />
+				<Obstacle X="722" Y="214" Type="外围大石块" />
+				<Obstacle X="2062" Y="1640" Type="水面浮石3_1237" />
+				<Obstacle X="2063" Y="724" Type="地毯03" />
+				<Obstacle X="1329" Y="319" Type="山石4" />
+				<Obstacle X="1860" Y="1287" Type="山石13" />
+				<Obstacle X="825" Y="558" Type="右-瓦罐摊位" />
+				<Obstacle X="2428" Y="946" Type="石壁接悬崖左上_2365" />
+				<Obstacle X="1131" Y="192" Type="野外-山石04_13074" />
+				<Obstacle X="2289" Y="432" Type="药摊_objects4_00480" />
+				<Obstacle X="2386" Y="764" Type="迷仙石碑_1218" />
+				<Obstacle X="1948" Y="899" Type="大石头1_1324" />
+				<Obstacle X="2260" Y="489" Type="黄色山石38" />
+				<Obstacle X="1897" Y="1198" Type="石像6_objects3_01106" />
+				<Obstacle X="1626" Y="425" Type="水面浮石3_1237" />
+				<Obstacle X="2375" Y="215" Type="石像5_objects4_00840" />
+				<Obstacle X="2149" Y="1029" Type="药摊_objects4_00480" />
+				<Obstacle X="1800" Y="854" Type="主殿-石柱01" />
+				<Obstacle X="1527" Y="1661" Type="山石12" />
+				<Obstacle X="1293" Y="1170" Type="骨头_objects7_00451" />
+				<Obstacle X="1093" Y="1260" Type="黄色山石44" />
+				<Obstacle X="1554" Y="1110" Type="地毯02" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="2" Title="狂沙战场" Hp="3000" Width="3500" Height="2000" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1000" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="3300" Y="1000" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="1649" Y="1517" Type="黄色山石42" />
+				<Obstacle X="1431" Y="781" Type="黄色山石41" />
+				<Obstacle X="911" Y="716" Type="石墙-02_1765" />
+				<Obstacle X="2849" Y="470" Type="山石7" />
+				<Obstacle X="2251" Y="796" Type="石01_objects2_03228" />
+				<Obstacle X="571" Y="1345" Type="黄色山石50" />
+				<Obstacle X="2726" Y="1123" Type="山石14" />
+				<Obstacle X="2803" Y="1254" Type="黄色山石18" />
+				<Obstacle X="2562" Y="162" Type="黄色山石38" />
+				<Obstacle X="2339" Y="1296" Type="右-城内大石块" />
+				<Obstacle X="1767" Y="623" Type="黄色山石19" />
+				<Obstacle X="595" Y="319" Type="杂货摊_objects7_00132" />
+				<Obstacle X="2806" Y="1404" Type="小石塔_1240" />
+				<Obstacle X="2468" Y="1268" Type="黄色山石40" />
+				<Obstacle X="2677" Y="1821" Type="石墙-02_1765" />
+				<Obstacle X="1899" Y="1875" Type="右-八卦摊位" />
+				<Obstacle X="1907" Y="1092" Type="迷仙石碑_1353" />
+				<Obstacle X="1383" Y="1791" Type="杂货摊_objects7_00132" />
+				<Obstacle X="1054" Y="1530" Type="黄色山石39" />
+				<Obstacle X="2183" Y="737" Type="地毯02" />
+				<Obstacle X="700" Y="634" Type="杂物1" />
+				<Obstacle X="2652" Y="699" Type="山石20" />
+				<Obstacle X="1480" Y="368" Type="山石1" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="3" Title="远古遗迹" Hp="4000" Width="4000" Height="2200" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1100" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="3800" Y="1100" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="2329" Y="601" Type="黄色山石10" />
+				<Obstacle X="1355" Y="259" Type="大石头6_1345" />
+				<Obstacle X="758" Y="1535" Type="右-箱子车子" />
+				<Obstacle X="2480" Y="718" Type="黄色山石29" />
+				<Obstacle X="1262" Y="1763" Type="大石头2_1329" />
+				<Obstacle X="672" Y="620" Type="山石11" />
+				<Obstacle X="3286" Y="1736" Type="车轮印" />
+				<Obstacle X="1046" Y="1318" Type="骨头_objects7_00451" />
+				<Obstacle X="1366" Y="754" Type="黄色山石27" />
+				<Obstacle X="501" Y="1047" Type="黄色山石9" />
+				<Obstacle X="2728" Y="1182" Type="黄色山石37" />
+				<Obstacle X="3352" Y="1040" Type="黄色山石30" />
+				<Obstacle X="3075" Y="1703" Type="石门_1496" />
+				<Obstacle X="1709" Y="1412" Type="山石8" />
+				<Obstacle X="544" Y="931" Type="山石24" />
+				<Obstacle X="748" Y="1623" Type="黄色山石5" />
+				<Obstacle X="803" Y="561" Type="地毯01" />
+				<Obstacle X="1674" Y="1811" Type="石墙-02_1765" />
+				<Obstacle X="2772" Y="539" Type="右-箱子车子" />
+				<Obstacle X="3022" Y="111" Type="山石3" />
+				<Obstacle X="640" Y="2040" Type="地毯01" />
+				<Obstacle X="837" Y="1332" Type="骨头_objects7_00451_3827" />
+				<Obstacle X="621" Y="1501" Type="石像3_objects4_00824" />
+				<Obstacle X="2142" Y="197" Type="地面杂物" />
+				<Obstacle X="1911" Y="172" Type="山石22" />
+				<Obstacle X="1371" Y="288" Type="黄色山石39" />
+				<Obstacle X="2465" Y="790" Type="山石9" />
+				<Obstacle X="2862" Y="1104" Type="黄色山石21" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="4" Title="幽暗深渊" Hp="5000" Width="4500" Height="1800" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="900" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="4300" Y="900" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="3434" Y="654" Type="右-箱子车子" />
+				<Obstacle X="3531" Y="929" Type="石像2_objects3_01099" />
+				<Obstacle X="2361" Y="1125" Type="黄色山石8" />
+				<Obstacle X="1898" Y="1153" Type="黄色山石24" />
+				<Obstacle X="1998" Y="248" Type="黄色山石4" />
+				<Obstacle X="975" Y="1666" Type="水面浮石1_1231" />
+				<Obstacle X="3916" Y="107" Type="黄色山石13" />
+				<Obstacle X="1926" Y="1181" Type="黄色山石40" />
+				<Obstacle X="2590" Y="1248" Type="野外-大树_01-03_12823" />
+				<Obstacle X="2440" Y="1356" Type="黄色山石9" />
+				<Obstacle X="1119" Y="662" Type="黄色山石45" />
+				<Obstacle X="2397" Y="475" Type="石墙-01_1754" />
+				<Obstacle X="2160" Y="428" Type="石01_objects2_03228" />
+				<Obstacle X="1294" Y="564" Type="地毯01" />
+				<Obstacle X="2585" Y="1468" Type="右-八卦摊位" />
+				<Obstacle X="1073" Y="440" Type="黄色山石41" />
+				<Obstacle X="581" Y="1148" Type="野外-大树_01-02_12795" />
+				<Obstacle X="2843" Y="319" Type="石柱-03_2038" />
+				<Obstacle X="3912" Y="717" Type="黄色山石13" />
+				<Obstacle X="2138" Y="301" Type="右-箱子车子" />
+				<Obstacle X="3632" Y="953" Type="山石18" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="5" Title="冰封王座" Hp="6000" Width="5000" Height="2000" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1000" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="4800" Y="1000" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="4017" Y="622" Type="石像3_objects4_00824" />
+				<Obstacle X="1629" Y="1845" Type="瀑布浮石1_1227" />
+				<Obstacle X="2795" Y="171" Type="野外-大树_01-02_12795" />
+				<Obstacle X="3024" Y="847" Type="山石7" />
+				<Obstacle X="4317" Y="355" Type="山石24" />
+				<Obstacle X="2377" Y="1653" Type="石壁接悬崖右上_2374" />
+				<Obstacle X="2058" Y="1889" Type="石像9_objects3_01127" />
+				<Obstacle X="1279" Y="1453" Type="野外-山石02_13027" />
+				<Obstacle X="2606" Y="700" Type="外围大石块" />
+				<Obstacle X="2440" Y="372" Type="迷仙石碑_1218" />
+				<Obstacle X="2792" Y="1164" Type="黄色山石16" />
+				<Obstacle X="4489" Y="262" Type="石柱-03_2038" />
+				<Obstacle X="3172" Y="1470" Type="黄色山石42" />
+				<Obstacle X="2579" Y="1153" Type="石像9_objects3_01127" />
+				<Obstacle X="1468" Y="768" Type="黄色山石10" />
+				<Obstacle X="3795" Y="1653" Type="黄色山石46" />
+				<Obstacle X="2240" Y="1053" Type="黄色山石40" />
+				<Obstacle X="1320" Y="1031" Type="迷仙石碑_1218" />
+				<Obstacle X="2955" Y="1466" Type="杂物1" />
+				<Obstacle X="1990" Y="1379" Type="地毯03" />
+				<Obstacle X="1992" Y="177" Type="石像9_objects3_01127" />
+				<Obstacle X="4486" Y="442" Type="黄色山石7" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="6" Title="燃烧平原" Hp="7000" Width="5500" Height="2200" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1100" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="5300" Y="1100" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="2885" Y="1663" Type="药摊_objects4_00480" />
+				<Obstacle X="912" Y="2044" Type="山石18" />
+				<Obstacle X="4474" Y="786" Type="右-八卦摊位" />
+				<Obstacle X="1033" Y="728" Type="山石21" />
+				<Obstacle X="548" Y="510" Type="黄色山石22" />
+				<Obstacle X="2269" Y="1744" Type="山石25" />
+				<Obstacle X="3935" Y="752" Type="山石12" />
+				<Obstacle X="3382" Y="877" Type="车轮印" />
+				<Obstacle X="3996" Y="1386" Type="地毯03" />
+				<Obstacle X="795" Y="350" Type="山石2" />
+				<Obstacle X="3058" Y="611" Type="地毯02" />
+				<Obstacle X="2541" Y="1461" Type="车轮印" />
+				<Obstacle X="1033" Y="1580" Type="水面浮石4_1238" />
+				<Obstacle X="2446" Y="1233" Type="杂货摊_objects7_00132" />
+				<Obstacle X="654" Y="1823" Type="石像2_objects3_01099" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="7" Title="人类皇城" Hp="8000" Width="6000" Height="1800" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="900" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="5800" Y="900" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="1406" Y="736" Type="地毯01" />
+				<Obstacle X="4723" Y="808" Type="山石22" />
+				<Obstacle X="3681" Y="913" Type="黄色山石38" />
+				<Obstacle X="1499" Y="1451" Type="黄色山石18" />
+				<Obstacle X="2589" Y="449" Type="石墙-02_1765" />
+				<Obstacle X="1413" Y="731" Type="杂货摊_objects7_00132" />
+				<Obstacle X="2522" Y="1642" Type="石柱头2_2525" />
+				<Obstacle X="3507" Y="913" Type="山石15" />
+				<Obstacle X="5053" Y="897" Type="右-箱子车子" />
+				<Obstacle X="1166" Y="693" Type="石门2_1503" />
+				<Obstacle X="4568" Y="144" Type="右-八卦摊位" />
+				<Obstacle X="3167" Y="367" Type="右-八卦摊位" />
+				<Obstacle X="948" Y="1399" Type="右-横躺石块灌木" />
+				<Obstacle X="3339" Y="172" Type="右-瓦罐摊位" />
+				<Obstacle X="3415" Y="402" Type="车轮印" />
+				<Obstacle X="4098" Y="685" Type="黄色山石11" />
+				<Obstacle X="1050" Y="1017" Type="山石8" />
+				<Obstacle X="1469" Y="600" Type="山石7" />
+				<Obstacle X="1999" Y="977" Type="车轮印" />
+				<Obstacle X="634" Y="346" Type="地毯02" />
+				<Obstacle X="3087" Y="419" Type="野外-大树_01-03_12823" />
+				<Obstacle X="4010" Y="107" Type="杂货摊_objects7_00132" />
+				<Obstacle X="3154" Y="233" Type="黄色山石28" />
+				<Obstacle X="3467" Y="332" Type="车轮印" />
+				<Obstacle X="1619" Y="1606" Type="地面杂物" />
+				<Obstacle X="3026" Y="1437" Type="地毯02" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="8" Title="兽人部落" Hp="9000" Width="6500" Height="2000" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1000" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="6300" Y="1000" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="1866" Y="1358" Type="右-八卦摊位" />
+				<Obstacle X="5595" Y="899" Type="黄色山石9" />
+				<Obstacle X="5732" Y="1551" Type="山石9" />
+				<Obstacle X="930" Y="499" Type="山石8" />
+				<Obstacle X="3553" Y="389" Type="右-八卦摊位" />
+				<Obstacle X="4935" Y="218" Type="杂货摊_objects7_00132" />
+				<Obstacle X="2707" Y="1697" Type="杂物1" />
+				<Obstacle X="5915" Y="311" Type="石塔3_objects2_01998" />
+				<Obstacle X="4742" Y="453" Type="石门2_1503" />
+				<Obstacle X="5547" Y="882" Type="山石12" />
+				<Obstacle X="3118" Y="1718" Type="右-瓦罐摊位" />
+				<Obstacle X="2268" Y="1271" Type="车轮印" />
+				<Obstacle X="1746" Y="376" Type="水面浮石4_1238" />
+				<Obstacle X="3310" Y="738" Type="山石20" />
+				<Obstacle X="1953" Y="1204" Type="山石13" />
+				<Obstacle X="1876" Y="903" Type="药摊_objects4_00480" />
+				<Obstacle X="1554" Y="1820" Type="右-八卦摊位" />
+				<Obstacle X="5830" Y="974" Type="山石13" />
+				<Obstacle X="1430" Y="1510" Type="黄色山石36" />
+				<Obstacle X="1987" Y="693" Type="黄色山石15" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="9" Title="纳格兰草原" Hp="10000" Width="7000" Height="2200" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="1100" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="6800" Y="1100" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="2244" Y="1887" Type="水面浮石3_1237" />
+				<Obstacle X="940" Y="645" Type="右-箱子车子" />
+				<Obstacle X="4684" Y="2025" Type="黄色山石20" />
+				<Obstacle X="601" Y="651" Type="石壁接悬崖右_2275" />
+				<Obstacle X="1719" Y="202" Type="野外-山石04_13074" />
+				<Obstacle X="3278" Y="1298" Type="山石17" />
+				<Obstacle X="2308" Y="1470" Type="黄色山石23" />
+				<Obstacle X="1323" Y="1782" Type="石03_objects2_03234" />
+				<Obstacle X="745" Y="714" Type="地面杂物" />
+				<Obstacle X="4714" Y="844" Type="右-瓦罐摊位" />
+				<Obstacle X="2116" Y="2051" Type="地毯01" />
+				<Obstacle X="6391" Y="943" Type="车轮印" />
+				<Obstacle X="2932" Y="1495" Type="黄色山石46" />
+				<Obstacle X="3311" Y="1675" Type="石墙-04_1786" />
+				<Obstacle X="2511" Y="550" Type="杂货摊_objects7_00132" />
+				<Obstacle X="670" Y="1685" Type="石门2_1503" />
+				<Obstacle X="3171" Y="676" Type="药摊_objects4_00480" />
+				<Obstacle X="2240" Y="2099" Type="山石14" />
+				<Obstacle X="4323" Y="1631" Type="地毯01" />
+				<Obstacle X="1660" Y="272" Type="石壁接悬崖左上_2365" />
+				<Obstacle X="5738" Y="1989" Type="山石19" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+		<Stage Id="10" Title="虚空禁地" Hp="11000" Width="7500" Height="1800" ObstaclesCount="20"
+			TileMapData="">
+			<Terrain />
+			<Placements>
+				<Entity Team="human" Type="Building" Key="castle" X="200" Y="900" />
+				<Entity Team="orc" Type="Building" Key="stronghold" X="7300" Y="900" />
+			</Placements>
+			<Obstacles>
+				<Obstacle X="4378" Y="694" Type="大石头5_1341" />
+				<Obstacle X="1304" Y="1320" Type="杂物1" />
+				<Obstacle X="5063" Y="895" Type="石壁接悬崖右上_2374" />
+				<Obstacle X="3858" Y="1689" Type="骨头_objects7_00451" />
+				<Obstacle X="5291" Y="794" Type="右-八卦摊位" />
+				<Obstacle X="1387" Y="513" Type="骨头_objects7_00451" />
+				<Obstacle X="6821" Y="271" Type="山石19" />
+				<Obstacle X="3885" Y="1505" Type="石01_objects2_03228" />
+				<Obstacle X="2556" Y="1406" Type="地毯03" />
+				<Obstacle X="3828" Y="1120" Type="大石头7_1348" />
+				<Obstacle X="4557" Y="1416" Type="石门_1496" />
+				<Obstacle X="6072" Y="1320" Type="黄色山石20" />
+				<Obstacle X="5429" Y="727" Type="石像1_1818" />
+				<Obstacle X="1788" Y="1694" Type="右-箱子车子" />
+				<Obstacle X="4305" Y="1505" Type="车轮印" />
+				<Obstacle X="5912" Y="273" Type="黄色山石7" />
+				<Obstacle X="3033" Y="1063" Type="石墙-05_1795" />
+				<Obstacle X="4083" Y="667" Type="黄色山石18" />
+				<Obstacle X="1449" Y="1322" Type="黄色山石3" />
+				<Obstacle X="5277" Y="357" Type="右-瓦罐摊位" />
+				<Obstacle X="4056" Y="1396" Type="黄色山石14" />
+				<Obstacle X="4388" Y="917" Type="山石22" />
+				<Obstacle X="4699" Y="1438" Type="石柱-1_2099" />
+				<Obstacle X="4597" Y="141" Type="主殿-石柱02-xin" />
+				<Obstacle X="4053" Y="774" Type="黄色山石34" />
+				<Obstacle X="3808" Y="818" Type="黄色山石25" />
+				<Obstacle X="5601" Y="140" Type="黄色山石11" />
+			</Obstacles>
+			<RoadPoints />
+		</Stage>
+	</Stages>
+
+	<GlobalSettings Title="联盟 vs 部落 - 战术大师版" InitialGold="30000" BaseGoldPerSec="5" MaxPop="25"
+		EnableFog="false" />
+</GameConfig>
